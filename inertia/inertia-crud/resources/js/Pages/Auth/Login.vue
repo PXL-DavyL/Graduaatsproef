@@ -1,10 +1,8 @@
 <script setup>
 import Checkbox from '@/Components/Checkbox.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import InputButton from '@/Components/InputButton.vue';
+import InputText from '@/Components/InputText.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 defineProps({
@@ -39,34 +37,30 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
+                <InputText
                     id="email"
+                    name="Email"
                     type="email"
                     class="mt-1 block w-full"
                     v-model="form.email"
                     required
                     autofocus
                     autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
+                    :error="form.errors.email"
+                />    
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
+                <InputText
                     id="password"
+                    name="Password"
                     type="password"
                     class="mt-1 block w-full"
                     v-model="form.password"
                     required
                     autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
+                    :error="form.errors.password"
+                />    
             </div>
 
             <div class="mt-4 block">
@@ -87,13 +81,13 @@ const submit = () => {
                     Forgot your password?
                 </Link>
 
-                <PrimaryButton
+                <InputButton
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Log in
-                </PrimaryButton>
+                </InputButton>
             </div>
         </form>
     </GuestLayout>

@@ -1,9 +1,7 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import InputButton from '@/Components/InputButton.vue';
+import InputText from '@/Components/InputText.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
@@ -26,70 +24,57 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="name" value="Name" />
-
-                <TextInput
+                <InputText
                     id="name"
+                    name="Name"
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.name"
                     required
                     autofocus
                     autocomplete="name"
-                />
-
-                <InputError class="mt-2" :message="form.errors.name" />
+                    :error="form.errors.name"
+                />    
             </div>
 
             <div class="mt-4">
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
+                <InputText
                     id="email"
+                    name="Email"
                     type="email"
                     class="mt-1 block w-full"
                     v-model="form.email"
                     required
                     autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
+                    :error="form.errors.email"
+                />    
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
 
-                <TextInput
+                <InputText
                     id="password"
+                    name="Password"
                     type="password"
                     class="mt-1 block w-full"
                     v-model="form.password"
                     required
                     autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
+                    :error="form.errors.password"
+                />    
             </div>
 
             <div class="mt-4">
-                <InputLabel
-                    for="password_confirmation"
-                    value="Confirm Password"
-                />
-
-                <TextInput
+                <InputText
                     id="password_confirmation"
+                    name="Confirm Password"
                     type="password"
                     class="mt-1 block w-full"
                     v-model="form.password_confirmation"
                     required
                     autocomplete="new-password"
-                />
-
-                <InputError
-                    class="mt-2"
-                    :message="form.errors.password_confirmation"
-                />
+                    :error="form.errors.password_confirmation"
+                />    
             </div>
 
             <div class="mt-4 flex items-center justify-end">
@@ -100,13 +85,13 @@ const submit = () => {
                     Already registered?
                 </Link>
 
-                <PrimaryButton
+                <InputButton
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Register
-                </PrimaryButton>
+                </InputButton>
             </div>
         </form>
     </GuestLayout>

@@ -1,8 +1,6 @@
 <script setup>
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import InputButton from '@/Components/InputButton.vue';
+import InputText from '@/Components/InputText.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
 
 defineProps({
@@ -39,34 +37,32 @@ const form = useForm({
             class="mt-6 space-y-6"
         >
             <div>
-                <InputLabel for="name" value="Name" />
 
-                <TextInput
+                <InputText
                     id="name"
+                    name="Name"
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.name"
-                    required
                     autofocus
                     autocomplete="name"
+                    :error="form.errors.name"
                 />
-
-                <InputError class="mt-2" :message="form.errors.name" />
+                {{ form.errors.name }}
             </div>
 
             <div>
-                <InputLabel for="email" value="Email" />
 
-                <TextInput
+                <InputText
                     id="email"
+                    name="Email"
                     type="email"
                     class="mt-1 block w-full"
                     v-model="form.email"
                     required
                     autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
+                    :error="form.errors.email"
+                />    
             </div>
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
@@ -91,7 +87,7 @@ const form = useForm({
             </div>
 
             <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+                <InputButton :disabled="form.processing">Save</InputButton>
 
                 <Transition
                     enter-active-class="transition ease-in-out"
