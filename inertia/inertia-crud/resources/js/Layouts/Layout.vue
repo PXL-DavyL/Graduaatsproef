@@ -1,8 +1,7 @@
 <template>
     <Head :title="props.title" />
 
-    <div         class="mt-4 container mx-auto min-h-screen flex flex-col gap-4"
-    >
+    <div class="mt-4 container mx-auto min-h-screen flex flex-col gap-4">
         <header class="w-full p-4 bg-gray-50 flex justify-between rounded">
             <div class="min-h-8 min-w-8">
                 <ApplicationLogo class="text-red-600" />
@@ -17,7 +16,6 @@
                     </Link>
                 </section>
                 <section v-else class="relative">
-
                     <div
                         class="flex items-center gap-1 text-sm p-2 rounded-md hover:cursor-pointer hover:bg-gray-100 transition"
                         @click="showUserDropdown = !showUserDropdown"
@@ -66,13 +64,14 @@
 
         <main class="w-full bg-white p-4 bg-gray-100 rounded">
             <section class="border-b border-gray-300 w-full mb-4">
-                <h1 class="text-2xl font-semibold text-gray-800">{{ props.title }}</h1>
+                <h1 class="text-2xl font-semibold text-gray-800">
+                    {{ props.title }}
+                </h1>
             </section>
 
             <slot />
         </main>
     </div>
-
 </template>
 
 <script setup>
@@ -87,9 +86,9 @@ import IconLogout from "@/Components/icons/IconLogout.vue";
 const props = defineProps({
     title: {
         type: String,
-        required: true
-    }
-})
+        required: true,
+    },
+});
 
 const user = ref();
 const showUserDropdown = ref(false);
@@ -104,9 +103,8 @@ onMounted(() => document.addEventListener("click", handleClickOutside));
 onUnmounted(() => document.removeEventListener("click", handleClickOutside));
 
 const handleClickOutside = (event) => {
-	if (showUserDropdown.value && !event.target.closest(".relative")) {
-		showUserDropdown.value = false;
-	}
+    if (showUserDropdown.value && !event.target.closest(".relative")) {
+        showUserDropdown.value = false;
+    }
 };
-
 </script>
