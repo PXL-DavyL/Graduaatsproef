@@ -81,19 +81,21 @@ class BlogController extends Controller
             'author_id' => 'nullable',
         ]);
 
-        $title = $request->title;
-        $content = $request->content;
-        $author = $request->author;
-        if($author != null) {
-            
-            $blog->poster_id = $author['id'];
-            $blog->save();
+        if($request->title != null) {
+            $blog->title = $request->title;
         }
 
+        if($request->content != null) {
+            $blog->content = $request->content;
+        }
+
+        if($request->author != null) {
+            $blog->poster_id = $request->author['id'];
+        }
+
+        $blog->save();
+
         return to_route('blog.edit', $blog);
-
-        dd($title, $content, $author);
-
     }
 
     /**
