@@ -8,7 +8,7 @@
             {{ props.name }}
         </label>
         <div
-            class="bg-gray-100 border border-gray-200 rounded w-full p-2"
+            class="bg-gray-50 border border-gray-200 rounded w-full p-2"
             @click="showList = !showList"
         >
             {{ placeholder.name }}
