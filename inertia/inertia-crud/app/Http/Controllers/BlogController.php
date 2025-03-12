@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -64,6 +65,7 @@ class BlogController extends Controller
     {
         return Inertia::render('Blog/Edit', [
             'blog' => $blog->load('poster'),
+            'users' => User::all(),
         ]);
     }
 
@@ -73,6 +75,25 @@ class BlogController extends Controller
     public function update(Request $request, Blog $blog)
     {
         //
+        $request->validate([
+            'title' => 'nullable',
+            'content' => 'nullable',
+            'author_id' => 'nullable',
+        ]);
+
+        $title = $request->title;
+        $content = $request->content;
+        $author = $request->author;
+        if($author != null) {
+            
+            $blog->poster_id = $author['id'];
+            $blog->save();
+        }
+
+        return to_route('blog.edit', $blog);
+
+        dd($title, $content, $author);
+
     }
 
     /**
