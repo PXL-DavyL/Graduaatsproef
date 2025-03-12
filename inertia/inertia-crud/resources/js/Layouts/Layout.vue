@@ -2,7 +2,7 @@
     <Head :title="props.title" />
 
     <div class="mt-4 container mx-auto min-h-screen flex flex-col gap-4">
-        <header class="w-full p-4 bg-gray-50 flex justify-between rounded shadow-md">
+        <header class="w-full p-4 bg-gray-50 flex items-center justify-between rounded shadow-md">
             <div class="min-h-8 min-w-8">
                 <ApplicationLogo class="text-red-600" />
             </div>
