@@ -51,8 +51,6 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        //
-
         return Inertia::render('Blog/Show', [
             'blog' => $blog->load('poster'),
         ]);
@@ -101,8 +99,19 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blog $blog)
+    public function destroy(Blog $blog, Request $request)
     {
-        //
+        $request->validate([
+            'confirm_title' => 'required|string',
+        ]);
+
+        if($request->confirm_title == $blog->title) {
+            $blog->delete();
+        }
+        else {
+            return back()->withErrors(['confirm_title' => 'Title does not match.']);
+        }
+
+        return to_route('home');
     }
 }

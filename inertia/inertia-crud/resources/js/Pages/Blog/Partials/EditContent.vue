@@ -1,5 +1,18 @@
 <template>
-    <div class="bg-white w-full p-4 shadow sm:rounded-lg sm:p-8 flex flex-col gap-4">
+    <div
+        class="bg-white w-full p-4 shadow sm:rounded-lg sm:p-8 flex flex-col gap-4"
+    >
+        <div>
+            <h2 class="text-lg font-medium text-gray-900">
+                Update blog content
+            </h2>
+
+            <span class="text-sm text-gray-600">
+                You are able to edit the blog title and content in the form
+                below.
+            </span>
+        </div>
+
         <InputText
             name="Title"
             id="title"
@@ -15,13 +28,11 @@
         />
 
         <div class="flex justify-between">
-            <InputButton type="danger" @click="reset()">
+            <InputButton type="warning" @click="reset()">
                 Reset to original
             </InputButton>
 
-            <InputButton @click="submit()">
-                Update blog content
-            </InputButton>
+            <InputButton @click="submit()"> Update blog content </InputButton>
         </div>
     </div>
 </template>
@@ -42,15 +53,13 @@ const reset = () => {
 };
 
 const submit = () => {
-
     form.patch(route("blog.update", usePage().props.blog.id), {
         onSuccess: () => {
-            console.log('Blog content updated');
+            console.log("Blog content updated");
         },
         onError: (err) => {
-            console.error('Error updating blog content', err);
+            console.error("Error updating blog content", err);
         },
     });
-
 };
 </script>
