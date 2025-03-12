@@ -23,7 +23,8 @@
                     </div>
                     {{ article.title }}
 
-                    <InputButtonLink :href="route('blog.show', article.id, true)" class="self-end">Read more</InputButtonLink>
+                    <InputButtonLink v-if="usePage().props.auth.user" :href="route('blog.show', article.id, true)" class="self-end">Read more</InputButtonLink>
+                    <span v-else class="text-xs text-gray-600 self-end">You have to be logged in to view blogs.</span>
                 </article>
             </section>
 
@@ -33,7 +34,7 @@
 </template>
 
 <script setup>
-import { usePage, Link } from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
 import Layout from "@/Layouts/Layout.vue";
 import Pagination from "@/Components/Pagination.vue";
 import InputButtonLink from "@/Components/InputButtonLink.vue";
