@@ -1,6 +1,6 @@
 <template>
     <Layout title="Home">
-        <section class="grid grid-flow-row grid-cols-3 gap-4">
+        <section class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <article class="bg-red-200 min-h-48 min-w-48 p-4 rounded">
                 Article 1
             </article>
