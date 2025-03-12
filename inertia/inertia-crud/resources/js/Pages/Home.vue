@@ -22,7 +22,8 @@
                         >
                     </div>
                     {{ article.title }}
-                    <InputButton class="self-end"> Read more </InputButton>
+
+                    <InputButtonLink :href="route('blog.show', article.id, true)" class="self-end">Read more</InputButtonLink>
                 </article>
             </section>
 
@@ -32,10 +33,10 @@
 </template>
 
 <script setup>
-import InputButton from "@/Components/InputButton.vue";
-import Pagination from "@/Components/Pagination.vue";
+import { usePage, Link } from "@inertiajs/vue3";
 import Layout from "@/Layouts/Layout.vue";
-import { usePage } from "@inertiajs/vue3";
+import Pagination from "@/Components/Pagination.vue";
+import InputButtonLink from "@/Components/InputButtonLink.vue";
 
 const articles = usePage().props.blogs.data;
 </script>
