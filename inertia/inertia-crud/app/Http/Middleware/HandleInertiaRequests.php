@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -31,9 +32,12 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
+            
             'auth' => [
                 'user' => $request->user(),
             ],
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
         ];
     }
 }

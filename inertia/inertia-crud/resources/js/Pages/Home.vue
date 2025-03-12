@@ -1,5 +1,5 @@
 <template>
-    <Layout title="Welcome">
+    <Layout title="Home">
         <section class="grid grid-flow-row grid-cols-3 gap-4">
             <article class="bg-red-200 min-h-48 min-w-48 p-4 rounded">
                 Article 1
