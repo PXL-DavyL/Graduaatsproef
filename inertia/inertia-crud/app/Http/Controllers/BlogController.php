@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -30,7 +31,18 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+        
+        $blog = Blog::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'poster_id' => Auth::id(),
+        ]);
+
+        return to_route('blog.show', $blog);
     }
 
     /**
