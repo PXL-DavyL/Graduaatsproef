@@ -1,38 +1,37 @@
 <template>
     <Layout title="Home">
-        <section class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <article class="bg-red-200 min-h-48 min-w-48 p-4 rounded">
-                Article 1
-            </article>
-            <article class="bg-blue-200 min-h-48 min-w-48 p-4 rounded">
-                Article 2
-            </article>
-            <article class="bg-green-200 min-h-48 min-w-48 p-4 rounded">
-                Article 3
-            </article>
-            <article class="bg-yellow-200 min-h-48 min-w-48 p-4 rounded">
-                Article 4
-            </article>
-            <article class="bg-purple-200 min-h-48 min-w-48 p-4 rounded">
-                Article 5
-            </article>
-            <article class="bg-pink-200 min-h-48 min-w-48 p-4 rounded">
-                Article 6
-            </article>
-            <article class="bg-indigo-200 min-h-48 min-w-48 p-4 rounded">
-                Article 7
-            </article>
-            <article class="bg-teal-200 min-h-48 min-w-48 p-4 rounded">
-                Article 8
-            </article>
-            <article class="bg-orange-200 min-h-48 min-w-48 p-4 rounded">
-                Article 9
-            </article>
-        </section>
-    </Layout>
+        <div class="flex flex-col gap-3">
+            <section
+                class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+            >
+                <article
+                    v-for="article in articles"
+                    class="min-h-48 min-w-48 rounded flex flex-col justify-between bg-gray-50"
+                    :key="article.id"
+                >
+                    <div class="flex-col">
+                        {{
+                            new Date(article.created_at).toLocaleDateString(
+                                "nl-BE"
+                            )
+                        }}
+                    </div>
 
+                    {{ article.content }}
+
+                    <a href="#" class="self-end">Read more</a>
+                </article>
+            </section>
+
+            <Pagination :pagination="usePage().props.blogs" />
+        </div>
+    </Layout>
 </template>
 
 <script setup>
-    import Layout from '@/Layouts/Layout.vue';
+import Pagination from "@/Components/Pagination.vue";
+import Layout from "@/Layouts/Layout.vue";
+import { usePage } from "@inertiajs/vue3";
+
+const articles = usePage().props.blogs.data;
 </script>
