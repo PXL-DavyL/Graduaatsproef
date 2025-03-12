@@ -1,6 +1,6 @@
 <script setup>
-import Checkbox from '@/Components/Checkbox.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
+import InputCheck from '@/Components/InputCheck.vue';
 import InputButton from '@/Components/InputButton.vue';
 import InputText from '@/Components/InputText.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
@@ -64,12 +64,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4 block">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600"
-                        >Remember me</span
-                    >
-                </label>
+                <InputCheck text="Remember me" name="remember" v-model:checked="form.remember" />
             </div>
 
             <div class="mt-4 flex items-center justify-end">
