@@ -17,9 +17,9 @@ class Blog extends Model
         'image',
     ];    
 
-    public function poster_id() : BelongsTo
+    public function poster() : BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'poster_id');
     }
 
 }
