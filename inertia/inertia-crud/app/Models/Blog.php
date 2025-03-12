@@ -13,8 +13,7 @@ class Blog extends Model
     protected $fillable = [
         'title',
         'poster_id',
-        'content',
-        'image',
+        'content'
     ];    
 
     public function poster() : BelongsTo

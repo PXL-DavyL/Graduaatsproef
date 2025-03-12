@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('poster_id')->constrained('users')->onDelete('cascade');
             $table->text('title');
             $table->text('content');
-            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
