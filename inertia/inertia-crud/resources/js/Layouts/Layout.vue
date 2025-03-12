@@ -2,7 +2,7 @@
     <Head :title="props.title" />
 
     <div class="mt-4 container mx-auto min-h-screen flex flex-col gap-4">
-        <header class="w-full p-4 bg-gray-50 flex justify-between rounded">
+        <header class="w-full p-4 bg-gray-50 flex justify-between rounded shadow-md">
             <div class="min-h-8 min-w-8">
                 <ApplicationLogo class="text-red-600" />
             </div>
@@ -21,6 +21,7 @@
                         class="flex items-center gap-1 text-sm p-2 rounded-md hover:cursor-pointer hover:bg-gray-100 transition"
                         @click="showUserDropdown = !showUserDropdown"
                     >
+                        <IconAccount class="h-4 w-4 text-gray-700"/>
                         {{ user.name }}
                         <IconChevron
                             class="transition-transform duration-200"
@@ -63,7 +64,7 @@
             </div>
         </header>
 
-        <main class="w-full bg-white p-4 bg-gray-100 rounded">
+        <main class="w-full bg-white p-4 bg-gray-100 rounded shadow-md">
             <section class="border-b border-gray-300 w-full mb-4">
                 <h1 class="text-2xl font-semibold text-gray-800">
                     {{ props.title }}
@@ -73,7 +74,7 @@
             <slot />
         </main>
 
-        <footer class="w-full flex justify-between p-4 bg-gray-50">
+        <footer class="w-full flex justify-between p-4 bg-gray-50 rounded shadow-md">
             <span>Laravel v{{ usePage().props.laravelVersion }}</span> 
             <span>PHP v{{ usePage().props.phpVersion }}</span>
         </footer>
@@ -88,6 +89,7 @@ import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import IconChevron from "@/Components/icons/IconChevron.vue";
 import IconProfile from "@/Components/icons/IconProfile.vue";
 import IconLogout from "@/Components/icons/IconLogout.vue";
+import IconAccount from "@/Components/icons/IconAccount.vue";
 
 const props = defineProps({
     title: {
@@ -103,8 +105,6 @@ onBeforeMount(() => {
     user.value = usePage().props.auth.user;
 });
 
-console.log(usePage().props);
-
 onMounted(() => document.addEventListener("click", handleClickOutside));
 onUnmounted(() => document.removeEventListener("click", handleClickOutside));
 
@@ -113,6 +113,4 @@ const handleClickOutside = (event) => {
         showUserDropdown.value = false;
     }
 };
-
-console.log(usePage().props);
 </script>
