@@ -6,20 +6,23 @@
             >
                 <article
                     v-for="article in articles"
-                    class="min-h-48 min-w-48 rounded flex flex-col justify-between bg-gray-50"
+                    class="min-h-24 min-w-48 rounded flex flex-col justify-between bg-gray-50 border border-gray-200 p-2"
                     :key="article.id"
                 >
-                    <div class="flex-col">
-                        {{
-                            new Date(article.created_at).toLocaleDateString(
-                                "nl-BE"
-                            )
-                        }}
+                    <div class="flex justify-between bg-sky-100 rounded p-2">
+                        <span>
+                            {{ article.poster.name }}
+                        </span>
+                        <span>
+                            {{
+                                new Date(article.created_at).toLocaleDateString(
+                                    "nl-BE"
+                                )
+                            }}</span
+                        >
                     </div>
-
-                    {{ article.content }}
-
-                    <a href="#" class="self-end">Read more</a>
+                    {{ article.title }}
+                    <InputButton class="self-end"> Read more </InputButton>
                 </article>
             </section>
 
@@ -29,6 +32,7 @@
 </template>
 
 <script setup>
+import InputButton from "@/Components/InputButton.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Layout from "@/Layouts/Layout.vue";
 import { usePage } from "@inertiajs/vue3";
