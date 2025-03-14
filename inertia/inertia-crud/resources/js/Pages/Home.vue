@@ -13,17 +13,15 @@
                         <span>
                             {{ article.poster.name }}
                         </span>
-                        <span>
-                            {{
-                                new Date(article.created_at).toLocaleDateString(
-                                    "nl-BE"
-                                )
-                            }}</span
-                        >
+                        <span> {{ formatDate(article.created_at) }}</span>
                     </div>
                     {{ article.title }}
 
-                    <InputButtonLink :href="route('blog.show', article.id, true)" class="self-end">Read more</InputButtonLink>
+                    <InputButtonLink
+                        :href="route('blog.show', article.id, true)"
+                        class="self-end"
+                        >Read more</InputButtonLink
+                    >
                 </article>
             </section>
 
@@ -35,7 +33,8 @@
 <script setup>
 import { onMounted } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
+import { formatDate } from "@/Composables/dates.js";
 
 import Layout from "@/Layouts/Layout.vue";
 import Pagination from "@/Components/Pagination.vue";
@@ -44,9 +43,8 @@ import InputButtonLink from "@/Components/InputButtonLink.vue";
 const articles = usePage().props.blogs.data;
 
 onMounted(() => {
-    if(usePage().props.errors) {
-
-        for(const error in usePage().props.errors) {
+    if (usePage().props.errors) {
+        for (const error in usePage().props.errors) {
             toast.error(usePage().props.errors[error]);
         }
     }
