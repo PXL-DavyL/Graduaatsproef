@@ -8,7 +8,7 @@
             click on the row and you will be redirected to the edit page.
         </div>
 
-        <div class="mt-3 flex flex-col gap-5 min-w-[50%] max-w-[50%]">
+        <div class="mt-3 flex flex-col gap-5">
             <div class="flex flex-col border border-neutral-600 rounded">
                 <span class="p-2 bg-neutral-700"> Latest users </span>
                 <table class="table-auto w-full text-left border-collapse">

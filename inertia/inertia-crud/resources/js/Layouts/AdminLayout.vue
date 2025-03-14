@@ -6,12 +6,25 @@
         >
             <span class="text-xl bold w-full">Admin Menu</span>
             <div class="mt-8 flex flex-col gap-2">
-                <span class="flex w-full gap-4"><IconHome class="h-6 w-6" /> Home</span>
-                <span class="flex w-full gap-4"><IconUser class="h-6 w-6" /> Users</span>
-                <span class="flex w-full gap-4"><IconBlog class="h-6 w-6" /> Blogs</span>
+                <Link :href="route('admin.index')"
+                    ><span class="flex w-full gap-4"
+                        ><IconHome class="h-6 w-6" /> Home</span
+                    ></Link
+                >
+                
+                <Link :href="route('admin.users.index')"
+                    ><span class="flex w-full gap-4"
+                        ><IconUser class="h-6 w-6" /> Users</span
+                    ></Link
+                >
+                <span class="flex w-full gap-4"
+                    ><IconBlog class="h-6 w-6" /> Blogs</span
+                >
             </div>
             <div class="mt-8">
-                <span class="flex w-full gap-4"><IconReturn class="h-6 w-6" /> Back to site</span>
+                <span class="flex w-full gap-4"
+                    ><IconReturn class="h-6 w-6" /> Back to site</span
+                >
             </div>
         </div>
         <div class="w-full bg-zinc-500">
@@ -34,7 +47,7 @@ import IconHome from "@/Components/icons/Admin/IconHome.vue";
 import IconUser from "@/Components/icons/Admin/IconUser.vue";
 import IconReturn from "@/Components/icons/Admin/IconReturn.vue";
 
-import { Head } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
 
 const props = defineProps({
     title: {
