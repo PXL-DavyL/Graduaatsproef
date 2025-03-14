@@ -35,8 +35,8 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'content' => 'required',
+            'title' => 'required|min:5',
+            'content' => 'required|min:5',
         ]);
         
         $blog = Blog::create([
@@ -85,23 +85,22 @@ class BlogController extends Controller
                 return to_route('home')->withErrors(['blog_author_error' => 'You are not the author of this blog.']);
             }
         }
+        
         $request->validate([
-            'title' => 'nullable',
-            'content' => 'nullable',
+            'title' => 'required|min:5',
+            'content' => 'required|min:5',
             'author_id' => 'nullable',
         ]);
 
-        if($request->title != null) {
-            $blog->title = $request->title;
-        }
-
-        if($request->content != null) {
-            $blog->content = $request->content;
-        }
+        $blog->title = $request->title;
+        $blog->content = $request->content;
 
         // Only admins can change authors.
-        if($request->author != null && Auth::user()->hasRole == 'admin') {
-            $blog->poster_id = $request->author['id'];
+        if($request->author != null) {
+            if(Auth::user()->hasRole('admin')) {
+                $blog->poster_id = $request->author['id'];
+            }
+            else return back()->withErrors(['author' => 'Only admins can change authors.']);
         }
 
         $blog->save();
