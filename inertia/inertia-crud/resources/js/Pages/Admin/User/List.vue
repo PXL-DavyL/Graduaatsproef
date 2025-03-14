@@ -42,10 +42,10 @@
                                     {{ user.email }}
                                 </td>
                                 <td class="p-2 border-b border-neutral-500">
-                                    {{ user.created_at }}
+                                    {{ formatDate(user.created_at) }}
                                 </td>
                                 <td class="p-2 border-b border-neutral-500">
-                                    {{ user.updated_at }}
+                                    {{ formatDate(user.updated_at) }}
                                 </td>
                             </tr>
                         </tbody>
@@ -60,6 +60,7 @@
 </template>
 <script setup>
 import { usePage } from "@inertiajs/vue3";
+import { formatDate } from "@/Composables/dates";
 import Pagination from "@/Components/Pagination.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 
