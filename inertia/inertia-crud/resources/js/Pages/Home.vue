@@ -23,8 +23,7 @@
                     </div>
                     {{ article.title }}
 
-                    <InputButtonLink v-if="usePage().props.auth.user" :href="route('blog.show', article.id, true)" class="self-end">Read more</InputButtonLink>
-                    <span v-else class="text-xs text-gray-600 self-end">You have to be logged in to view blogs.</span>
+                    <InputButtonLink :href="route('blog.show', article.id, true)" class="self-end">Read more</InputButtonLink>
                 </article>
             </section>
 
