@@ -18,10 +18,15 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => 'test@test.net',
+            'password' => bcrypt('test@test.net'),
         ]);
 
-
         Blog::factory(25)->create(); 
+
+        $this->call([
+            RolesAndPermissionsSeeder::class,
+        ]);
+
     }
 }
