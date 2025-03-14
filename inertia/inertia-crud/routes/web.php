@@ -8,7 +8,6 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
         'blogs' => Blog::with('poster')->paginate(12),
     ]);
 })->name('home');
