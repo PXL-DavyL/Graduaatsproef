@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white w-full p-4 shadow sm:rounded-lg sm:p-8 flex flex-col gap-2">
+    <div class="bg-white w-full p-3 sm:p-6 shadow sm:rounded-lg flex flex-col gap-2">
         <h2 class="text-lg font-medium text-gray-900">
             Update blog author
         </h2>

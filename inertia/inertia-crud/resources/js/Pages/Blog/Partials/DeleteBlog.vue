@@ -1,17 +1,19 @@
 <template>
-    <div class="bg-gray-50 w-full p-4 shadow sm:rounded-lg sm:p-8 flex gap-4">
-        <div class="flex flex-col">
-            <h2 class="text-lg font-medium text-gray-900">Delete blog</h2>
+    <div class="bg-gray-50 w-full p-3 sm:p-6 shadow sm:rounded-lg flex gap-4">
+        <div class="flex flex-col gap-2">
+            <div>
+                <h2 class="text-lg font-medium text-gray-900">Delete blog</h2>
 
-            <span class="text-sm text-gray-600">
-                Alternatively, you might wish to delete the blog. You can do so
-                below by clicking on the delete button.
-            </span>
-        </div>
-        <div class="self-end">
-            <InputButton type="danger" @click="showDeleteModal = true">
-                Delete blog
-            </InputButton>
+                <span class="text-sm text-gray-600">
+                    Alternatively, you might wish to delete the blog. You can do so
+                    below by clicking on the delete button.
+                </span>
+            </div>
+            <div>
+                <InputButton type="danger" @click="showDeleteModal = true">
+                    Delete blog
+                </InputButton>
+            </div>
         </div>
     </div>
 
