@@ -37,9 +37,11 @@
     </div>
 </template>
 <script setup>
+import { useForm, usePage } from "@inertiajs/vue3";
+import { toast } from "vue3-toastify";
+
 import InputTextArea from "@/Components/InputTextArea.vue";
 import InputText from "@/Components/InputText.vue";
-import { useForm, usePage } from "@inertiajs/vue3";
 import InputButton from "@/Components/InputButton.vue";
 
 const form = useForm({
@@ -55,10 +57,12 @@ const reset = () => {
 const submit = () => {
     form.patch(route("blog.update", usePage().props.blog.id), {
         onSuccess: () => {
-            console.log("Blog content updated");
+            toast.success("Blog has been updated.");
         },
         onError: (err) => {
-            console.error("Error updating blog content", err);
+            for(const error in err) {
+                toast.error(err[error]);
+            }
         },
     });
 };

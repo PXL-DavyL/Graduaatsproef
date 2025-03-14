@@ -56,6 +56,7 @@
 <script setup>
 import { ref } from "vue";
 import { useForm, usePage } from "@inertiajs/vue3";
+import { toast } from "vue3-toastify";
 
 import InputButton from "@/Components/InputButton.vue";
 import Modal from "@/Components/Modal.vue";
@@ -80,11 +81,13 @@ const deleteBlog = () => {
         confirm_title: form.confirm_title,
     }), {
         onSuccess: () => {
-            console.log("Blog deleted");
+            toast.warning("Blog has been deleted.");
             closeModal();
         },
         onError: (err) => {
-            console.error("Error deleting blog", err);
+            for(const error in err) {
+                toast.error(err[error]);
+            }
         },
     });
     

@@ -27,6 +27,7 @@
 <script setup>
 import { ref } from "vue";
 import { useForm, usePage } from "@inertiajs/vue3";
+import { toast } from "vue3-toastify";
 
 import InputUserSelect from "@/Components/InputUserSelect.vue";
 import InputButton from "@/Components/InputButton.vue";
@@ -35,19 +36,23 @@ console.log(usePage().props.blog.poster);
 
 const form = useForm({
     author: ref(usePage().props.blog.poster),
+    title: usePage().props.blog.title,
+    content: usePage().props.blog.content
 });
 
 const submit = () => {
     form.patch(route("blog.update", usePage().props.blog.id), {
         
         onSuccess: () => {
-            console.log('Author updated');
+            toast.success("Blog author has been changed.");
         },
         onFinish: () => {
             form.author = usePage().props.blog.poster;
         },
         onError: (err) => {
-            console.error('Error updating author', err);
+            for(const error in err) {
+                toast.error(err[error]);
+            }
         },
     });
 };
