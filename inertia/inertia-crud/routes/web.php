@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
@@ -35,7 +36,7 @@ Route::middleware('auth', 'verified', 'role:admin')->group(function () {
     Route::get('/admin', function () {
         return Inertia::render('Admin/Dashboard', [
                 'users' => User::latest()->take(7)->get(),
-                'blogs' => Blog::latest()->take(7)->get(),
+                'blogs' => Blog::with('poster')->take(7)->get(),
         ]);
     })->name('admin.index');       
     
