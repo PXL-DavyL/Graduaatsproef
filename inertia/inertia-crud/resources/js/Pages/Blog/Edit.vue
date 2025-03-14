@@ -16,6 +16,4 @@ import EditContent from "./Partials/EditContent.vue";
 import DeleteBlog from "./Partials/DeleteBlog.vue";
 import { hasRole } from "@/Composables/permissions.js";
 import { usePage } from "@inertiajs/vue3";
-
-console.log(usePage().props);
 </script>

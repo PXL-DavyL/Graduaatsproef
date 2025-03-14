@@ -9,7 +9,7 @@
 
             <span v-html="blog.content"></span>
 
-            <div v-if="usePage().props.auth.user.id == blog.id">
+            <div v-if="usePage().props.auth.user.id == blog.poster.id">
                 <InputButtonLink :href="route('blog.edit', blog.id)" type="warning" method="get">
                     Edit
                 </InputButtonLink>
@@ -24,6 +24,4 @@ import Layout from "@/Layouts/Layout.vue";
 import InputButtonLink from "@/Components/InputButtonLink.vue";
 
 const blog = usePage().props.blog;
-
-console.log(usePage().props);
 </script>
