@@ -7,7 +7,7 @@ export const hasRole = (check_role) => {
         return false;
     }
 
-    for(role of usePage().props.auth.user.roles){
+    for(const role of usePage().props.auth.user.roles){
         if(role.name === check_role){
             return true;
         }
