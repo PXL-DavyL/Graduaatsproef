@@ -1,15 +1,10 @@
 <template>
     <AdminLayout title="Dashboard">
-        <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi cum
-            amet recusandae iure tempore possimus dolorum minima veniam earum
-            tempora, nisi esse at laborum mollitia a maxime. Accusamus delectus,
-            rerum adipisci veniam et magnam laboriosam? Deserunt iure ratione
-            corporis veritatis? Culpa labore eveniet ratione, dolorum neque
-            perspiciatis officiis autem accusantium!
+        <div class="p-2">
+            In the admin dashboard, you can get an overview of all existing users and blogs. You will be able to modify both appropriately.
         </div>
 
-        <div class="flex flex-col gap-5">
+        <div class="mt-3 flex flex-col gap-5">
             <div class="flex flex-col border border-neutral-600 rounded">
                 <span class="p-2 bg-neutral-600">
                     Latest users
