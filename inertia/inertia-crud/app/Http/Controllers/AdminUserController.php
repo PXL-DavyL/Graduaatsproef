@@ -51,7 +51,9 @@ class AdminUserController extends Controller
     {
         //
 
-        return Inertia::render('Admin/User/Edit');
+        return Inertia::render('Admin/User/Edit', [
+            'user' => $user,
+        ]);
     }
 
     /**

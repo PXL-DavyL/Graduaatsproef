@@ -30,7 +30,8 @@
                         <tr
                             v-for="user in usePage().props.users"
                             :key="user.id"
-                            class="odd:bg-zinc-500 even:bg-zinc-400"
+                            class="odd:bg-zinc-500 even:bg-zinc-400 hover:text-zinc-800 hover:bg-zinc-300 cursor-pointer"
+                            @click="onClickUserRow(user)"
                         >
                             <td class="p-2 border-b border-zinc-500">
                                 {{ user.id }}
@@ -106,5 +107,7 @@ import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { formatDate } from "@/Composables/dates";
 
-console.log(usePage().props);
+const onClickUserRow = (user) => {
+    window.location.href = route('admin.users.edit', user);
+}
 </script>

@@ -30,7 +30,8 @@
                             <tr
                                 v-for="user in usePage().props.users.data"
                                 :key="user.id"
-                                class="odd:bg-zinc-500 even:bg-zinc-400"
+                                :class="'odd:bg-zinc-500 even:bg-zinc-400 hover:text-zinc-800 hover:bg-zinc-300 cursor-pointer'"
+                                @click="onClickRow(user)"
                             >
                                 <td class="p-2 border-b border-zinc-500">
                                     {{ user.id }}
@@ -64,5 +65,7 @@ import { formatDate } from "@/Composables/dates";
 import Pagination from "@/Components/Pagination.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 
-console.log(usePage().props.users);
+const onClickRow = (user) => {
+    window.location.href = route('admin.users.edit', user);
+}
 </script>
