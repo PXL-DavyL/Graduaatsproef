@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,10 +31,12 @@ Route::group(['middleware' => 'auth'], function () {
 Route::resource('blog', BlogController::class, ['only' => ['index', 'show']]);
 
 // Admin
-
-    Route::middleware('auth', 'verified', 'role:admin')->group(function () {
-        Route::get('/admin', function () {
-            return Inertia::render('Admin/Dashboard');
-        })->name('admin.index');        
-    });
+Route::middleware('auth', 'verified', 'role:admin')->group(function () {
+    Route::get('/admin', function () {
+        return Inertia::render('Admin/Dashboard', [
+                'users' => User::latest()->take(7)->get(),
+                'blogs' => Blog::latest()->take(7)->get(),
+        ]);
+    })->name('admin.index');        
+});
 
