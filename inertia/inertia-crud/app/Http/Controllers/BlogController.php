@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Inertia\Inertia;
 
 class BlogController extends Controller
@@ -61,6 +63,12 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
+        if(!Auth::user()->hasRole('admin')) {
+            if(Auth::id() != $blog->poster_id) {
+                return back()->withErrors(['auth' => 'You are not the author of this blog.']);
+            }
+        }
+
         return Inertia::render('Blog/Edit', [
             'blog' => $blog->load('poster'),
             'users' => User::all(),
@@ -72,7 +80,11 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        //
+        if(!Auth::user()->hasRole('admin')) {
+            if(Auth::id() != $blog->poster_id) {
+                return back()->withErrors(['auth' => 'You are not the author of this blog.']);
+            }
+        }
         $request->validate([
             'title' => 'nullable',
             'content' => 'nullable',
@@ -87,7 +99,8 @@ class BlogController extends Controller
             $blog->content = $request->content;
         }
 
-        if($request->author != null) {
+        // Only admins can change authors.
+        if($request->author != null && Auth::user()->hasRole == 'admin') {
             $blog->poster_id = $request->author['id'];
         }
 
