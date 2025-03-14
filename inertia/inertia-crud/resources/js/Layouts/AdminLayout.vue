@@ -22,9 +22,10 @@
                 >
             </div>
             <div class="mt-8">
-                <span class="flex w-full gap-4"
-                    ><IconReturn class="h-6 w-6" /> Back to site</span
-                >
+                <Link :href="route('home')"
+                    ><span class="flex w-full gap-4"
+                        ><IconReturn class="h-6 w-6" /> Back to site</span
+                    ></Link>
             </div>
         </div>
         <div class="w-full bg-zinc-500">
