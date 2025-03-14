@@ -65,7 +65,7 @@ class BlogController extends Controller
     {
         if(!Auth::user()->hasRole('admin')) {
             if(Auth::id() != $blog->poster_id) {
-                return back()->withErrors(['auth' => 'You are not the author of this blog.']);
+                return to_route('home')->withErrors(['blog_author_error' => 'You are not the author of this blog.']);
             }
         }
 
@@ -82,7 +82,7 @@ class BlogController extends Controller
     {
         if(!Auth::user()->hasRole('admin')) {
             if(Auth::id() != $blog->poster_id) {
-                return back()->withErrors(['auth' => 'You are not the author of this blog.']);
+                return to_route('home')->withErrors(['blog_author_error' => 'You are not the author of this blog.']);
             }
         }
         $request->validate([

@@ -33,10 +33,24 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue";
 import { usePage } from "@inertiajs/vue3";
+import { toast } from 'vue3-toastify';
+
 import Layout from "@/Layouts/Layout.vue";
 import Pagination from "@/Components/Pagination.vue";
 import InputButtonLink from "@/Components/InputButtonLink.vue";
 
 const articles = usePage().props.blogs.data;
+
+onMounted(() => {
+    if(usePage().props.errors) {
+
+        for(const error in usePage().props.errors) {
+            toast.error(usePage().props.errors[error]);
+        }
+    }
+});
+
+console.log(usePage().props);
 </script>
