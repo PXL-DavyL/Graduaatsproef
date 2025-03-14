@@ -4,24 +4,24 @@
             <span class="text-2xl font-bold">Users</span>
 
             <div class="mt-3 flex flex-col gap-5">
-                <div class="flex flex-col border border-neutral-600 rounded">
-                    <span class="p-2 bg-neutral-700"> Users </span>
+                <div class="flex flex-col border border-zinc-600 rounded">
+                    <span class="p-2 bg-zinc-700"> Users </span>
                     <table class="table-auto w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-neutral-600 text-white">
-                                <th class="p-2 border-b border-neutral-500">
+                            <tr class="bg-zinc-600 text-white">
+                                <th class="p-2 border-b border-zinc-500">
                                     ID
                                 </th>
-                                <th class="p-2 border-b border-neutral-500">
+                                <th class="p-2 border-b border-zinc-500">
                                     Name
                                 </th>
-                                <th class="p-2 border-b border-neutral-500">
+                                <th class="p-2 border-b border-zinc-500">
                                     Email
                                 </th>
-                                <th class="p-2 border-b border-neutral-500">
+                                <th class="p-2 border-b border-zinc-500">
                                     Created At
                                 </th>
-                                <th class="p-2 border-b border-neutral-500">
+                                <th class="p-2 border-b border-zinc-500">
                                     Updated At
                                 </th>
                             </tr>
@@ -30,27 +30,27 @@
                             <tr
                                 v-for="user in usePage().props.users.data"
                                 :key="user.id"
-                                class="odd:bg-neutral-500 even:bg-neutral-400"
+                                class="odd:bg-zinc-500 even:bg-zinc-400"
                             >
-                                <td class="p-2 border-b border-neutral-500">
+                                <td class="p-2 border-b border-zinc-500">
                                     {{ user.id }}
                                 </td>
-                                <td class="p-2 border-b border-neutral-500">
+                                <td class="p-2 border-b border-zinc-500">
                                     {{ user.name }}
                                 </td>
-                                <td class="p-2 border-b border-neutral-500">
+                                <td class="p-2 border-b border-zinc-500">
                                     {{ user.email }}
                                 </td>
-                                <td class="p-2 border-b border-neutral-500">
+                                <td class="p-2 border-b border-zinc-500">
                                     {{ formatDate(user.created_at) }}
                                 </td>
-                                <td class="p-2 border-b border-neutral-500">
+                                <td class="p-2 border-b border-zinc-500">
                                     {{ formatDate(user.updated_at) }}
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <span class="p-2 bg-neutral-600"> Browse all users </span>
+                    <span class="p-2 bg-zinc-600"> Browse all users </span>
                 </div>
             </div>
 
