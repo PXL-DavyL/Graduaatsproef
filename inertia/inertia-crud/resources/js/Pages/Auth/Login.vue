@@ -74,11 +74,13 @@
 </template>
 
 <script setup>
+import { Head, Link, useForm } from "@inertiajs/vue3";
+import { toast } from 'vue3-toastify';
+
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import InputCheck from "@/Components/InputCheck.vue";
 import InputButton from "@/Components/InputButton.vue";
 import InputText from "@/Components/InputText.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
 
 defineProps({
     canResetPassword: {
@@ -101,6 +103,14 @@ const form = useForm({
 const submit = () => {
     form.post(route("login"), {
         onFinish: () => form.reset("password"),
+        onSuccess: () => {
+            toast.info("You have logged in. Welcome to the blog!");
+        },
+        onError: (err) => {
+            for(const error in err) {
+                toast.error(err[error]);
+            }
+        },
     });
 };
 </script>

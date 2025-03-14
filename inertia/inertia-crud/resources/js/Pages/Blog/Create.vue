@@ -39,6 +39,7 @@ import InputText from "@/Components/InputText.vue";
 import InputTextArea from "@/Components/InputTextArea.vue";
 import Layout from "@/Layouts/Layout.vue";
 import { useForm } from "@inertiajs/vue3";
+import { toast } from 'vue3-toastify';
 
 const form = useForm({
     title: "",
@@ -47,7 +48,15 @@ const form = useForm({
 
 const submit = () => {
     form.post(route("blog.store"), {
-        onFinish: () => form.reset(),
+        onFinish: () => form.reset(),        
+        onSuccess: () => {
+            toast.success("You have successfully created a blog.");
+        },
+        onError: (err) => {
+            for(const error in err) {
+                toast.error(err[error]);
+            }
+        },
     });
 };
 </script>

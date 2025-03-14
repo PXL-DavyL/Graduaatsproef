@@ -3,6 +3,7 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputButton from '@/Components/InputButton.vue';
 import InputText from '@/Components/InputText.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import { toast } from 'vue3-toastify';
 
 const props = defineProps({
     email: {
@@ -25,6 +26,14 @@ const form = useForm({
 const submit = () => {
     form.post(route('password.store'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
+        onSuccess: () => {
+            toast.warning("Your password has been reset.");
+        },
+        onError: (err) => {
+            for(const error in err) {
+                toast.error(err[error]);
+            }
+        },
     });
 };
 </script>

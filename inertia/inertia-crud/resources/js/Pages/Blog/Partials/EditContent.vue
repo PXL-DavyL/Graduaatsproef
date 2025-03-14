@@ -18,6 +18,7 @@
             id="title"
             v-model="form.title"
             class="w-full"
+            :error="form.errors.title"
         />
 
         <InputTextArea
@@ -25,6 +26,7 @@
             id="content"
             v-model="form.content"
             class="w-full"
+            :error="form.errors.content"
         />
 
         <div class="flex justify-between">

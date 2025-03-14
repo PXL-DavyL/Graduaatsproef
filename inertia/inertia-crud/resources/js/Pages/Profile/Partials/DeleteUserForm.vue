@@ -4,6 +4,7 @@ import InputText from '@/Components/InputText.vue';
 import Modal from '@/Components/Modal.vue';
 import { useForm } from '@inertiajs/vue3';
 import { nextTick, ref } from 'vue';
+import { toast } from 'vue3-toastify';
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref(null);
@@ -21,8 +22,16 @@ const confirmUserDeletion = () => {
 const deleteUser = () => {
     form.delete(route('profile.destroy'), {
         preserveScroll: true,
-        onSuccess: () => closeModal(),
-        onError: () => passwordInput.value.focus(),
+        onSuccess: () => {
+            closeModal();
+            toast.success('Your account has been deleted.');
+        },
+        onError: () => {
+            passwordInput.value.focus();
+            for(const error in err) {
+                toast.error(err[error]);
+            }
+        },
         onFinish: () => form.reset(),
     });
 };
