@@ -37,6 +37,9 @@ Route::middleware('auth', 'verified', 'role:admin')->group(function () {
                 'users' => User::latest()->take(7)->get(),
                 'blogs' => Blog::latest()->take(7)->get(),
         ]);
-    })->name('admin.index');        
+    })->name('admin.index');       
+    
+    Route::resource('/admin/users', AdminUserController::class)->names('admin.users');
+
 });
 
