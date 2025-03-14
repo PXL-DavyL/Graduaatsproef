@@ -8,14 +8,18 @@
             {{ props.name }}
         </label>
         <div
-            class="bg-gray-50 border border-gray-200 rounded w-full p-2"
+            class="bg-gray-50 border border-gray-200 rounded w-full p-2 flex justify-between items-center"
             @click="showList = !showList"
         >
-            {{ placeholder.name }}
+            <span> {{ placeholder.name }}</span>
+            <IconChevron
+                class="transition-transform duration-200"
+                :class="{ 'rotate-180': showList }"
+            />
         </div>
         <div
             v-if="showList"
-            class="absolute top-16 w-full flex flex-col  bg-gray-50 border border-gray-200 shadow rounded p-2"
+            class="absolute top-16 w-full flex flex-col bg-gray-50 border border-gray-200 shadow rounded p-2"
         >
             <input
                 type="text"
@@ -39,6 +43,7 @@
 </template>
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
+import IconChevron from "./icons/IconChevron.vue";
 
 const showList = ref(false);
 
