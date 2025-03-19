@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col w-full relative">
         <div
-            class="border border-zinc-600 bg-zinc-400 text-zinc-700 focus:border-indigo-600 focus:ring-indigo-600 w-full p-2 rounded flex justify-between items-center"
+            class="border border-zinc-600 bg-zinc-400 text-zinc-700 focus:border-indigo-600 focus:ring-indigo-600 w-full p-2 rounded-md flex justify-between items-center"
             @click="showList = !showList"
         >
             <span> {{ placeholder.name }}</span>

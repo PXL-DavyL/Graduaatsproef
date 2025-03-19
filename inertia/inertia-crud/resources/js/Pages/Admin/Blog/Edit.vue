@@ -24,7 +24,7 @@
                 </span>
             </div>
 
-            <EditPoster :blog="usePage().props.blog" @update-blog-author="updateBlogAuthor" />
+            <Author :blog="usePage().props.blog" @update-blog-author="updateBlogAuthor" />
 
             <InputText
                 id="title"
@@ -58,7 +58,6 @@
                 </span>
             </div>
 
-
             <InputButton
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
@@ -66,6 +65,8 @@
                 Save Blog Post
             </InputButton>
         </form>
+
+        <Delete :blog="usePage().props.blog" class="mt-4" />
     </AdminLayout>
 </template>
 
@@ -78,7 +79,8 @@ import InputButton from "@/Components/InputButton.vue";
 import InputText from "@/Components/InputText.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import InputTextArea from "@/Components/InputTextArea.vue";
-import EditPoster from "./Partials/EditPoster.vue";
+import Author from "./Partials/Author.vue";
+import Delete from "./Partials/Delete.vue";
 
 const form = useForm({
     title: usePage().props.blog.title,

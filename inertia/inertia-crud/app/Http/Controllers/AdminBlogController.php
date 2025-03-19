@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class AdminBlogController extends Controller
@@ -32,7 +33,18 @@ class AdminBlogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|min:5',
+            'content' => 'required|min:5',
+        ]);
+        
+        $blog = Blog::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'poster_id' => Auth::id(),
+        ]);
+
+        return to_route('blog.show', $blog);
     }
 
     /**
@@ -40,7 +52,6 @@ class AdminBlogController extends Controller
      */
     public function show(Blog $blog)
     {
-
         return to_route('admin.blogs.edit', $blog->load('poster'));
     }
 
@@ -80,8 +91,19 @@ class AdminBlogController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blog $blog)
+    public function destroy(Blog $blog, Request $request)
     {
-        //
+        $request->validate([
+            'confirm_title' => 'required|string',
+        ]);
+
+        if($request->confirm_title == $blog->title) {
+            $blog->delete();
+        }
+        else {
+            return back()->withErrors(['confirm_title' => 'Title does not match.']);
+        }
+
+        return to_route('admin.blogs.index');
     }
 }
