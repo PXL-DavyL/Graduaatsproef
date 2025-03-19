@@ -53,11 +53,11 @@
             <div v-if="showComments" class="flex flex-col gap-2 p-2 bg-gray-100 rounded">
                 <h1 class="text-xl">Comments</h1>
                 <div
-                    v-for="comment in comments"
+                    v-for="comment in blog.comments"
                     :key="comment.id"
                     class="flex flex-col gap-2 bg-white border border-gray-50 p-2 rounded"
                 >
-                    <span>Comment by {{ comment.user.name }} on {{ formatDate(comment.created_at) }}</span>
+                    <span>Comment by {{ comment.poster.name }} on {{ formatDate(comment.created_at) }}</span>
                     <span>{{ comment.content }}</span>
                 </div>
             </div>
@@ -111,4 +111,5 @@ const comments = [
 ]
 
 const blog = usePage().props.blog;
+console.log(blog);
 </script>

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Blog;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\BlogComment;
 
 class DatabaseSeeder extends Seeder
 {
@@ -37,5 +38,13 @@ class DatabaseSeeder extends Seeder
 
         // Create blogs
         Blog::factory(25)->create(); 
+
+        // Create blog comments
+        Blog::all()->each(function ($blog) {
+            BlogComment::factory(rand(5, 10))->create([
+                'blog_id' => $blog->id,
+                'poster_id' => User::inRandomOrder()->first()->id,
+            ]);
+        });
     }
 }
