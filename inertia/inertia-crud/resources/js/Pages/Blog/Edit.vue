@@ -10,8 +10,8 @@
 </template>
 <script setup>
 import Layout from "@/Layouts/Layout.vue";
-import EditContent from "./Partials/EditContent.vue";
-import DeleteBlog from "./Partials/DeleteBlog.vue";
+import EditContent from "./EditPartials/EditContent.vue";
+import DeleteBlog from "./EditPartials/DeleteBlog.vue";
 import { usePage } from "@inertiajs/vue3";
 console.log(usePage().props.auth);
 </script>

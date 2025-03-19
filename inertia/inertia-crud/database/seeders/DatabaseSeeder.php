@@ -41,9 +41,9 @@ class DatabaseSeeder extends Seeder
 
         // Create blog comments
         Blog::all()->each(function ($blog) {
-            BlogComment::factory(rand(5, 10))->create([
+            BlogComment::factory(rand(5, 25))->create([
                 'blog_id' => $blog->id,
-                'poster_id' => User::inRandomOrder()->first()->id,
+                'poster_id' => User::inRandomOrder()->first(),
             ]);
         });
     }

@@ -54,7 +54,8 @@ class BlogController extends Controller
     public function show(Blog $blog)
     {
         return Inertia::render('Blog/Show', [
-            'blog' => $blog->load('poster', 'comments', 'comments.poster'),
+            'blog' => $blog->load('poster'),
+            'comments' => $blog->comments()->with('poster')->orderBy('created_at', 'desc')->paginate(10),
         ]);
     }
 

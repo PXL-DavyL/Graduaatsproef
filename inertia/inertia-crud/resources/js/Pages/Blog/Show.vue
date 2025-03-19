@@ -17,7 +17,10 @@
             <div class="flex gap-2 w-full">
                 <InputButton @click="showComments = !showComments">
                     Comments
-                    <IconChevron class="transform transition duration-300" :class="{ 'rotate-180': showComments }" />
+                    <IconChevron
+                        class="transform transition duration-300"
+                        :class="{ 'rotate-180': showComments }"
+                    />
                 </InputButton>
                 <div class="flex gap-2">
                     <InputButton
@@ -50,17 +53,8 @@
                 </div>
             </div>
 
-            <div v-if="showComments" class="flex flex-col gap-2 p-2 bg-gray-100 rounded">
-                <h1 class="text-xl">Comments</h1>
-                <div
-                    v-for="comment in blog.comments"
-                    :key="comment.id"
-                    class="flex flex-col gap-2 bg-white border border-gray-50 p-2 rounded"
-                >
-                    <span>Comment by {{ comment.poster.name }} on {{ formatDate(comment.created_at) }}</span>
-                    <span>{{ comment.content }}</span>
-                </div>
-            </div>
+            <ShowComments :comments="comments" :show="showComments" @refresh-comments="refreshComments" />
+            <AddComment @submit-comment="refreshComments" />
         </div>
     </Layout>
 </template>
@@ -73,6 +67,9 @@ import Layout from "@/Layouts/Layout.vue";
 import InputButton from "@/Components/InputButton.vue";
 import InputButtonLink from "@/Components/InputButtonLink.vue";
 import IconChevron from "@/Components/icons/IconChevron.vue";
+
+import ShowComments from "./ShowPartials/ShowComments.vue";
+import AddComment from "./ShowPartials/AddComment.vue";
 
 const showComments = ref(true);
 const reactions = [
@@ -89,27 +86,10 @@ const reactions = [
         count: 2,
     },
 ];
-const comments = [
-    {
-        id: 1,
-        user: {
-            id: 1,
-            name: "John Doe",
-        },
-        content: "This is a comment",
-        created_at: "2021-09-01 12:00:00",
-    },
-    {
-        id: 2,
-        user: {
-            id: 2,
-            name: "Jane Doe",
-        },
-        content: "This is another comment",
-        created_at: "2021-09-01 12:00:00",
-    }
-]
 
 const blog = usePage().props.blog;
-console.log(blog);
+const comments = ref(usePage().props.comments);
+const refreshComments = () => {
+    comments.value = usePage().props.comments;
+};
 </script>

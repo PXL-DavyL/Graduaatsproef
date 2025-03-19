@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminPermissionController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\BlogCommentController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use App\Models\Blog;
@@ -31,6 +32,9 @@ Route::middleware('auth', 'verified')->group(function () {
 // Blog
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('blog', BlogController::class, ['except' => ['index', 'show']]);
+
+    Route::post('/blog/{blog}/comment', [BlogCommentController::class, 'store'])->name('blog.comment.add');
+    Route::delete('/blog/comment/{comment}', [BlogCommentController::class, 'delete'])->name('blog.comment.delete');
 });
 Route::resource('blog', BlogController::class, ['only' => ['index', 'show']]);
 
