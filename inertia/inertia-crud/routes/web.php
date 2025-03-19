@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminPermissionController;
 use App\Http\Controllers\BlogController;
@@ -35,6 +36,7 @@ Route::resource('blog', BlogController::class, ['only' => ['index', 'show']]);
 
 // Admin
 Route::middleware('auth', 'verified', 'role:admin')->group(function () {
+    // Index page
     Route::get('/admin', function () {
         return Inertia::render('Admin/Dashboard', [
                 'users' => User::latest()->take(7)->get(),
@@ -42,12 +44,13 @@ Route::middleware('auth', 'verified', 'role:admin')->group(function () {
         ]);
     })->name('admin.index');       
 
-
+    // Permission routes
     Route::get('/admin/get-permissions', [AdminPermissionController::class, 'index'])->name('admin.permissions');
     Route::post('/admin/users/{user}/permission', [AdminPermissionController::class, 'update'])->name('admin.users.toggle_permission');
     Route::post('/admin/users/{user}/admin', [AdminPermissionController::class, 'toggle_admin'])->name('admin.users.toggle_admin');
 
+    // Resource routes (blogs/users)
     Route::resource('/admin/users', AdminUserController::class)->names('admin.users');
-
+    Route::resource('/admin/blogs', AdminBlogController::class)->names('admin.blogs');
 });
 

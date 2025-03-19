@@ -3,7 +3,6 @@
         <div
             class="flex flex-col gap-2 justify-center items-center h-full w-full"
         >
-            <EditPoster v-if="hasRole('admin')" />
             <EditContent />
             <DeleteBlog />
         </div>
@@ -11,10 +10,8 @@
 </template>
 <script setup>
 import Layout from "@/Layouts/Layout.vue";
-import EditPoster from "./Partials/EditPoster.vue";
 import EditContent from "./Partials/EditContent.vue";
 import DeleteBlog from "./Partials/DeleteBlog.vue";
-import { hasRole } from "@/Composables/permissions.js";
 import { usePage } from "@inertiajs/vue3";
 console.log(usePage().props.auth);
 </script>

@@ -80,28 +80,17 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        if(!Auth::user()->hasRole('admin')) {
-            if(Auth::id() != $blog->poster_id) {
-                return to_route('home')->withErrors(['blog_author_error' => 'You are not the author of this blog.']);
-            }
+        if(Auth::id() != $blog->poster_id) {
+            return to_route('home')->withErrors(['blog_author_error' => 'You are not the author of this blog.']);
         }
-        
+
         $request->validate([
             'title' => 'required|min:5',
-            'content' => 'required|min:5',
-            'author_id' => 'nullable',
+            'content' => 'required|min:5'
         ]);
 
         $blog->title = $request->title;
         $blog->content = $request->content;
-
-        // Only admins can change authors.
-        if($request->author != null) {
-            if(Auth::user()->hasRole('admin')) {
-                $blog->poster_id = $request->author['id'];
-            }
-            else return back()->withErrors(['author' => 'Only admins can change authors.']);
-        }
 
         $blog->save();
 

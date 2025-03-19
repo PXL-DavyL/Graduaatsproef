@@ -4,6 +4,7 @@
             v-if="props.name.length > 1"
             :for="props.id"
             class="block text-sm font-medium text-gray-700"
+            :class="{'text-zinc-300': props.darkmode}"
         >
             {{ props.name }}
         </label>
@@ -14,6 +15,7 @@
             :autofocus="props.autofocus"
             :placeholder="props.placeholder"
             class="rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 w-full min-h-96 resize-none"
+            :class="{ 'border-zinc-600 bg-zinc-400 text-zinc-700 focus:border-indigo-600 focus:ring-indigo-600': props.darkmode }"
             v-model="model"
         />
         
@@ -53,6 +55,10 @@ const props = defineProps({
         type: String,
         required: false,
     },
+    darkmode: {
+        type: Boolean,
+        default: false,
+    }
 });
 
 const model = defineModel({

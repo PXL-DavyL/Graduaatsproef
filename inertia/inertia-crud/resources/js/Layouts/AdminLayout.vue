@@ -17,9 +17,12 @@
                         ><IconUser class="h-6 w-6" /> Users</span
                     ></Link
                 >
-                <span class="flex w-full gap-4"
-                    ><IconBlog class="h-6 w-6" /> Blogs</span
-                >
+
+                <Link :href="route('admin.blogs.index')">
+                    <span class="flex w-full gap-4"
+                        ><IconBlog class="h-6 w-6" /> Blogs
+                    </span>
+                </Link>
             </div>
             <div class="mt-8">
                 <Link :href="route('home')"
