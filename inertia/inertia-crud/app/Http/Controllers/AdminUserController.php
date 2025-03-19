@@ -25,7 +25,6 @@ class AdminUserController extends Controller
      */
     public function create()
     {
-        
         return Inertia::render('Admin/User/Create');
     }
 
@@ -34,7 +33,20 @@ class AdminUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'password_confirmation' => 'required|required_with:password|same:password',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+        
+        return to_route('admin.users.edit', $user);
     }
 
     /**
@@ -42,7 +54,6 @@ class AdminUserController extends Controller
      */
     public function show(User $user)
     {
-        //
         return to_route('admin.users.edit', $user);
     }
 
