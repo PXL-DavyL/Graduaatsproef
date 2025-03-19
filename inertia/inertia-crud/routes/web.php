@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AdminPermissionController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
 
 // Authentication
 require __DIR__.'/auth.php';
@@ -39,7 +41,12 @@ Route::middleware('auth', 'verified', 'role:admin')->group(function () {
                 'blogs' => Blog::with('poster')->take(7)->get(),
         ]);
     })->name('admin.index');       
-    
+
+
+    Route::get('/admin/get-permissions', [AdminPermissionController::class, 'index'])->name('admin.permissions');
+    Route::post('/admin/users/{user}/permission', [AdminPermissionController::class, 'update'])->name('admin.users.toggle_permission');
+    Route::post('/admin/users/{user}/admin', [AdminPermissionController::class, 'toggle_admin'])->name('admin.users.toggle_admin');
+
     Route::resource('/admin/users', AdminUserController::class)->names('admin.users');
 
 });

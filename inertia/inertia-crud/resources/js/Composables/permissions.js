@@ -2,6 +2,9 @@
 
 import { usePage } from "@inertiajs/vue3";
 
+/*
+    This function will check if the AUTHENTICATED user has the role passed as parameter.
+*/
 export const hasRole = (check_role) => {
     if(usePage().props.auth === undefined || usePage().props.auth === null){
         return false;
@@ -13,5 +16,16 @@ export const hasRole = (check_role) => {
         }
     }
     
+    return false;
+};
+
+export const doesUserHaveRole = (user_object, check_role) => {
+
+    for(const role of user_object.roles){
+        if(role.name === check_role){
+            return true;
+        }
+    }
+
     return false;
 };

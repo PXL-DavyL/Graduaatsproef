@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Role;
 
 class AdminUserController extends Controller
 {
@@ -62,8 +63,13 @@ class AdminUserController extends Controller
      */
     public function edit(User $user)
     {
+        $permissions = $user->permissions->pluck('name');
+        if($user->hasRole('admin')) {
+            $permissions = Role::findByName('admin')->permissions->pluck('name');
+        }
         return Inertia::render('Admin/User/Edit', [
             'user' => $user,
+            'user_permissions' => $permissions,
         ]);
     }
 

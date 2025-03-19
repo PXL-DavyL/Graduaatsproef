@@ -78,10 +78,11 @@
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
             >
-                Save
+                Save User
             </InputButton>
         </form>
 
+        <Permissions class="mt-4"/>
         <Delete :user="usePage().props.user" class="mt-4" />
     </AdminLayout>
 </template>
@@ -94,6 +95,7 @@ import InputButton from "@/Components/InputButton.vue";
 import InputText from "@/Components/InputText.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import Delete from "./Partials/Delete.vue";
+import Permissions from "./Partials/Permissions.vue";
 
 const form = useForm({
     name: usePage().props.user.name,
