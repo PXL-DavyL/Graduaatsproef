@@ -15,12 +15,8 @@
                     <thead>
                         <tr class="bg-zinc-600 text-white">
                             <th class="p-2 border-b border-zinc-500">ID</th>
-                            <th class="p-2 border-b border-zinc-500">
-                                Name
-                            </th>
-                            <th class="p-2 border-b border-zinc-500">
-                                Email
-                            </th>
+                            <th class="p-2 border-b border-zinc-500">Name</th>
+                            <th class="p-2 border-b border-zinc-500">Email</th>
                             <th class="p-2 border-b border-zinc-500">
                                 Created At
                             </th>
@@ -48,7 +44,11 @@
                         </tr>
                     </tbody>
                 </table>
-                <span class="p-2 bg-zinc-600"> Browse all users </span>
+                <span class="p-2 bg-zinc-600">
+                    <Link :href="route('admin.users.index')" class="hover:underline">
+                        Browse all users
+                    </Link>
+                </span>
             </div>
 
             <div class="flex flex-col border border-zinc-600 rounded">
@@ -60,9 +60,7 @@
                             <th class="p-2 border-b border-zinc-500">
                                 Poster ID
                             </th>
-                            <th class="p-2 border-b border-zinc-500">
-                                Title
-                            </th>
+                            <th class="p-2 border-b border-zinc-500">Title</th>
                             <th class="p-2 border-b border-zinc-500">
                                 Created At
                             </th>
@@ -75,7 +73,8 @@
                         <tr
                             v-for="blog in usePage().props.blogs"
                             :key="blog.id"
-                            class="odd:bg-zinc-500 even:bg-zinc-400"
+                            class="odd:bg-zinc-500 even:bg-zinc-400 hover:text-zinc-800 hover:bg-zinc-300 cursor-pointer"
+                            @click="onClickBlogRow(blog)"
                         >
                             <td class="p-2 border-b border-zinc-500">
                                 {{ blog.id }}
@@ -96,7 +95,9 @@
                     </tbody>
                 </table>
                 <span class="p-2 bg-zinc-600">
-                    Browse all blogs
+                    <Link :href="route('admin.blogs.index')" class="hover:underline">
+                        Browse all blogs
+                    </Link>
                 </span>
             </div>
         </div>
@@ -104,10 +105,13 @@
 </template>
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { usePage } from "@inertiajs/vue3";
+import { usePage, Link } from "@inertiajs/vue3";
 import { formatDate } from "@/Composables/dates";
 
 const onClickUserRow = (user) => {
-    window.location.href = route('admin.users.edit', user);
-}
+    window.location.href = route("admin.users.edit", user);
+};
+const onClickBlogRow = (blog) => {
+    window.location.href = route("admin.blogs.edit", blog);
+};
 </script>
