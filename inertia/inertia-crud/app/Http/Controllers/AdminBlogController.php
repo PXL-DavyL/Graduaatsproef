@@ -16,7 +16,7 @@ class AdminBlogController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Blog/List', [
-            'blogs' => Blog::with('poster')->latest()->paginate(10),
+            'blogs' => Blog::with('poster', 'comments')->latest()->paginate(10),
         ]);
     }
 
@@ -52,7 +52,7 @@ class AdminBlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        return to_route('admin.blogs.edit', $blog->load('poster'));
+        return to_route('admin.blogs.edit', $blog->load('poster', 'comments'));
     }
 
     /**
@@ -61,7 +61,7 @@ class AdminBlogController extends Controller
     public function edit(Blog $blog)
     {
         return Inertia::render('Admin/Blog/Edit', [
-            'blog' => $blog->load('poster'),
+            'blog' => $blog->load('poster', 'comments'),
             'users' => User::all()
         ]);
     }

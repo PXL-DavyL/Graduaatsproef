@@ -61,6 +61,8 @@
                                 Poster ID
                             </th>
                             <th class="p-2 border-b border-zinc-500">Title</th>
+                            <th class="p-2 border-b border-zinc-500">Views</th>
+                            <th class="p-2 border-b border-zinc-500">Comments</th>
                             <th class="p-2 border-b border-zinc-500">
                                 Created At
                             </th>
@@ -84,6 +86,12 @@
                             </td>
                             <td class="p-2 border-b border-zinc-500">
                                 {{ blog.title }}
+                            </td>
+                            <td class="p-2 border-b border-zinc-500">
+                                {{ blog.views }}
+                            </td>
+                            <td class="p-2 border-b border-zinc-500">
+                                {{ blog.comments.length }}
                             </td>
                             <td class="p-2 border-b border-zinc-500">
                                 {{ formatDate(blog.created_at) }}

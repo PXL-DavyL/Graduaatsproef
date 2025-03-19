@@ -58,6 +58,29 @@
                 </span>
             </div>
 
+            <div class="flex flex-col gap-1">
+                <span class="block text-sm font-medium text-zinc-300">
+                    Views
+                </span>
+                <span
+                    class="border border-zinc-700 bg-zinc-600 text-zinc-400 p-2 rounded-md w-full"
+                >
+                    {{ usePage().props.blog.views }}
+                </span>
+            </div>
+
+
+            <div class="flex flex-col gap-1">
+                <span class="block text-sm font-medium text-zinc-300">
+                    Comments
+                </span>
+                <span
+                    class="border border-zinc-700 bg-zinc-600 text-zinc-400 p-2 rounded-md w-full"
+                >
+                    {{ usePage().props.blog.comments }}
+                </span>
+            </div>
+
             <InputButton
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
