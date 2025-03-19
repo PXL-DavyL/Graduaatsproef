@@ -9,7 +9,7 @@
 
             <span v-html="blog.content"></span>
 
-            <div v-if="usePage().props.auth.user.id == blog.poster.id">
+            <div v-if="usePage().props.auth.user !== null && usePage().props.auth.user.id == blog.poster.id">
                 <InputButtonLink :href="route('blog.edit', blog.id)" type="warning" method="get">
                     Edit
                 </InputButtonLink>
