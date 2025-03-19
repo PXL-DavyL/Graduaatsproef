@@ -1,6 +1,5 @@
 <template>
     <AdminLayout title="Edit Blog Post">
-
         <form @submit.prevent="editBlog" class="flex flex-col gap-4">
             <div class="flex flex-col gap-1">
                 <span class="block text-sm font-medium text-zinc-300">
@@ -24,7 +23,10 @@
                 </span>
             </div>
 
-            <Author :blog="usePage().props.blog" @update-blog-author="updateBlogAuthor" />
+            <Author
+                :blog="usePage().props.blog"
+                @update-blog-author="updateBlogAuthor"
+            />
 
             <InputText
                 id="title"
@@ -45,7 +47,6 @@
                 :error="form.errors.content"
                 :darkmode="true"
             ></InputTextArea>
-
 
             <div class="flex flex-col gap-1">
                 <span class="block text-sm font-medium text-zinc-300">
@@ -69,16 +70,18 @@
                 </span>
             </div>
 
-
             <div class="flex flex-col gap-1">
                 <span class="block text-sm font-medium text-zinc-300">
                     Comments
                 </span>
-                <span
+                <div
                     class="border border-zinc-700 bg-zinc-600 text-zinc-400 p-2 rounded-md w-full"
                 >
-                    {{ usePage().props.blog.comments }}
-                </span>
+                    <div class="flex justify-between items-center">
+                        <span> {{ usePage().props.blog.comments.length }}</span>
+                        <InputButton type="primary">Manage comments</InputButton>
+                    </div>
+                </div>
             </div>
 
             <InputButton
