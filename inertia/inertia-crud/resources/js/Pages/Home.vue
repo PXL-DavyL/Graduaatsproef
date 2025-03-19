@@ -18,17 +18,25 @@
                     {{ article.title }}
 
                     <div class="w-full flex justify-between items-center">
-                        <div class="flex gap-1 items-center text-gray-400">
-                            <IconView class="h-4 w-4"/>
-                            <span class="text-sm">
-
-                                {{ article.views }}
-                            </span>
+                        <div class="flex gap-4">
+                            <div class="flex gap-1 items-center text-gray-400">
+                                <IconView class="h-4 w-4" />
+                                <span class="text-sm">
+                                    {{ article.views }}
+                                </span>
+                            </div>
+                            <div class="flex gap-1 items-center text-gray-400">
+                                <IconComments class="h-4 w-4" />
+                                <span class="text-sm">{{
+                                    article.comments.length
+                                }}</span>
+                            </div>
                         </div>
                         <InputButtonLink
                             :href="route('blog.show', article.id, true)"
-                            class="self-end"
-                            >Read more</InputButtonLink
+                            class="self-end">
+                            Read more    
+                        </InputButtonLink
                         >
                     </div>
                 </article>
@@ -49,6 +57,7 @@ import Layout from "@/Layouts/Layout.vue";
 import Pagination from "@/Components/Pagination.vue";
 import InputButtonLink from "@/Components/InputButtonLink.vue";
 import IconView from "@/Components/icons/IconView.vue";
+import IconComments from "@/Components/icons/IconComments.vue";
 
 const articles = usePage().props.blogs.data;
 

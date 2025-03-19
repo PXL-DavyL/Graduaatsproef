@@ -18,7 +18,7 @@ require __DIR__.'/auth.php';
 // Index page
 Route::get('/', function () {
     return Inertia::render('Home', [
-        'blogs' => Blog::with('poster')->paginate(12),
+        'blogs' => Blog::with('poster', 'comments')->paginate(12),
     ]);
 })->name('home');
 
