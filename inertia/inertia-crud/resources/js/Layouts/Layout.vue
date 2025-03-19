@@ -2,7 +2,9 @@
     <Head :title="props.title" />
 
     <div class="mt-4 container mx-auto max-h-screen flex flex-col gap-4">
-        <header class="w-full p-4 bg-gray-50 flex items-center justify-between rounded shadow-md">
+        <header
+            class="w-full p-4 bg-gray-50 flex items-center justify-between rounded shadow-md"
+        >
             <div class="min-h-8 min-w-8">
                 <ApplicationLogo class="text-red-600" />
             </div>
@@ -21,7 +23,7 @@
                         class="flex items-center gap-1 text-sm p-2 rounded-md hover:cursor-pointer hover:bg-gray-100 transition"
                         @click="showUserDropdown = !showUserDropdown"
                     >
-                        <IconAccount class="h-4 w-4 text-gray-700"/>
+                        <IconAccount class="h-4 w-4 text-gray-700" />
                         {{ user.name }}
                         <IconChevron
                             class="transition-transform duration-200"
@@ -50,6 +52,14 @@
                                 Profile
                             </Link>
                             <Link
+                                v-if="hasRole('admin')"
+                                :href="route('admin.index')"
+                                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                                <IconHome class="h-4 w-4" />
+                                Admin
+                            </Link>
+                            <Link
                                 :href="route('logout')"
                                 method="post"
                                 as="button"
@@ -74,8 +84,10 @@
             <slot />
         </main>
 
-        <footer class="w-full flex justify-between p-4 bg-gray-50 rounded shadow-md">
-            <span>Laravel v{{ usePage().props.laravelVersion }}</span> 
+        <footer
+            class="w-full flex justify-between p-4 bg-gray-50 rounded shadow-md"
+        >
+            <span>Laravel v{{ usePage().props.laravelVersion }}</span>
             <span>PHP v{{ usePage().props.phpVersion }}</span>
         </footer>
     </div>
@@ -84,12 +96,14 @@
 <script setup>
 import { Head, Link, usePage } from "@inertiajs/vue3";
 import { ref, onBeforeMount, onMounted, onUnmounted } from "vue";
+import { hasRole } from "@/Composables/permissions";
 
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import IconChevron from "@/Components/icons/IconChevron.vue";
 import IconProfile from "@/Components/icons/IconProfile.vue";
 import IconLogout from "@/Components/icons/IconLogout.vue";
 import IconAccount from "@/Components/icons/IconAccount.vue";
+import IconHome from "@/Components/icons/Admin/IconHome.vue";
 
 const props = defineProps({
     title: {

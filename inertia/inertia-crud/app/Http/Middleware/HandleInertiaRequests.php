@@ -35,7 +35,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user()->load('roles'),
             ],
             'canLogin' => Route::has('login'),
             'laravelVersion' => Application::VERSION,
