@@ -4,6 +4,7 @@
             v-if="props.name.length > 1"
             :for="props.id"
             class="block text-sm font-medium text-gray-700"
+            :class="{'text-zinc-300': props.darkmode}"
         >
             {{ props.name }}
         </label>

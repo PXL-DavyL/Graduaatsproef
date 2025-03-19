@@ -2,7 +2,7 @@
     <AdminLayout title="Edit User">
         <form @submit.prevent="editUser" class="flex flex-col gap-4">
             <div class="flex flex-col gap-1">
-                <span class="block text-sm font-medium text-gray-700">
+                <span class="block text-sm font-medium text-zinc-300">
                     User ID:
                 </span>
                 <span
@@ -54,7 +54,7 @@
             />
 
             <div class="flex flex-col gap-1">
-                <span class="block text-sm font-medium text-gray-700">
+                <span class="block text-sm font-medium text-zinc-300">
                     Registered at:
                 </span>
                 <span
@@ -64,7 +64,7 @@
                 </span>
             </div>
             <div class="flex flex-col gap-1">
-                <span class="block text-sm font-medium text-gray-700">
+                <span class="block text-sm font-medium text-zinc-300">
                     Last update at:
                 </span>
                 <span
@@ -81,6 +81,8 @@
                 Save
             </InputButton>
         </form>
+
+        <Delete :user="usePage().props.user" class="mt-4" />
     </AdminLayout>
 </template>
 <script setup>
@@ -91,6 +93,7 @@ import { toast } from "vue3-toastify";
 import InputButton from "@/Components/InputButton.vue";
 import InputText from "@/Components/InputText.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+import Delete from "./Partials/Delete.vue";
 
 const form = useForm({
     name: usePage().props.user.name,
@@ -103,7 +106,7 @@ const editUser = () => {
     form.patch(route("admin.users.update", usePage().props.user.id), {
         onFinish: () => form.reset(),
         onSuccess: () => {
-            toast.info("User updated successfully.");
+            toast.success("User updated successfully.");
             form.clearErrors();
             form.password = "";
             form.password_confirmation = "";
