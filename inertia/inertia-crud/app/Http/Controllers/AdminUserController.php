@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -49,8 +51,6 @@ class AdminUserController extends Controller
      */
     public function edit(User $user)
     {
-        //
-
         return Inertia::render('Admin/User/Edit', [
             'user' => $user,
         ]);
@@ -78,8 +78,19 @@ class AdminUserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'confirm_password' => 'required',
+        ]);
+
+        $adminUser = Auth::user();
+        if(!Hash::check($request->confirm_password, $adminUser->password)) {
+            return back()->withErrors(['confirm_password' => 'Invalid password']);
+        }
+
+        $user->delete();
+
+        return to_route('admin.users.index');
     }
 }
