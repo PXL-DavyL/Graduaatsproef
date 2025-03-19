@@ -88,6 +88,7 @@ const reactions = [
 ];
 
 const blog = usePage().props.blog;
+console.log(blog);
 const comments = ref(usePage().props.comments);
 const refreshComments = () => {
     comments.value = usePage().props.comments;

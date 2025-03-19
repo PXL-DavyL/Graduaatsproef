@@ -17,11 +17,20 @@
                     </div>
                     {{ article.title }}
 
-                    <InputButtonLink
-                        :href="route('blog.show', article.id, true)"
-                        class="self-end"
-                        >Read more</InputButtonLink
-                    >
+                    <div class="w-full flex justify-between items-center">
+                        <div class="flex gap-1 items-center text-gray-400">
+                            <IconView class="h-4 w-4"/>
+                            <span class="text-sm">
+
+                                {{ article.views }}
+                            </span>
+                        </div>
+                        <InputButtonLink
+                            :href="route('blog.show', article.id, true)"
+                            class="self-end"
+                            >Read more</InputButtonLink
+                        >
+                    </div>
                 </article>
             </section>
 
@@ -39,6 +48,7 @@ import { formatDate } from "@/Composables/dates.js";
 import Layout from "@/Layouts/Layout.vue";
 import Pagination from "@/Components/Pagination.vue";
 import InputButtonLink from "@/Components/InputButtonLink.vue";
+import IconView from "@/Components/icons/IconView.vue";
 
 const articles = usePage().props.blogs.data;
 

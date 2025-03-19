@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('poster_id')->constrained('users')->onDelete('cascade');
             $table->text('title');
             $table->text('content');
+            $table->tinyInteger('views')->default(0);
             $table->timestamps();
         });
     }
