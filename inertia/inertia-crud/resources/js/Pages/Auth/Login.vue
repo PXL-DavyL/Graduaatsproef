@@ -6,7 +6,7 @@
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit">
+        <form>
             <div>
                 <InputText
                     id="email"
@@ -55,6 +55,7 @@
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
+                    @click="submit"
                 >
                     Log in
                 </InputButton>

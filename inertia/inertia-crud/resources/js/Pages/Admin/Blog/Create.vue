@@ -1,6 +1,6 @@
 <template>
     <AdminLayout title="Create Blog Post">
-        <form @submit.prevent="createBlogPost" class="flex flex-col gap-4">
+        <form class="flex flex-col gap-4">
             <InputText
                 id="title"
                 name="Title"
@@ -24,7 +24,7 @@
                 :darkmode="true"
             />
 
-            <InputButton type="primary" class="w-full" :disabled="form.processing">
+            <InputButton type="primary" class="w-full" :disabled="form.processing" @click="createBlogPost">
                 Create Blog Post
             </InputButton>
         </form>

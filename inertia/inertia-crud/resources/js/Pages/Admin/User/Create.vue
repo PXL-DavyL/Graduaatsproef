@@ -1,6 +1,6 @@
 <template>
     <AdminLayout title="Create User">
-        <form @submit.prevent="createUser" class="flex flex-col gap-4">
+        <form class="flex flex-col gap-4">
             <InputText
                 id="name"
                 name="Name"
@@ -42,7 +42,7 @@
                 :darkmode="true"
             />
 
-            <InputButton type="primary" class="w-full" :disabled="form.processing">
+            <InputButton type="primary" class="w-full" :disabled="form.processing" @click="createUser">
                 Create User 
             </InputButton>
         </form>

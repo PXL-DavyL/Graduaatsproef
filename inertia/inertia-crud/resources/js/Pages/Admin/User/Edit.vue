@@ -1,6 +1,6 @@
 <template>
     <AdminLayout title="Edit User">
-        <form @submit.prevent="editUser" class="flex flex-col gap-4">
+        <form class="flex flex-col gap-4">
             <div class="flex flex-col gap-1">
                 <span class="block text-sm font-medium text-zinc-300">
                     User ID:
@@ -77,6 +77,7 @@
             <InputButton
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
+                @click="editUser"
             >
                 Save User
             </InputButton>

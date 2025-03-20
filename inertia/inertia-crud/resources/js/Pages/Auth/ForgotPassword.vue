@@ -46,7 +46,7 @@ const submit = () => {
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit">
+        <form>
             <div>
                 <InputText
                     id="email"
@@ -65,6 +65,7 @@ const submit = () => {
                 <InputButton
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
+                    @click="submit"
                 >
                     Email Password Reset Link
                 </InputButton>

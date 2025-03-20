@@ -1,6 +1,6 @@
 <template>
     <AdminLayout title="Edit Blog Post">
-        <form @submit.prevent="editBlog" class="flex flex-col gap-4">
+        <form class="flex flex-col gap-4">
             <div class="flex flex-col gap-1">
                 <span class="block text-sm font-medium text-zinc-300">
                     Blog ID:
@@ -107,6 +107,7 @@
             <InputButton
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
+                @click="editBlog"
             >
                 Save Blog Post
             </InputButton>

@@ -1,6 +1,6 @@
 <template>
     <Layout title="Create Blog">
-        <form @submit.prevent="submit">
+        <form>
             <InputText
                 id="title"
                 name="Desired title of your blog"
@@ -27,6 +27,7 @@
                 class="mt-4"
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
+                @click="submit"
             >
                 Create Blog
             </InputButton>

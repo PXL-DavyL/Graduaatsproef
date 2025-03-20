@@ -51,7 +51,7 @@ const updatePassword = () => {
             </p>
         </header>
 
-        <form @submit.prevent="updatePassword" class="mt-6 space-y-6">
+        <form class="mt-6 space-y-6">
             <div>
                 <InputText
                     id="current_password"
@@ -91,7 +91,7 @@ const updatePassword = () => {
             </div>
 
             <div class="flex items-center gap-4">
-                <InputButton :disabled="form.processing">Save</InputButton>
+                <InputButton :disabled="form.processing" @click="updatePassword">Save</InputButton>
 
                 <Transition
                     enter-active-class="transition ease-in-out"

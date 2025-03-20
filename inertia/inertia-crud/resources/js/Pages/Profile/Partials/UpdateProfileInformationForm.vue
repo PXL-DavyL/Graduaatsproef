@@ -47,7 +47,6 @@ const updateProfile = () => {
         </header>
 
         <form
-            @submit.prevent="updateProfile"
             class="mt-6 space-y-6"
         >
             <div>
@@ -101,7 +100,7 @@ const updateProfile = () => {
             </div>
 
             <div class="flex items-center gap-4">
-                <InputButton :disabled="form.processing">Save</InputButton>
+                <InputButton :disabled="form.processing" @click="updateProfile">Save</InputButton>
 
                 <Transition
                     enter-active-class="transition ease-in-out"

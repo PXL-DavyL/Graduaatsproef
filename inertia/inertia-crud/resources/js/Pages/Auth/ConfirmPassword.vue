@@ -33,7 +33,7 @@ const submit = () => {
             password before continuing.
         </div>
 
-        <form @submit.prevent="submit">
+        <form>
             <div>
                 <InputText
                     label="Password"
@@ -54,6 +54,7 @@ const submit = () => {
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
+                    @click="submit"
                 >
                     Confirm
                 </InputButton>

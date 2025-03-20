@@ -31,7 +31,7 @@ const submit = () => {
     <GuestLayout>
         <Head title="Register" />
 
-        <form @submit.prevent="submit">
+        <form>
             <div>
                 <InputText
                     id="name"
@@ -98,6 +98,7 @@ const submit = () => {
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
+                    @click="submit"
                 >
                     Register
                 </InputButton>

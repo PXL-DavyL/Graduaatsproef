@@ -39,11 +39,12 @@ const verificationLinkSent = computed(
             provided during registration.
         </div>
 
-        <form @submit.prevent="submit">
+        <form>
             <div class="mt-4 flex items-center justify-between">
                 <InputButton
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
+                    @click="submit"
                 >
                     Resend Verification Email
                 </InputButton>

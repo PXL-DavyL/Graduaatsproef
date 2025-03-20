@@ -42,7 +42,7 @@ const submit = () => {
     <GuestLayout>
         <Head title="Reset Password" />
 
-        <form @submit.prevent="submit">
+        <form>
             <div>
 
                 <InputText
@@ -88,6 +88,7 @@ const submit = () => {
                 <InputButton
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
+                    @click="submit"
                 >
                     Reset Password
                 </InputButton>
