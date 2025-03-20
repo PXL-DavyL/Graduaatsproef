@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Comments
     Route::post('/blog/{blog}/comment', [BlogCommentController::class, 'store'])->name('blog.comment.add');
+    Route::patch('/blog/{blog}/comment/{comment}', [BlogCommentController::class, 'update'])->name('blog.comment.update');
     Route::delete('/blog/comment/{comment}', [BlogCommentController::class, 'delete'])->name('blog.comment.delete');
 
     // Reactions

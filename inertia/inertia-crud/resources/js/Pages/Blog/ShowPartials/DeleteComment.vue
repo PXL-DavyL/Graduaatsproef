@@ -1,6 +1,11 @@
 <template>
-    <div v-if="usePage().props.auth.user !== null && props.comment.poster.id === usePage().props.auth.user.id">
-        <InputButton type="secondary" @click="deleteComment(props.comment)"
+    <div
+        v-if="
+            usePage().props.auth.user !== null &&
+            props.comment.poster.id === usePage().props.auth.user.id
+        "
+    >
+        <InputButton type="danger" @click="deleteComment(props.comment)"
             >Delete</InputButton
         >
     </div>

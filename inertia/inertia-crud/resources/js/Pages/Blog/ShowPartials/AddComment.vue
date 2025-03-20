@@ -28,6 +28,7 @@ const form = useForm({
 });
 
 const submitComment = () => {
+    
     form.post(route('blog.comment.add', usePage().props.blog.id), {
         onFinish: () => form.reset(),
         onSuccess: () => {

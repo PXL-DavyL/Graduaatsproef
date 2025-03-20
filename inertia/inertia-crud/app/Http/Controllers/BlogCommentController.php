@@ -34,4 +34,23 @@ class BlogCommentController extends Controller {
                 ['comment' => 'You do not have permission to delete this comment']);
         }
     }
+
+    public function update(Blog $blog, BlogComment $comment, Request $request) {
+
+        $request->validate([
+            'content' => 'required|string'
+        ]);
+
+        if(Auth::user()->id == $comment->poster_id) {
+            $comment->content = $request->content;
+            $comment->save();
+
+            return to_route('blog.show', $blog);
+        }
+        else {
+            return to_route('blog.show', $comment->blog_id)->withErrors(
+                ['comment' => 'You do not have permission to update this comment']);
+        }
+
+    }
 }
