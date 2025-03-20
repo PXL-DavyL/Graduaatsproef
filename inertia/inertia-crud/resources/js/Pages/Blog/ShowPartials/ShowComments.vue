@@ -17,7 +17,7 @@
                 </div>
             </div>
 
-            <div class="flex gap-1" v-if="!editMode[index]">
+            <div class="flex gap-1 items-center" v-if="!editMode[index]">
                 <div
                     v-if="
                         usePage().props.auth.user !== null &&
