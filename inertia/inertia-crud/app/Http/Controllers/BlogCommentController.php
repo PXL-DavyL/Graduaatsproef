@@ -7,10 +7,8 @@ use App\Models\BlogComment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
 
 class BlogCommentController extends Controller {
-
 
     public function store(Blog $blog, Request $request) : RedirectResponse {
         $request->validate([

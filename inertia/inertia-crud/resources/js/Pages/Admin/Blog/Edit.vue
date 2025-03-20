@@ -79,7 +79,9 @@
                 >
                     <div class="flex justify-between items-center">
                         <span> {{ usePage().props.blog.comments.length }}</span>
-                        <InputButton type="primary">Manage comments</InputButton>
+                        <InputButtonLink type="primary" :href="route('admin.comments.show', {
+                            blog: usePage().props.blog
+                        })">Manage comments</InputButtonLink>
                     </div>
                 </div>
             </div>
@@ -93,6 +95,10 @@
         </form>
 
         <Delete :blog="usePage().props.blog" class="mt-4" />
+
+        <InputButtonLink class="mt-4 w-full" type="secondary" :href="route('admin.blogs.index')">
+            Back to blogs
+        </InputButtonLink>
     </AdminLayout>
 </template>
 
@@ -107,6 +113,7 @@ import AdminLayout from "@/Layouts/AdminLayout.vue";
 import InputTextArea from "@/Components/InputTextArea.vue";
 import Author from "./Partials/Author.vue";
 import Delete from "./Partials/Delete.vue";
+import InputButtonLink from "@/Components/InputButtonLink.vue";
 
 const form = useForm({
     title: usePage().props.blog.title,

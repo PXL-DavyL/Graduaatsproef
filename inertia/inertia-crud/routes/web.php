@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminBlogCommentController;
 use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminPermissionController;
@@ -56,5 +57,11 @@ Route::middleware('auth', 'verified', 'role:admin')->group(function () {
     // Resource routes (blogs/users)
     Route::resource('/admin/users', AdminUserController::class)->names('admin.users');
     Route::resource('/admin/blogs', AdminBlogController::class)->names('admin.blogs');
+
+    // Comments
+    Route::get('/admin/blogs/{blog}/comment/', [AdminBlogCommentController::class, 'show'])->name('admin.comments.show');
+    Route::get('/admin/blogs/{blog}/comment/{comment}/edit', [AdminBlogCommentController::class, 'edit'])->name('admin.comments.edit');
+    Route::patch('/admin/blogs/{blog}/comment/{comment}', [AdminBlogCommentController::class, 'update'])->name('admin.comments.update');
+    Route::delete('/admin/blogs/{blog}/comment/{comment}', [AdminBlogCommentController::class, 'destroy'])->name('admin.comments.destroy');
 });
 
