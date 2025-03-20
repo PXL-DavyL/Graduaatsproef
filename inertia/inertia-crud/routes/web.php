@@ -12,7 +12,6 @@ use App\Models\User;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Spatie\Permission\Models\Permission;
 
 // Authentication
 require __DIR__.'/auth.php';
@@ -34,14 +33,8 @@ Route::middleware('auth', 'verified')->group(function () {
 // Blog
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('blog', BlogController::class, ['except' => ['index', 'show']]);
-
-    // Comments
-    Route::post('/blog/{blog}/comment', [BlogCommentController::class, 'store'])->name('blog.comment.add');
-    Route::patch('/blog/{blog}/comment/{comment}', [BlogCommentController::class, 'update'])->name('blog.comment.update');
-    Route::delete('/blog/comment/{comment}', [BlogCommentController::class, 'delete'])->name('blog.comment.delete');
-
-    // Reactions
-    Route::post('/blog/{blog}/reaction', [BlogReactionController::class, 'toggle_reaction'])->name('blog.reaction.toggle');
+    Route::resource('blog.comment', BlogCommentController::class)->only(['store', 'update', 'destroy']); // Comments
+    Route::post('/blog/{blog}/reaction', [BlogReactionController::class, 'toggle_reaction'])->name('blog.reaction.toggle'); // Reactions
 });
 Route::resource('blog', BlogController::class, ['only' => ['index', 'show']]);
 
@@ -63,11 +56,5 @@ Route::middleware('auth', 'verified', 'role:admin')->group(function () {
     // Resource routes (blogs/users)
     Route::resource('/admin/users', AdminUserController::class)->names('admin.users');
     Route::resource('/admin/blogs', AdminBlogController::class)->names('admin.blogs');
-
-    // Comments
-    Route::get('/admin/blogs/{blog}/comment/', [AdminBlogCommentController::class, 'show'])->name('admin.comments.show');
-    Route::get('/admin/blogs/{blog}/comment/{comment}/edit', [AdminBlogCommentController::class, 'edit'])->name('admin.comments.edit');
-    Route::patch('/admin/blogs/{blog}/comment/{comment}', [AdminBlogCommentController::class, 'update'])->name('admin.comments.update');
-    Route::delete('/admin/blogs/{blog}/comment/{comment}', [AdminBlogCommentController::class, 'destroy'])->name('admin.comments.destroy');
+    Route::resource('/admin/blogs/{blog}/comment', AdminBlogCommentController::class)->only(['show', 'edit', 'update', 'destroy'])->names('admin.comments');
 });
-
