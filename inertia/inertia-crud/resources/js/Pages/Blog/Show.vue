@@ -24,7 +24,7 @@
                 </InputButton>
                 <div class="flex gap-2">
                     <InputButton
-                        v-for="reaction in reactions"
+                        v-for="reaction in processedReactions"
                         type="secondary"
                         :key="reaction.id"
                         class="flex gap-2"
@@ -59,7 +59,7 @@
     </Layout>
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { formatDate } from "@/Composables/dates.js";
 
@@ -72,24 +72,35 @@ import ShowComments from "./ShowPartials/ShowComments.vue";
 import AddComment from "./ShowPartials/AddComment.vue";
 
 const showComments = ref(true);
-const reactions = [
-    {
-        id: 1,
-        name: "Like",
-        icon: "👍",
-        count: 0,
-    },
-    {
-        id: 2,
-        name: "Dislike",
-        icon: "👎",
-        count: 2,
-    },
-];
+
+const processedReactions = ref([]);
+const processReactions = () => {
+    const reactionCounts = reactions.value.reduce(
+        (acc, reaction) => {
+            if (reaction.type === "upvote") {
+                acc.upvotes++;
+            } else if (reaction.type === "downvote") {
+                acc.downvotes++;
+            }
+            return acc;
+        },
+        { upvotes: 0, downvotes: 0 }
+    );
+
+    processedReactions.value = [
+        { id: "upvote", icon: "👍", count: reactionCounts.upvotes },
+        { id: "downvote", icon: "👎", count: reactionCounts.downvotes },
+    ];
+};
+
+onMounted(() => {
+    processReactions();
+});
 
 const blog = usePage().props.blog;
-console.log(blog);
+console.log(usePage().props);
 const comments = ref(usePage().props.comments);
+const reactions = ref(usePage().props.reactions);
 const refreshComments = () => {
     comments.value = usePage().props.comments;
 };

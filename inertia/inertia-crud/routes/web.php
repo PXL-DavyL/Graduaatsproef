@@ -19,7 +19,7 @@ require __DIR__.'/auth.php';
 // Index page
 Route::get('/', function () {
     return Inertia::render('Home', [
-        'blogs' => Blog::with('poster', 'comments')->paginate(12),
+        'blogs' => Blog::with('poster', 'comments', 'reactions')->paginate(12),
     ]);
 })->name('home');
 
@@ -45,7 +45,7 @@ Route::middleware('auth', 'verified', 'role:admin')->group(function () {
     Route::get('/admin', function () {
         return Inertia::render('Admin/Dashboard', [
                 'users' => User::latest()->take(7)->get(),
-                'blogs' => Blog::with('poster', 'comments')->take(7)->get(),
+                'blogs' => Blog::with('poster', 'comments', 'reactions')->take(7)->get(),
         ]);
     })->name('admin.index');       
 

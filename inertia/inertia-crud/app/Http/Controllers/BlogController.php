@@ -55,6 +55,7 @@ class BlogController extends Controller
         return Inertia::render('Blog/Show', [
             'blog' => $blog->load('poster'),
             'comments' => $blog->comments()->with('poster')->orderBy('created_at', 'desc')->paginate(10),
+            'reactions' => $blog->reactions()->with('poster')->get(),
         ]);
     }
 
