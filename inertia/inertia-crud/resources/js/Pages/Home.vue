@@ -1,14 +1,6 @@
 <template>
     <Layout title="Home">
         <div class="flex flex-col gap-3">
-            <div v-if="hasPermission('create blog')">
-                <InputButtonLink
-                    :href="route('blog.create', true)"
-                    class="bg-sky-100 text-white"
-                >
-                    Create a new blog
-                </InputButtonLink>
-            </div>
             <section
                 class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
             >
@@ -79,7 +71,6 @@ import { onBeforeMount, onMounted, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { toast } from "vue3-toastify";
 import { formatDate } from "@/Composables/dates.js";
-import { hasPermission } from "@/Composables/permissions.js";
 
 import Layout from "@/Layouts/Layout.vue";
 import Pagination from "@/Components/Pagination.vue";

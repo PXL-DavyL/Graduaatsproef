@@ -5,9 +5,24 @@
         <header
             class="w-full p-4 bg-gray-50 flex items-center justify-between rounded shadow-md"
         >
-            <div class="min-h-8 min-w-8">
-                <ApplicationLogo class="text-red-600" />
+            <div class="flex gap-2 items-center">
+                <div class="min-h-8 min-w-8">
+                    <ApplicationLogo class="text-red-600" />
+                </div>
+                <div
+                    class="w-full flex"
+                    v-if="hasPermission('create blog') || hasRole('admin')"
+                >
+
+                    <Link
+                        :href="route('blog.create', true)"
+                        class="p-1 bg-gray-100 border border-gray-200 hover:bg-gray-200 hover:border-gray-300 text-gray-500 rounded"
+                    >
+                        <IconWrite class="h-6 w-6" />
+                    </Link>
+                </div>
             </div>
+
             <div class="flex gap-2">
                 <section v-if="!user">
                     <Link
@@ -96,7 +111,9 @@
 <script setup>
 import { Head, Link, usePage } from "@inertiajs/vue3";
 import { ref, onBeforeMount, onMounted, onUnmounted } from "vue";
-import { hasRole } from "@/Composables/permissions";
+import { hasPermission, hasRole } from "@/Composables/permissions.js";
+
+import InputButtonLink from "@/Components/InputButtonLink.vue";
 
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import IconChevron from "@/Components/icons/IconChevron.vue";
@@ -104,6 +121,7 @@ import IconProfile from "@/Components/icons/IconProfile.vue";
 import IconLogout from "@/Components/icons/IconLogout.vue";
 import IconAccount from "@/Components/icons/IconAccount.vue";
 import IconHome from "@/Components/icons/Admin/IconHome.vue";
+import IconWrite from "@/Components/icons/IconWrite.vue";
 
 const props = defineProps({
     title: {
