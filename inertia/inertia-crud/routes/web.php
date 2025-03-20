@@ -34,8 +34,17 @@ Route::middleware('auth', 'verified')->group(function () {
 
 // Blog
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('blog', BlogController::class, ['except' => ['index', 'show']]);
-    Route::resource('blog.comment', BlogCommentController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('blog', BlogController::class, [
+        'except' => ['index', 'show']
+    ])->middleware([
+        'create' => 'permission:create blog',
+        'store' => 'permission:create blog',
+    ]);
+    
+    // Comments
+    Route::post('/blog/{blog}/comment', [BlogCommentController::class, 'store'])->name('blog.comment.add');
+    Route::patch('/blog/{blog}/comment/{comment}', [BlogCommentController::class, 'update'])->name('blog.comment.update');
+    Route::delete('/blog/comment/{comment}', [BlogCommentController::class, 'delete'])->name('blog.comment.delete');
 
     // Reactions
     Route::post('/blog/{blog}/reaction', [BlogReactionController::class, 'toggle_reaction'])->name('blog.reaction.toggle');
