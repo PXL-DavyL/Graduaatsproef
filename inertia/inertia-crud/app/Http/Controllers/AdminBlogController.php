@@ -16,7 +16,7 @@ class AdminBlogController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Blog/List', [
-            'blogs' => Blog::with('poster', 'comments')->latest()->paginate(10),
+            'blogs' => Blog::with('poster', 'comments', 'reactions')->latest()->paginate(10),
         ]);
     }
 
@@ -61,7 +61,7 @@ class AdminBlogController extends Controller
     public function edit(Blog $blog)
     {
         return Inertia::render('Admin/Blog/Edit', [
-            'blog' => $blog->load('poster', 'comments'),
+            'blog' => $blog->load('poster', 'comments', 'reactions'),
             'users' => User::all()
         ]);
     }

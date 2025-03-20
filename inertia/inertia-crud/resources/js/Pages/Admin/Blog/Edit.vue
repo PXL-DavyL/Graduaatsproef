@@ -86,6 +86,24 @@
                 </div>
             </div>
 
+
+            <div class="flex flex-col gap-1">
+                <span class="block text-sm font-medium text-zinc-300">
+                    Reactions
+                </span>
+                <div
+                    class="border border-zinc-700 bg-zinc-600 text-zinc-400 p-2 rounded-md w-full"
+                >
+                    <div class="flex justify-between items-center">
+                        {{ sortReactions().upvote }} upvotes
+                        {{ sortReactions().downvote }} downvotes
+                        <InputButtonLink type="primary" :href="route('admin.reactions.show', {
+                            blog: usePage().props.blog
+                        })">Manage Reactions</InputButtonLink>
+                    </div>
+                </div>
+            </div>
+
             <InputButton
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
@@ -139,4 +157,18 @@ const editBlog = () => {
         },
     });
 };
+
+const sortReactions = () => {
+    const reactions = usePage().props.blog.reactions;
+    const sortedReactions = {
+        upvote: 0,
+        downvote: 0
+    };
+
+    reactions.forEach((reaction) => {
+        sortedReactions[reaction.type]++;
+    });
+
+    return sortedReactions;
+}
 </script>

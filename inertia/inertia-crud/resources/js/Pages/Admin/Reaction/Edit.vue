@@ -1,14 +1,14 @@
 <template>
-    <AdminLayout title="Manage comments">
+    <AdminLayout title="Manage reactions">
         <form class="flex flex-col gap-4">
             <div class="flex flex-col gap-1">
                 <span class="block text-sm font-medium text-zinc-300">
-                    Comment ID:
+                    Reaction ID:
                 </span>
                 <span
                     class="border border-zinc-700 bg-zinc-600 text-zinc-400 p-2 rounded-md w-full"
                 >
-                    {{ usePage().props.comment.id }}
+                    {{ usePage().props.reaction.id }}
                 </span>
             </div>
 
@@ -19,10 +19,16 @@
                 <span
                     class="border border-zinc-700 bg-zinc-600 text-zinc-400 p-2 rounded-md w-full"
                 >
-                    {{ usePage().props.comment.poster.name }}
+                    {{ usePage().props.reaction.poster.name }}
                 </span>
             </div>
 
+            <div class="flex flex-col gap-1">
+                <span class="block text-sm font-medium text-zinc-300">
+                    Type:
+                </span>
+                <InputSelect v-model="form.type" :options="['upvote', 'downvote']"/>
+            </div>
 
             <div class="flex flex-col gap-1">
                 <span class="block text-sm font-medium text-zinc-300">
@@ -31,18 +37,9 @@
                 <span
                     class="border border-zinc-700 bg-zinc-600 text-zinc-400 p-2 rounded-md w-full"
                 >
-                    {{ formatDate(usePage().props.comment.created_at) }}
+                    {{ formatDate(usePage().props.reaction.created_at) }}
                 </span>
             </div>
-
-            <InputTextArea
-                id="content"
-                name="Content"
-                v-model="form.content"
-                required
-                :error="form.errors.content"
-                :darkmode="true"
-            ></InputTextArea>
 
             <div class="flex flex-col gap-1">
                 <span class="block text-sm font-medium text-zinc-300">
@@ -51,7 +48,7 @@
                 <span
                     class="border border-zinc-700 bg-zinc-600 text-zinc-400 p-2 rounded-md w-full"
                 >
-                    {{ formatDate(usePage().props.comment.updated_at) }}
+                    {{ formatDate(usePage().props.reaction.updated_at) }}
                 </span>
             </div>
         </form>
@@ -61,19 +58,19 @@
                 class="mt-4"
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
-                @click="editComment"
+                @click="editReaction"
             >
-                Save comment
+                Save reaction
             </InputButton>
             
-            <Delete :comment="usePage().props.comment" />
+            <Delete :reaction="usePage().props.reaction" />
 
             <InputButtonLink
-                :href="route('admin.comments.show', { blog: usePage().props.blog })"
+                :href="route('admin.reactions.show', { blog: usePage().props.blog })"
                 class="w-full"
                 type="secondary"
             >
-                Back to comments
+                Back to reactions
             </InputButtonLink>
         </div>
     </AdminLayout>
@@ -85,25 +82,25 @@ import { toast } from "vue3-toastify";
 
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 
-import InputTextArea from "@/Components/InputTextArea.vue";
 import InputButton from "@/Components/InputButton.vue";
 import InputButtonLink from "@/Components/InputButtonLink.vue";
+import InputSelect from "@/Components/InputSelect.vue";
 import Delete from "./Partials/Delete.vue";
 
 const form = useForm({
-    content: usePage().props.comment.content,
+    type: usePage().props.reaction.type,
 });
 
-const editComment = () => {
+const editReaction = () => {
     form.patch(
-        route("admin.comments.update", {
+        route("admin.reactions.update", {
             blog: usePage().props.blog.id,
-            comment: usePage().props.comment.id,
+            reaction: usePage().props.reaction.id,
         }),
         {
             onFinish: () => form.reset(),
             onSuccess: () => {
-                toast.success("Blog comment updated successfully.");
+                toast.success("Blog reaction updated successfully.");
                 form.clearErrors();
             },
             onError: (err) => {
