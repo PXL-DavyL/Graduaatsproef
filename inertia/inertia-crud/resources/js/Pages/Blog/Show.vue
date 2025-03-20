@@ -147,7 +147,6 @@ const toggleReaction = (type) => {
 };
 
 const getUserSubmittedReaction = () => {
-    console.log(reactions.value);
     return reactions.value.find(
         (reaction) => reaction.poster_id === usePage().props.auth.user.id
     );
@@ -155,6 +154,5 @@ const getUserSubmittedReaction = () => {
 
 onMounted(() => {
     processReactions();
-    console.log(processedReactions.value);
 });
 </script>
