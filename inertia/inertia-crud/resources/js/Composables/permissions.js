@@ -19,6 +19,9 @@ export const hasRole = (check_role) => {
     return false;
 };
 
+/*
+    This function checks if a specific user has a specific role.
+*/
 export const doesUserHaveRole = (user_object, check_role) => {
 
     for(const role of user_object.roles){
