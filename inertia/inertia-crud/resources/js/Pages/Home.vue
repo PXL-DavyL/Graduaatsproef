@@ -114,9 +114,8 @@ onMounted(() => {
     }
 });
 
+// Process reactions before the DOM gets loaded....
 onBeforeMount(() => {
     processReactions();
 });
-
-console.log(usePage().props);
 </script>
