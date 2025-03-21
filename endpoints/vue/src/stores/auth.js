@@ -55,6 +55,29 @@ export const useAuthStore = defineStore("auth", () => {
 		}
 	};
 
+
+
+	const forgot_pass = async (credentials) => {
+		loading.value = true;
+		try {
+			await getCsrfToken();
+			const response = await axios.post("http://localhost:8000/api/forgot_pass", credentials, {
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+				withCredentials: true,
+			});
+
+			return response;
+		} catch (error) {
+			console.error("Forgot password failed:", error);
+			throw error;
+		} finally {
+			loading.value = false;
+		}
+	};
+
 	const fetchUser = async () => {
 		loading.value = true;
 		try {
@@ -127,6 +150,7 @@ export const useAuthStore = defineStore("auth", () => {
 		isAuthenticated,
 		register,
 		login,
+		forgot_pass,
 		fetchUser,
 		logout,
 		loading,

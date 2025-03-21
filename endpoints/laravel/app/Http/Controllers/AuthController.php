@@ -54,6 +54,29 @@ class AuthController extends Controller
         ], 401);
     }
 
+    public function forgot_pass(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        // NOTE: We don't send the email here since the logic would be identical to how Breeze does it, 
+        // minus the manual work. We aren't testing Laravel functionality here, just the API to front end.
+
+        if(!$user) {
+            return response()->json([
+                'errors' => [
+                    'email' => ['The provided credentials do not match our records.']
+                ]
+            ], 401);
+        }
+
+        return response()->json([
+            'status' => 'We have emailed your password reset link!'
+        ]);
+    }
+
     public function logout(Request $request)
     {   
         if(Auth::check()) {
