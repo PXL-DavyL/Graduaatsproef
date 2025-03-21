@@ -12,7 +12,13 @@ Route::get('/test', function() {
     return response()->json(['message' => 'API is working!']);
 });
 
-// routes/web.php
+
+Route::get('/metadata', function() {
+    return response()->json([
+        'phpVersion' => phpversion(),
+        'laravelVersion' => app()->version(),
+    ]);
+});
 
 
 Route::prefix('api')->group(function () {

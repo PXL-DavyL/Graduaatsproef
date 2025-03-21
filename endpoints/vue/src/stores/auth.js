@@ -1,6 +1,9 @@
 import { defineStore } from "pinia";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import axios from "axios";
+
+const loading = ref(false);
+
 
 export const useAuthStore = defineStore("auth", () => {
 	const getUserData = () => {
@@ -11,7 +14,7 @@ export const useAuthStore = defineStore("auth", () => {
 	};
 
 	const register = async (credentials) => {
-
+		loading.value = true;
 		try {
 			await getCsrfToken();
 			const response = await axios.post("http://localhost:8000/api/register", credentials, {
@@ -25,12 +28,14 @@ export const useAuthStore = defineStore("auth", () => {
 		} catch (error) {
 			console.error("Registration failed:", error);
 			throw error;
+		} finally {
+			loading.value = false;
 		}
 	};
 
 	const login = async (credentials) => {
+		loading.value = true;
 		try {
-
 			await getCsrfToken();
 			const response = await axios.post("http://localhost:8000/api/login", credentials, {
 				headers: {
@@ -45,12 +50,14 @@ export const useAuthStore = defineStore("auth", () => {
 		} catch (error) {
 			console.error("Login failed:", error);
 			throw error;
+		} finally {
+			loading.value = false;
 		}
 	};
 
 	const fetchUser = async () => {
+		loading.value = true;
 		try {
-
 			await getCsrfToken();
 			const response = await axios.get("http://localhost:8000/api/user", {
 				headers: {
@@ -70,10 +77,13 @@ export const useAuthStore = defineStore("auth", () => {
 
 			console.error("Failed to fetch user:", error);
 			throw error;
+		} finally {
+			loading.value = false;
 		}
 	};
 
 	const logout = async () => {
+		loading.value = true;
 		try {
 			await getCsrfToken();
 			const response = await axios.post("http://localhost:8000/api/logout", {
@@ -93,10 +103,13 @@ export const useAuthStore = defineStore("auth", () => {
 		} catch (error) {
 			console.error("Logout failed:", error);
 			throw error;
+		} finally {
+			loading.value = false;
 		}
 	};
 
 	const getCsrfToken = async () => {
+		loading.value = true;
 		try {
 			const response = await axios.get("http://localhost:8000/api/csrf-token");
 			axios.defaults.headers.common["X-CSRF-TOKEN"] = response.data.token;
@@ -104,16 +117,18 @@ export const useAuthStore = defineStore("auth", () => {
 		} catch (error) {
 			console.error("Failed to fetch CSRF token:", error);
 			throw error;
+		} finally {
+			loading.value = false;
 		}
 	};
 
 	return {
 		getUserData,
 		isAuthenticated,
-
 		register,
 		login,
 		fetchUser,
 		logout,
+		loading,
 	};
 });

@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['api/*'],
+    'paths' => ['api/*', 'metadata'],
     'allowed_methods' => ['*'],
     'allowed_origins' => ['*'], // vue
     'allowed_origins_patterns' => [],

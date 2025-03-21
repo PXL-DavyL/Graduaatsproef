@@ -1,70 +1,100 @@
 <template>
 	<GuestLayout>
-		<form @submit.prevent="handleRegister">
+		<form>
 			<div>
-				<label for="name">Name</label>
-				<input id="name" v-model="name" type="text" required placeholder="Your name" />
+				<InputText
+					id="name"
+					name="Name"
+					type="text"
+					class="mt-1 block w-full"
+					v-model="name"
+					required
+					autofocus
+					autocomplete="name"
+					:error="errors.name"
+				/>
 			</div>
 
-			<div>
-				<label for="email">Email</label>
-				<input
+			<div class="mt-4">
+				<InputText
 					id="email"
-					v-model="email"
+					name="Email"
 					type="email"
+					class="mt-1 block w-full"
+					v-model="email"
 					required
-					placeholder="your@email.com"
+					autofocus
+					autocomplete="email"
+					:error="errors.email"
 				/>
 			</div>
 
-			<div>
-				<label for="password">Password</label>
-				<input
+			<div class="mt-4">
+				<InputText
 					id="password"
+					name="Password"
+					type="password"
+					class="mt-1 block w-full"
 					v-model="password"
-					type="password"
 					required
-					placeholder="Your password (min. 8 characters)"
+					autofocus
+					:error="errors.password"
 				/>
 			</div>
 
-			<div>
-				<label for="password_confirmation">Confirm Password</label>
-				<input
+			<div class="mt-4">
+				<InputText
 					id="password_confirmation"
-					v-model="password_confirmation"
+					name="Confirm Password"
 					type="password"
+					class="mt-1 block w-full"
+					v-model="password_confirmation"
 					required
-					placeholder="Confirm your password"
+					autofocus
+					:error="errors.password_confirmation"
 				/>
 			</div>
 
-			<button type="submit" :disabled="authStore.loading">
-				{{ authStore.loading ? "Registering..." : "Register" }}
-			</button>
-		</form>
+			<div class="mt-4 gap-2 flex items-center justify-end">
+				<div>
+					<router-link
+						to="/login"
+						class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+						>Already registered?</router-link
+					>
+				</div>
 
-		<div>
-			Already have an account?
-			<router-link to="/login">Login</router-link>
-		</div>
+				<InputButton type="primary" :disabled="loading" @click="handleRegister">
+					{{ loading ? "Registering..." : "Register" }}
+				</InputButton>
+			</div>
+		</form>
 	</GuestLayout>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { toast } from "vue3-toastify";
 import { useRouter } from "vue-router";
+const router = useRouter();
 
 import { useAuthStore } from "@/stores/auth";
-import GuestLayout from "@/layout/GuestLayout.vue";
-
 const authStore = useAuthStore();
-const router = useRouter();
+import GuestLayout from "@/layout/GuestLayout.vue";
+import InputButton from "@/components/InputButton.vue";
+import InputText from "@/components/InputText.vue";
 
 const name = ref("");
 const email = ref("");
 const password = ref("");
 const password_confirmation = ref("");
+const errors = ref({});
+
+const loading = ref(false);
+watch(
+	() => authStore.loading,
+	(value) => (loading.value = value),
+);
 
 const handleRegister = async () => {
 	try {
@@ -75,9 +105,14 @@ const handleRegister = async () => {
 			password_confirmation: password_confirmation.value,
 		});
 
+		toast.info("You have successfully registered!");
 		router.push("/login");
 	} catch (error) {
-		console.log(error.response.data.errors);
+		const errors = error.response.data.errors;
+		for (const error in errors) {
+			toast.error(errors[error]);
+		}
+		errors.value = error.response.data.errors;
 	}
 };
 </script>

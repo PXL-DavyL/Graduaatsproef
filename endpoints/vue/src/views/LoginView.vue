@@ -1,53 +1,87 @@
 <template>
 	<GuestLayout>
 		<div>
-			<form @submit.prevent="handleLogin">
+			<form>
 				<div>
-					<label for="email">Email</label>
-					<input
+					<InputText
 						id="email"
-						v-model="email"
+						name="Email"
 						type="email"
+						class="mt-1 block w-full"
+						v-model="email"
 						required
-						placeholder="your@email.com"
+						autofocus
+						autocomplete="username"
+						:error="errors.email"
 					/>
 				</div>
 
-				<div>
-					<label for="password">Password</label>
-					<input
+				<div class="mt-4">
+					<InputText
 						id="password"
-						v-model="password"
+						name="Password"
 						type="password"
+						class="mt-1 block w-full"
+						v-model="password"
 						required
-						placeholder="Your password"
+						autofocus
+						:error="errors.password"
 					/>
 				</div>
-
-				<button type="submit">Login</button>
+				<div class="mt-4 block">
+					<InputCheck text="Remember me" name="remember" v-model:checked="remember" />
+				</div>
+				<div class="mt-4 flex items-center justify-end gap-2">
+					<router-link
+						to="/forgot-password"
+						class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+					>
+						Forgot your password?
+					</router-link>
+					<InputButton
+						type="primary"
+						:disabled="loading"
+						@click="handleLogin"
+					>
+						{{ loading ? "Logging in..." : "Login" }}
+					</InputButton>
+				</div>
 			</form>
 
 			<div>
-				Don't have an account?
-				<router-link to="/register">Register</router-link>
+				<router-link
+					to="/register"
+					class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+					>Create an account</router-link
+				>
 			</div>
 		</div>
 	</GuestLayout>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { toast } from "vue3-toastify";
 import { useRouter } from "vue-router";
-import axios from "axios";
-
+const router = useRouter();
 import { useAuthStore } from "@/stores/auth";
-import GuestLayout from "@/layout/GuestLayout.vue";
 const authStore = useAuthStore();
 
-const router = useRouter();
+import GuestLayout from "@/layout/GuestLayout.vue";
+import InputCheck from "@/components/InputCheck.vue";
+import InputButton from "@/components/InputButton.vue";
+import InputText from "@/components/InputText.vue";
 
 const email = ref("");
 const password = ref("");
+const remember = ref(false);
+const errors = ref({});
+
+const loading = ref(false);
+watch(
+	() => authStore.loading,
+	(value) => (loading.value = value),
+);
 
 const handleLogin = async () => {
 	try {
@@ -56,9 +90,14 @@ const handleLogin = async () => {
 			password: password.value,
 		});
 
+		toast.info("You have logged in. Welcome to the blog!");
 		router.push("/");
 	} catch (error) {
-		console.log(error.response.data.errors);
+		const errors = error.response.data.errors;
+		for (const error in errors) {
+			toast.error(errors[error]);
+		}
+		errors.value = error.response.data.errors;
 	}
 };
 </script>
