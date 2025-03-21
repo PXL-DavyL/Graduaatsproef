@@ -72,11 +72,13 @@ const handleForgotPass = async () => {
         status.value = response.data.status;
         toast.info("We have sent an email containing a password reset link.");
 	} catch (error) {
-		const errors = error.response.data.errors;
-		for (const error in errors) {
-			toast.error(errors[error]);
-		}
-		errors.value = error.response.data.errors;
+        if(error.response) {
+            const errors = error.response.data.errors;
+            for (const error in errors) {
+                toast.error(errors[error]);
+            }
+            errors.value = error.response.data.errors;
+        }
 	}
 };
 </script>

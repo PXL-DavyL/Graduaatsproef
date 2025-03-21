@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -80,16 +79,15 @@ class AuthController extends Controller
     public function logout(Request $request)
     {   
         if(Auth::check()) {
-            return response()->json(Auth::user());
+
+            Auth::logout();
+    
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
         }
         else {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
-
-        Auth::logout();
-    
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
     }
 
     public function user()

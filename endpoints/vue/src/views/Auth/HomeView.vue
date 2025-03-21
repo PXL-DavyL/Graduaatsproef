@@ -1,5 +1,5 @@
 <template>
-	<Layout> hello world </Layout>
+	<Layout title="Home"> hello world </Layout>
 </template>
 
 <script setup>

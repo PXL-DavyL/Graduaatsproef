@@ -1,18 +1,13 @@
-<script setup lang="ts">
-import Layout from "@/layout/Layout.vue";
-import DeleteUserForm from "./Partials/DeleteUserForm.vue";
-</script>
-
 <template>
-	<Layout>
+	<Layout title="Profile">
 		<div class="flex flex-col gap-2 justify-center items-center h-full w-full">
 			<div class="flex flex-col lg:flex-row gap-2 w-full">
 				<div class="bg-white w-full p-4 shadow sm:rounded-lg sm:p-8">
-					UpdateProfileInformationForm
+					<UpdateProfileInformationForm class="max-w-xl"/>
 				</div>
 
 				<div class="bg-white w-full p-4 shadow sm:rounded-lg sm:p-8">
-					UpdatePasswordForm
+					<UpdatePasswordForm class="max-w-xl"/>
 				</div>
 			</div>
 
@@ -22,3 +17,9 @@ import DeleteUserForm from "./Partials/DeleteUserForm.vue";
 		</div>
 	</Layout>
 </template>
+<script setup>
+import Layout from "@/layout/Layout.vue";
+import DeleteUserForm from "./Partials/DeleteUserForm.vue";
+import UpdatePasswordForm from "./Partials/UpdatePasswordForm.vue";
+import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm.vue";
+</script>

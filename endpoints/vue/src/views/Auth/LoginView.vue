@@ -93,11 +93,13 @@ const handleLogin = async () => {
 		toast.info("You have logged in. Welcome to the blog!");
 		router.push("/");
 	} catch (error) {
-		const errors = error.response.data.errors;
-		for (const error in errors) {
-			toast.error(errors[error]);
+		if(error.response) {
+			const errors = error.response.data.errors;
+			for (const error in errors) {
+				toast.error(errors[error]);
+			}
+			errors.value = error.response.data.errors;
 		}
-		errors.value = error.response.data.errors;
 	}
 };
 </script>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
@@ -26,14 +27,15 @@ Route::prefix('api')->group(function () {
         return response()->json(['token' => csrf_token()]);
     });
     
+    // auth
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/forgot_pass', [AuthController::class, 'forgot_pass']);
-
-    // Portected
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+    Route::get('/user', function (Request $request) { return $request->user(); });
 
+    // Profile
+    Route::post('/update-profile', [ProfileController::class, 'updateProfile'])->middleware('auth');
+    Route::post('/update-password', [ProfileController::class, 'updatePassword'])->middleware('auth');
+    Route::post('/delete-account', [ProfileController::class, 'deleteAccount'])->middleware('auth');
 });

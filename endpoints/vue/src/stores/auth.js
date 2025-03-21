@@ -1,5 +1,7 @@
+// This pinia store is responsible for handling user authentication.
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { getCsrfToken } from "./utils";
 import axios from "axios";
 
 const loading = ref(false);
@@ -125,20 +127,6 @@ export const useAuthStore = defineStore("auth", () => {
 			return response;
 		} catch (error) {
 			console.error("Logout failed:", error);
-			throw error;
-		} finally {
-			loading.value = false;
-		}
-	};
-
-	const getCsrfToken = async () => {
-		loading.value = true;
-		try {
-			const response = await axios.get("http://localhost:8000/api/csrf-token");
-			axios.defaults.headers.common["X-CSRF-TOKEN"] = response.data.token;
-			return response.data.token;
-		} catch (error) {
-			console.error("Failed to fetch CSRF token:", error);
 			throw error;
 		} finally {
 			loading.value = false;
