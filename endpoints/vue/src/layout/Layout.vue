@@ -135,10 +135,8 @@ const user = ref();
 const showUserDropdown = ref(false);
 
 onBeforeMount(async() => {
-    user.value = authStore.getUserData();
-
+    user.value = await authStore.getUserData();
     const metadata = await getMetaData();
-    console.log(metadata);
 
     laravel_Version.value = metadata.data.laravelVersion;
     php_Version.value = metadata.data.phpVersion;
