@@ -109,11 +109,14 @@ const handleRegister = async () => {
 		router.push("/login");
 	} catch (error) {
 		if (error.response) {
-			const errors = error.response.data.errors;
-			for (const error in errors) {
-				toast.error(errors[error]);
+			errors.value = {};
+			const response_errors = error.response.data.errors;
+			for (const error in response_errors) {
+				toast.error(response_errors[error]);
+				errors.value[error] = response_errors[error][0];
 			}
-			errors.value = error.response.data.errors;
+
+			resetForm();
 		}
 	}
 };

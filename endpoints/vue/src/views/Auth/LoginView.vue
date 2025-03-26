@@ -38,11 +38,7 @@
 					>
 						Forgot your password?
 					</router-link>
-					<InputButton
-						type="primary"
-						:disabled="loading"
-						@click="handleLogin"
-					>
+					<InputButton type="primary" :disabled="loading" @click="handleLogin">
 						{{ loading ? "Logging in..." : "Login" }}
 					</InputButton>
 				</div>
@@ -93,12 +89,15 @@ const handleLogin = async () => {
 		toast.info("You have logged in. Welcome to the blog!");
 		router.push("/");
 	} catch (error) {
-		if(error.response) {
-			const errors = error.response.data.errors;
-			for (const error in errors) {
-				toast.error(errors[error]);
+		if (error.response) {
+			errors.value = {};
+			const response_errors = error.response.data.errors;
+			for (const error in response_errors) {
+				toast.error(response_errors[error]);
+				errors.value[error] = response_errors[error][0];
 			}
-			errors.value = error.response.data.errors;
+
+			resetForm();
 		}
 	}
 };
