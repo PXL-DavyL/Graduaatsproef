@@ -11,9 +11,22 @@ const loading = ref(false);
 export const useAuthStore = defineStore("auth", () => {
 
 	const getUserData = async() => {
+
+		if(localStorage.getItem("user_unix") === null) {
+			if(localStorage.getItem("user") !== null) {
+				localStorage.removeItem("user");
+				toast.error("Session expired. Please log in again.");
+				window.location.href = "/login";
+			}
+			// fix: infinite /login spam, if they're not logged in just return null
+			return null;
+		}
+
 		if (localStorage.getItem("user_unix") < Math.floor(Date.now() / 1000) - 7200) { // 120 minutes - config/session.php
 			localStorage.removeItem("user");
 			toast.error("Session expired. Please log in again.");
+			window.location.href = "/login";
+			return null;
 		}
 
 		return JSON.parse(localStorage.getItem("user"));
