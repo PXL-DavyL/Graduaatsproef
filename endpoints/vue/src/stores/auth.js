@@ -2,13 +2,20 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { getCsrfToken } from "./utils";
+import { toast } from "vue3-toastify";
 import axios from "axios";
 
 const loading = ref(false);
 
 
 export const useAuthStore = defineStore("auth", () => {
-	const getUserData = () => {
+
+	const getUserData = async() => {
+		if (localStorage.getItem("user_unix") < Math.floor(Date.now() / 1000) - 7200) { // 120 minutes - config/session.php
+			localStorage.removeItem("user");
+			toast.error("Session expired. Please log in again.");
+		}
+
 		return JSON.parse(localStorage.getItem("user"));
 	};
 	const isAuthenticated = () => {
@@ -47,6 +54,7 @@ export const useAuthStore = defineStore("auth", () => {
 				withCredentials: true,
 			});
 
+			localStorage.setItem("user_unix", Math.floor(Date.now() / 1000)); // get unix timestamp in seconds
 			localStorage.setItem("user", JSON.stringify(response.data.user));
 			return response;
 		} catch (error) {
@@ -56,8 +64,6 @@ export const useAuthStore = defineStore("auth", () => {
 			loading.value = false;
 		}
 	};
-
-
 
 	const forgot_pass = async (credentials) => {
 		loading.value = true;
@@ -93,13 +99,10 @@ export const useAuthStore = defineStore("auth", () => {
 				},
 				withCredentials: true,
 			});
-
 			return response;
 		} catch (error) {
 			delete axios.defaults.headers.common["Authorization"];
-
 			localStorage.removeItem("user");
-
 			console.error("Failed to fetch user:", error);
 			throw error;
 		} finally {
@@ -121,14 +124,14 @@ export const useAuthStore = defineStore("auth", () => {
 				withCredentials: true,
 			});
 
-			delete axios.defaults.headers.common["Authorization"];
-
-			localStorage.removeItem("user");
 			return response;
 		} catch (error) {
 			console.error("Logout failed:", error);
 			throw error;
 		} finally {
+
+			delete axios.defaults.headers.common["Authorization"];
+			localStorage.removeItem("user");
 			loading.value = false;
 		}
 	};

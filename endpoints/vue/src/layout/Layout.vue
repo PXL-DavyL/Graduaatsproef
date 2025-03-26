@@ -151,9 +151,16 @@ const handleClickOutside = (event) => {
     }
 };
 
-const onLogout = () => {
-	authStore.logout();
-	router.push("/login");
+const onLogout = async() => {
+
+    try {
+        await authStore.logout();
+    } catch (error) {
+        console.error(error);
+    }
+    finally {
+        router.push("/login");
+    }
 };
 
 // NOT IMPLEMENTED YET:
