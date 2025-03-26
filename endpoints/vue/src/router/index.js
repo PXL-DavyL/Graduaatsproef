@@ -9,6 +9,7 @@ import RegisterView from "@/views/Auth/RegisterView.vue";
 import ForgotPasswordView from "@/views/Auth/ForgotPasswordView.vue";
 import ProfileView from "@/views/Profile/ProfileView.vue";
 import AdminView from "@/views/Admin/AdminView.vue";
+import AdminEditUserView from "@/views/Admin/User/AdminEditUserView.vue";
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,7 +48,13 @@ const router = createRouter({
 			name: "Admin",
 			component: AdminView,
 			meta: { requiresAuth: true, requiresRole: 'admin'},
-		}
+		},
+		{
+			path: "/admin/users/edit/:id",
+			name: "AdminEditUser",
+			component: AdminEditUserView,
+			meta: { requiresAuth: true, requiresRole: 'admin'},
+		},
 	],
 });
 

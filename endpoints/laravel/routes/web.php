@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AdminUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,11 +44,31 @@ Route::prefix('api')->group(function () {
         Route::post('/delete-account', [ProfileController::class, 'deleteAccount']);
 
         // Role
+        Route::get('/auth-roles', [RoleController::class, 'get_auth_roles']);
+        Route::get('/auth-permissions', [RoleController::class, 'get_auth_permissions']);
+
         Route::get('/user-roles', [RoleController::class, 'get_user_roles']);
         Route::get('/user-permissions', [RoleController::class, 'get_user_permissions']);
     });
 
     Route::group(['middleware' => ['auth', 'role:admin']], function() {
         // Admin stuff goes ehre
+
+        Route::get('/admin/users', function() {
+            return response()->json([
+                'users' => User::all()
+            ]);
+        });
+
+
+        // Role
+        Route::post('/admin/user/set-permission', [RoleController::class, 'save_user_permissions']);
+        Route::post('/admin/user/toggle-admin', [RoleController::class, 'toggle_admin_role']);
+        Route::get('/admin/user/permissions', [RoleController::class, 'get_all_permissions']);
+
+        // User
+        Route::get('/admin/user', [AdminUserController::class, 'getUser']);
+        Route::post('/admin/user', [AdminUserController::class, 'saveUser']);
     });
+
 });

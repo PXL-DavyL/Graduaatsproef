@@ -6,7 +6,7 @@ import { useRoleStore } from "@/stores/roles";
 */
 export const hasRole = async(check_role) => {
     const roleStore = useRoleStore();
-    const roles = await roleStore.getUserRoles();
+    const roles = await roleStore.getAuthRoles();
     const data = roles.data;
 
     return roles.data.roles.some(role => role === check_role);
@@ -17,7 +17,7 @@ export const hasRole = async(check_role) => {
 */
 export const hasPermission = async (check_permission) => {
     const roleStore = useRoleStore();
-    const permissions = await roleStore.getUserPermissions();
+    const permissions = await roleStore.getAuthPermissions();
     const data = permissions.data;
 
     return data.permissions.some(permission => permission === check_permission);
