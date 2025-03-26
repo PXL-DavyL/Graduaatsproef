@@ -30,6 +30,19 @@ jobs:
     - name: Install Composer Dependencies
       run: composer install --no-scripts --no-interaction --prefer-dist
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: './inertia/inertia-crud/package-lock.json'
+
+    - name: Install NPM Dependencies
+      run: npm ci
+
+    - name: Build Front-end Assets
+      run: npm run build
+
     - name: Generate key
       run: php artisan key:generate
 
