@@ -30,5 +30,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('admin@test.net'),
         ]);
         $admin->assignRole('admin');
+
+        User::factory(100)->create();
     }
 }

@@ -2,57 +2,54 @@ import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "@/stores/auth"; 
 import { hasRole, hasPermission } from "@/composables/permissions";
 
-// Views
-import HomeView from "../views/Auth/HomeView.vue";
-import LoginView from "@/views/Auth/LoginView.vue";
-import RegisterView from "@/views/Auth/RegisterView.vue";
-import ForgotPasswordView from "@/views/Auth/ForgotPasswordView.vue";
-import ProfileView from "@/views/Profile/ProfileView.vue";
-import AdminView from "@/views/Admin/AdminView.vue";
-import AdminEditUserView from "@/views/Admin/User/AdminEditUserView.vue";
-
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
 	routes: [
 		{
 			path: "/",
 			name: "home",
-			component: HomeView,
+			component: () => import("../views/Auth/HomeView.vue"),
 		},
 		{
 			path: "/login",
 			name: "login",
-			component: LoginView,
+			component: () => import("@/views/Auth/LoginView.vue"),
 			meta: { requiresGuest: true },
 		},
 		{
 			path: "/forgot-password",
 			name: "forgot-password",
-			component: ForgotPasswordView,
+			component: () => import("@/views/Auth/ForgotPasswordView.vue"),
 			meta: { requiresGuest: true },
 		},
 		{
 			path: "/register",
 			name: "register",
-			component: RegisterView,
+			component: () => import("@/views/Auth/RegisterView.vue"),
 			meta: { requiresGuest: true },
 		},
 		{
 			path: "/profile",
 			name: "Profile",
-			component: ProfileView,
+			component: () => import("@/views/Profile/ProfileView.vue"),
 			meta: { requiresAuth: true },
 		},
 		{
 			path: "/admin",
 			name: "Admin",
-			component: AdminView,
+			component: () => import("@/views/Admin/Index.vue"),
+			meta: { requiresAuth: true, requiresRole: 'admin'},
+		},
+		{
+			path: "/admin/users/index",
+			name: "Admin Users",
+			component: () => import("@/views/Admin/List.vue"),
 			meta: { requiresAuth: true, requiresRole: 'admin'},
 		},
 		{
 			path: "/admin/users/edit/:id",
 			name: "AdminEditUser",
-			component: AdminEditUserView,
+			component: () => import("@/views/Admin/User/AdminEditUserView.vue"),
 			meta: { requiresAuth: true, requiresRole: 'admin'},
 		},
 	],

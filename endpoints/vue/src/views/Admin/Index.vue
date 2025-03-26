@@ -127,7 +127,6 @@ const getUsers = async () => {
 };
 
 const onClickUserRow = (user) => {
-	console.log("Clicked user row:", user);
 	router.push({ name: "AdminEditUser", params: { id: user.id } });
 };
 </script>

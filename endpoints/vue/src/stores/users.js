@@ -7,6 +7,26 @@ import axios from "axios";
 const loading = ref(false);
 
 export const useUserStore = defineStore("user", () => {
+	const getAllUsers = async () => {
+		loading.value = true;
+		try {
+			await getCsrfToken();
+			const response = await axios.get("http://localhost:8000/api/admin/users", {
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+				withCredentials: true,
+			});
+			return response;
+		} catch (error) {
+			console.error("Failed to fetch user list:", error);
+			throw error;
+		} finally {
+			loading.value = false;
+		}
+	};
+
 	const getUser = async (credentials) => {
 		loading.value = true;
 		try {
@@ -73,6 +93,7 @@ export const useUserStore = defineStore("user", () => {
 
     return {
         loading,
+		getAllUsers,
         getUser,
         saveUser,
 		deleteUser,

@@ -8,6 +8,12 @@
     
     class AdminUserController extends Controller
     {
+        public function index() {
+            return response()->json([
+                'users' => User::all(),
+            ]); 
+        }
+
         public function getUser(Request $request) {
             $request->validate([
                 'user' => 'required|integer'

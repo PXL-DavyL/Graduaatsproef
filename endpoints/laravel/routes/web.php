@@ -67,6 +67,7 @@ Route::prefix('api')->group(function () {
         Route::get('/admin/user/permissions', [RoleController::class, 'get_all_permissions']);
 
         // User
+        Route::get('/admin/users', [AdminUserController::class, 'index']);
         Route::get('/admin/user', [AdminUserController::class, 'getUser']);
         Route::post('/admin/user', [AdminUserController::class, 'saveUser']);
         Route::delete('/admin/user', [AdminUserController::class, 'destroyUser']);
