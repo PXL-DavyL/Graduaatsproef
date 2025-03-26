@@ -80,6 +80,10 @@ watch(
 );
 
 const handleLogin = async () => {
+	if (loading.value) {
+		return;
+	}
+
 	try {
 		await authStore.login({
 			email: email.value,

@@ -63,17 +63,16 @@
 	</section>
 </template>
 <script setup>
-import InputButton from '@/components/InputButton.vue';
-import InputText from '@/components/InputText.vue';
-import { ref, watch } from 'vue';
-import { toast } from 'vue3-toastify';
-import { useProfileStore } from '@/stores/profile';
+import InputButton from "@/components/InputButton.vue";
+import InputText from "@/components/InputText.vue";
+import { ref, watch } from "vue";
+import { toast } from "vue3-toastify";
+import { useProfileStore } from "@/stores/profile";
 const profileStore = useProfileStore();
 
-
-const current_password = ref('');
-const password = ref('');
-const password_confirmation = ref('');
+const current_password = ref("");
+const password = ref("");
+const password_confirmation = ref("");
 const errors = ref({});
 const recentlySuccessful = ref(false);
 
@@ -84,6 +83,10 @@ watch(
 );
 
 const updatePassword = async () => {
+	if (loading.value) {
+		return;
+	}
+
 	try {
 		await profileStore.updatePassword({
 			current_password: current_password.value,
@@ -92,33 +95,30 @@ const updatePassword = async () => {
 		});
 
 		recentlySuccessful.value = true;
-		toast.success('Password updated.');			
-		
+		toast.success("Password updated.");
+
 		setTimeout(() => {
 			recentlySuccessful.value = false;
 		}, 5000);
-
 	} catch (error) {
-        if(error.response) {
+		if (error.response) {
 			errors.value = {};
-			const response_errors = error.response.data.errors;	
-            for (const error in response_errors) {
-                toast.error(response_errors[error]);
+			const response_errors = error.response.data.errors;
+			for (const error in response_errors) {
+				toast.error(response_errors[error]);
 				errors.value[error] = response_errors[error][0];
-            }
+			}
 
-            resetForm();
-        }
-	}
-	finally {
+			resetForm();
+		}
+	} finally {
 		resetForm();
 	}
 };
 
 const resetForm = () => {
-	current_password.value = '';
-	password.value = '';
-	password_confirmation.value = '';
+	current_password.value = "";
+	password.value = "";
+	password_confirmation.value = "";
 };
-
 </script>

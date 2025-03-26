@@ -56,6 +56,10 @@ watch(
 );
 
 const handleForgotPass = async () => {
+	if (loading.value) {
+		return;
+	}
+
 	try {
 		const response = await authStore.forgot_pass({
 			email: email.value,

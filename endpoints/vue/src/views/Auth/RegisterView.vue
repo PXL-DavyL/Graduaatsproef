@@ -97,6 +97,10 @@ watch(
 );
 
 const handleRegister = async () => {
+	if (loading.value) {
+		return;
+	}
+
 	try {
 		const response = await authStore.register({
 			name: name.value,

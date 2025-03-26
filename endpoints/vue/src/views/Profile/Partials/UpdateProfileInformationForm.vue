@@ -67,6 +67,10 @@ watch(
 );
 
 const updateProfile = async () => {
+	if (loading.value) {
+		return;
+	}
+
 	try {
 		await profileStore.updateProfile({
 			name: name.value,
