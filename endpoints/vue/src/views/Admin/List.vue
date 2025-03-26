@@ -103,7 +103,6 @@ import { onBeforeMount } from "vue";
 import { useUserStore } from "@/stores/users";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import PaginationVue from "@/components/PaginationVue.vue";
 const router = useRouter();
 const userStore = useUserStore();
 
@@ -134,8 +133,8 @@ const renderUserList = () => {
 
 const nextPage = () => {
 	currentPage.value = currentPage.value + 1;
-	if (currentPage.value > Math.floor(allUsers.value.length / itemsPerPage)) {
-		currentPage.value = Math.floor(allUsers.value.length / itemsPerPage);
+	if (currentPage.value > getMaxPage()) {
+		currentPage.value = getMaxPage();
 	}
 	renderUserList();
 };
