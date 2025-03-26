@@ -14,11 +14,11 @@
 					id="current_password"
 					name="Current Password"
 					ref="currentPasswordInput"
-					v-model="form.current_password"
+					v-model="current_password"
 					type="password"
 					class="mt-1 block w-full"
 					autocomplete="current-password"
-					:error="form.errors.current_password"
+					:error="errors.current_password"
 				/>
 			</div>
 
@@ -27,11 +27,11 @@
 					id="password"
 					name="New Password"
 					ref="passwordInput"
-					v-model="form.password"
+					v-model="password"
 					type="password"
 					class="mt-1 block w-full"
 					autocomplete="new-password"
-					:error="form.errors.password"
+					:error="errors.password"
 				/>
 			</div>
 
@@ -39,16 +39,16 @@
 				<InputText
 					id="password_confirmation"
 					name="Confirm Password"
-					v-model="form.password_confirmation"
+					v-model="password_confirmation"
 					type="password"
 					class="mt-1 block w-full"
 					autocomplete="new-password"
-					:error="form.errors.password_confirmation"
+					:error="errors.password_confirmation"
 				/>
 			</div>
 
 			<div class="flex items-center gap-4">
-				<InputButton :disabled="form.processing" @click="updatePassword">Save</InputButton>
+				<InputButton :disabled="loading" @click="updatePassword">Save</InputButton>
 
 				<Transition
 					enter-active-class="transition ease-in-out"
@@ -56,7 +56,7 @@
 					leave-active-class="transition ease-in-out"
 					leave-to-class="opacity-0"
 				>
-					<p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
+					<p v-if="recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
 				</Transition>
 			</div>
 		</form>
@@ -65,20 +65,60 @@
 <script setup>
 import InputButton from '@/components/InputButton.vue';
 import InputText from '@/components/InputText.vue';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { toast } from 'vue3-toastify';
+import { useProfileStore } from '@/stores/profile';
+const profileStore = useProfileStore();
 
-const form = ref({
-    current_password: '',
-    password: '',
-    password_confirmation: '',
-    processing: false,
-    recentlySuccessful: false,
-    errors: {
-        current_password: null,
-        password: null,
-        password_confirmation: null,
-    },
-});
+
+const current_password = ref('');
+const password = ref('');
+const password_confirmation = ref('');
+const errors = ref({});
+const recentlySuccessful = ref(false);
+
+const loading = ref(false);
+watch(
+	() => profileStore.loading,
+	(value) => (loading.value = value),
+);
+
+const updatePassword = async () => {
+	try {
+		await profileStore.updatePassword({
+			current_password: current_password.value,
+			password: password.value,
+			password_confirmation: password_confirmation.value,
+		});
+
+		recentlySuccessful.value = true;
+		toast.success('Password updated.');			
+		
+		setTimeout(() => {
+			recentlySuccessful.value = false;
+		}, 5000);
+
+	} catch (error) {
+        if(error.response) {
+			errors.value = {};
+			const response_errors = error.response.data.errors;	
+            for (const error in response_errors) {
+                toast.error(response_errors[error]);
+				errors.value[error] = response_errors[error][0];
+            }
+
+            resetForm();
+        }
+	}
+	finally {
+		resetForm();
+	}
+};
+
+const resetForm = () => {
+	current_password.value = '';
+	password.value = '';
+	password_confirmation.value = '';
+};
 
 </script>
