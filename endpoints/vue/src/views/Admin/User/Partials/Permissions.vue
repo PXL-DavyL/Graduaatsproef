@@ -78,7 +78,7 @@ const collapseDropdown = ref(false);
 const permissions = ref([]);
 const userPermissions = ref({});
 
-const isUserAdmin = ref(false); // TODO: hasUserRole check
+const isUserAdmin = ref(false);
 
 const loadingPermissions = ref(true);
 const loadingUserPermissions = ref(true);

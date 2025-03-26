@@ -5,7 +5,7 @@
         >
             <span class="text-xl bold w-full">Admin Menu</span>
             <div class="mt-8 flex flex-col gap-2">
-                <router-link to="/admin/index"
+                <router-link to="/admin"
                     ><span class="flex w-full gap-4"
                         ><IconHome class="h-6 w-6" /> Home</span
                     ></router-link

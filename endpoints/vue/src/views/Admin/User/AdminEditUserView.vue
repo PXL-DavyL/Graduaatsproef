@@ -73,6 +73,7 @@
 			</InputButton>
 
             <Permissions/>
+            <Delete :user="user"/>
 		</form>
 	</AdminLayout>
 </template>
@@ -86,6 +87,7 @@ import InputButton from "@/components/InputButton.vue";
 import { formatDate } from "@/composables/dates";
 import { toast } from "vue3-toastify";
 import Permissions from "./Partials/Permissions.vue";
+import Delete from "./Partials/Delete.vue";
 
 const userStore = useUserStore();
 const router = useRouter();

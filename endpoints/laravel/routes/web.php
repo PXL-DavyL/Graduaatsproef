@@ -69,6 +69,7 @@ Route::prefix('api')->group(function () {
         // User
         Route::get('/admin/user', [AdminUserController::class, 'getUser']);
         Route::post('/admin/user', [AdminUserController::class, 'saveUser']);
+        Route::delete('/admin/user', [AdminUserController::class, 'destroyUser']);
     });
 
 });

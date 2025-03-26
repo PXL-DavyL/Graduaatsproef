@@ -48,9 +48,33 @@ export const useUserStore = defineStore("user", () => {
 		}
     };
 
+	const deleteUser = async (credentials) => {
+		loading.value = true;
+		try {
+			await getCsrfToken();
+			const response = await axios.delete("http://localhost:8000/api/admin/user", {
+				params: credentials,
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+				withCredentials: true,
+			});
+			return response;
+		}
+		catch (error) {
+			console.error("Failed to delete user:", error);
+			throw error;
+		}
+		finally {
+			loading.value = false;
+		}
+	}
+
     return {
         loading,
         getUser,
         saveUser,
+		deleteUser,
     }
 });
