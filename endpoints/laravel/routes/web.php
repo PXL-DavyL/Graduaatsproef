@@ -45,4 +45,8 @@ Route::prefix('api')->group(function () {
         Route::get('/user-roles', [RoleController::class, 'get_user_roles']);
         Route::get('/user-permissions', [RoleController::class, 'get_user_permissions']);
     });
+
+    Route::group(['middleware' => ['auth', 'role:admin']], function() {
+        // Admin stuff goes ehre
+    });
 });

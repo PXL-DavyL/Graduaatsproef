@@ -1,10 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useAuthStore } from "@/stores/auth"; 
+import { hasRole, hasPermission } from "@/composables/permissions";
+
+// Views
 import HomeView from "../views/Auth/HomeView.vue";
 import LoginView from "@/views/Auth/LoginView.vue";
 import RegisterView from "@/views/Auth/RegisterView.vue";
 import ForgotPasswordView from "@/views/Auth/ForgotPasswordView.vue";
 import ProfileView from "@/views/Profile/ProfileView.vue";
-import { useAuthStore } from "@/stores/auth"; 
+import AdminView from "@/views/Admin/AdminView.vue";
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,26 +40,49 @@ const router = createRouter({
 			path: "/profile",
 			name: "Profile",
 			component: ProfileView,
-			meta: { requiresAuth: true }, // Change this to requiresAuth
+			meta: { requiresAuth: true },
 		},
+		{
+			path: "/admin",
+			name: "Admin",
+			component: AdminView,
+			meta: { requiresAuth: true, requiresRole: 'admin'},
+		}
 	],
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async(to, from, next) => {
 	const authStore = useAuthStore();
 	const isAuthenticated = authStore.isAuthenticated();
 
-	// Routes that require authentication
-	if (to.meta.requiresAuth && !isAuthenticated) {
+	// Authentication check
+	if (to.meta.requiresAuth && !isAuthenticated) { // auth only
 		next({ name: "login" });
+		return;
 	}
-	// Routes that require guest (non-authenticated user)
-	else if (to.meta.requiresGuest && isAuthenticated) {
+	else if (to.meta.requiresGuest && isAuthenticated) { // guest only
 		next({ name: "home" });
+		return;
 	}
-	else {
-		next();
+
+	// Roles and permissions
+	else if (to.meta.requiresRole) { // role checker
+		const role = await hasRole(to.meta.requiresRole);
+		if (!role) {
+			next({ name: "home" });
+			return;
+		}
 	}
+	else if (to.meta.requiresPermission) { // permission checker
+		const permission = await hasPermission(to.meta.requiresPermission);
+		if (!permission) {
+			next({ name: "home" });
+			return;
+		}
+	}
+
+
+	next();
 });
 
 export default router;
