@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
@@ -34,8 +35,14 @@ Route::prefix('api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', function (Request $request) { return $request->user(); });
 
-    // Profile
-    Route::post('/update-profile', [ProfileController::class, 'updateProfile'])->middleware('auth');
-    Route::post('/update-password', [ProfileController::class, 'updatePassword'])->middleware('auth');
-    Route::post('/delete-account', [ProfileController::class, 'deleteAccount'])->middleware('auth');
+    Route::group(['middleware' => 'auth'], function() {
+        // Profile
+        Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
+        Route::post('/update-password', [ProfileController::class, 'updatePassword']);
+        Route::post('/delete-account', [ProfileController::class, 'deleteAccount']);
+
+        // Role
+        Route::get('/user-roles', [RoleController::class, 'get_user_roles']);
+        Route::get('/user-permissions', [RoleController::class, 'get_user_permissions']);
+    });
 });

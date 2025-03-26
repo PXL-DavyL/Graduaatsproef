@@ -10,7 +10,7 @@
                     </div>
                     <div
                         class="w-full flex"
-                        v-if="hasPermission('create blog') || hasRole('admin')"
+                        v-if="canWriteBlogs || isAdmin"
                     >
 
                         <router-link to="/blog/create" class="p-1 bg-gray-100 border border-gray-200 hover:bg-gray-200 hover:border-gray-300 text-gray-500 rounded">
@@ -62,7 +62,7 @@
                                     Profile
                                 </router-link>
                                 <router-link
-                                    v-if="hasRole('admin')"
+                                    v-if="isAdmin"
                                     to="/admin"
                                     class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                 >
@@ -104,7 +104,7 @@
 
 <script setup>
 import { ref, onBeforeMount, onMounted, onUnmounted } from "vue";
-//import { hasPermission, hasRole } from "@/composables/permissions.js";
+import { hasPermission, hasRole } from "@/composables/permissions.js";
 
 import { getMetaData } from "@/stores/metadata";
 import { useAuthStore } from "@/stores/auth";
@@ -131,6 +131,10 @@ const props = defineProps({
     },
 });
 
+// Permission props
+const isAdmin = ref(false);
+const canWriteBlogs = ref(false);
+
 const user = ref();
 const showUserDropdown = ref(false);
 
@@ -140,6 +144,10 @@ onBeforeMount(async() => {
 
     laravel_Version.value = metadata.data.laravelVersion;
     php_Version.value = metadata.data.phpVersion;
+
+    // Fetch permissions
+    isAdmin.value = await hasRole('admin');
+    canWriteBlogs.value = await hasPermission('create blog');
 });
 
 onMounted(() => document.addEventListener("click", handleClickOutside));
@@ -162,12 +170,4 @@ const onLogout = async() => {
         router.push("/login");
     }
 };
-
-// NOT IMPLEMENTED YET:
-const hasPermission = (permission) => {
-    return true;
-}
-const hasRole = (role) => {
-    return true;
-}
 </script>
