@@ -66,7 +66,7 @@ const deleteUser = async() => {
         });
 
         toast.success('User deleted successfully');
-        router.push("/admin");
+        router.push("/admin/users/index");
 
     } catch (error) {
         if (error.response) {
