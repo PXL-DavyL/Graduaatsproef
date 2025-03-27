@@ -35,6 +35,12 @@
 					</InputButtonLink>
 				</div>
 			</div>
+
+            <ShowComments
+                :comments="comments"
+                :show="showComments"
+				@refresh-comments="refreshComments"
+            />
 		</div>
 	</Layout>
 </template>
@@ -61,9 +67,13 @@ import InputButton from "@/components/InputButton.vue";
 import InputButtonLink from "@/components/InputButtonLink.vue";
 import IconChevron from "@/components/icons/IconChevron.vue";
 
+import ShowComments from "./ShowPartials/ShowComments.vue";
+
 const showComments = ref(true);
 const blog_id = useRoute().params.id;
 const blog_title = ref("Blog");
+const comments = ref([]);
+
 
 onMounted(async () => {
 	try {
@@ -73,9 +83,11 @@ onMounted(async () => {
 		const blogResponse = await blogStore.getBlog({
 			id: blog_id,
 		});
-
+		
 		blog.value = blogResponse.data.blog;
 		blog_title.value = blog.value.title;
+
+        comments.value = blogResponse.data.comments;
 	} catch (error) {
 		console.error("Blog error:", error);
 	}
@@ -105,4 +117,15 @@ const increaseView = async () => {
 		throw error;
 	}
 };
+
+const refreshComments = async() => {
+	try {
+		const blogResponse = await blogStore.getBlog({
+			id: blog_id,
+		});
+		comments.value = blogResponse.data.comments;
+	} catch (error) {
+		console.error("Refresh comments error:", error);
+	}
+}
 </script>

@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\RoleController;
 use App\Models\Blog;
@@ -47,6 +48,9 @@ Route::prefix('api')->group(function () {
     Route::patch('/blog/edit', [BlogController::class, 'edit']);
     Route::delete('/blog/destroy', [BlogController::class, 'destroy']);
 
+    // Comments
+
+    Route::patch('/comment/update', [CommentController::class, 'update']);
 
     Route::post('/blog/add-view', [BlogController::class, 'add_view']);
 
