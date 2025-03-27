@@ -20,23 +20,22 @@
 					<div class="w-full flex justify-between items-center">
 						<div class="flex gap-2">
 							<div class="flex gap-2">
-								<div
-                                    class="flex gap-1 items-center text-gray-400"
-                                >
-                                    <IconView class="h-4 w-4" />
-                                    <span class="text-sm">
-                                        {{ article.views }}
-                                    </span>
-                                </div>
+								<div class="flex gap-1 items-center text-gray-400">
+									<IconView class="h-4 w-4" />
+									<span class="text-sm">
+										{{ article.views }}
+									</span>
+								</div>
+								<div class="flex gap-1 items-center text-gray-400">
+									<IconComments class="h-4 w-4" />
+									<span class="text-sm">{{ article.comments.length }}</span>
+								</div>
 							</div>
 							<div class="flex gap-2">
 								<!-- reactions -->
 							</div>
 						</div>
-						<InputButton
-							@click="onShowBlog(article.id)"
-							class="self-end"
-						>
+						<InputButton @click="onShowBlog(article.id)" class="self-end">
 							Read more
 						</InputButton>
 					</div>
