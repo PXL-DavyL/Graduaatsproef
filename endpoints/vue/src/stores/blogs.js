@@ -50,7 +50,6 @@ export const useBlogStore = defineStore("blogs", () => {
         }
     }
 
-
     const editBlog = async (credentials) => {
         loading.value = true;
         try {

@@ -47,6 +47,9 @@ Route::prefix('api')->group(function () {
     Route::patch('/blog/edit', [BlogController::class, 'edit']);
     Route::delete('/blog/destroy', [BlogController::class, 'destroy']);
 
+
+    Route::post('/blog/add-view', [BlogController::class, 'add_view']);
+
     Route::group(['middleware' => 'auth'], function() {
         // Profile
         Route::post('/update-profile', [ProfileController::class, 'updateProfile']);

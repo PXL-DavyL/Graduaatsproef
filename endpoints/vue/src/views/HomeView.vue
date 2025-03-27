@@ -20,7 +20,14 @@
 					<div class="w-full flex justify-between items-center">
 						<div class="flex gap-2">
 							<div class="flex gap-2">
-								<!-- views and comments -->
+								<div
+                                    class="flex gap-1 items-center text-gray-400"
+                                >
+                                    <IconView class="h-4 w-4" />
+                                    <span class="text-sm">
+                                        {{ article.views }}
+                                    </span>
+                                </div>
 							</div>
 							<div class="flex gap-2">
 								<!-- reactions -->

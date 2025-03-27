@@ -15,6 +15,21 @@ class BlogController extends Controller
         ]); 
     }
 
+    public function add_view(Request $request) {
+        $request->validate([
+            'id' => 'required|integer',
+        ]);
+
+        $blog = Blog::find($request->id);
+        
+        // Pointless to send back an error. The user doesn't care if the views go up or not.
+        if($blog) {
+
+            $blog->views++;
+            $blog->save();
+        }
+    }
+
     public function show(Request $request) {
         $request->validate([
             'id' => 'required|integer',

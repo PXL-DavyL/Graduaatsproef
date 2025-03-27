@@ -75,6 +75,7 @@
 							v-for="blog in blogs"
 							:key="blog.id"
 							class="odd:bg-zinc-500 even:bg-zinc-400 hover:text-zinc-800 hover:bg-zinc-300 cursor-pointer"
+							@click="onClickBlogRow(blog)"
 						>
 							<td class="p-2 border-b border-zinc-500">
 								{{ blog.id }}
@@ -151,5 +152,8 @@ const loadProps = async () => {
 
 const onClickUserRow = (user) => {
 	router.push({ name: "AdminEditUser", params: { id: user.id } });
+};
+const onClickBlogRow = (blog) => {
+	router.push({ name: "AdminEditBlog", params: { id: blog.id } });
 };
 </script>
