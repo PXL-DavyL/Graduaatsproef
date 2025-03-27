@@ -54,6 +54,13 @@ Route::prefix('api')->group(function () {
     Route::group(['middleware' => ['auth', 'role:admin']], function() {
         // Admin stuff goes ehre
 
+        Route::get('/admin', function() {
+            return response()->json([
+                'message' => 'Admin only page.',
+                'users' => User::latest()->take(10)->get(),
+            ]);
+        });
+
         Route::get('/admin/users', function() {
             return response()->json([
                 'users' => User::all()

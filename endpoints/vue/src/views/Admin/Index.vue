@@ -109,14 +109,13 @@ const getUsers = async () => {
 	loadedUsers.value = false;
 	try {
 		await getCsrfToken();
-		const response = await axios.get("http://localhost:8000/api/admin/users", {
+		const response = await axios.get("http://localhost:8000/api/admin", {
 			headers: {
 				Accept: "application/json",
 				"Content-Type": "application/json",
 			},
 			withCredentials: true,
 		});
-        console.log(response);
 		loadedUsers.value = true;
 		return response.data.users;
 	} catch (error) {
