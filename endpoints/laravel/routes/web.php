@@ -89,6 +89,7 @@ Route::prefix('api')->group(function () {
         // Blog
 
         Route::patch('/admin/blog', [AdminBlogController::class, 'update']);
+        Route::delete('/admin/blog', [AdminBlogController::class, 'destroy']);
     });
 
 });

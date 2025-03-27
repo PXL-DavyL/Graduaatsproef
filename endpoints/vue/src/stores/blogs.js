@@ -69,11 +69,31 @@ export const useBlogStore = defineStore("blogs", () => {
         }
     }
 
-
     const editBlogAsAdmin = async (credentials) => {
         try {
             await getCsrfToken();
             const response = await axios.patch("http://localhost:8000/api/admin/blog", credentials, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            });
+            return response;
+        } catch (error) {
+            console.error("Update blog failed:", error);
+            throw error;
+        } finally {
+            loading.value = false;
+        }
+    }
+
+
+    const deleteBlogAsAdmin = async (credentials) => {
+        try {
+            await getCsrfToken();
+            const response = await axios.delete("http://localhost:8000/api/admin/blog", {
+                params: credentials,
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
@@ -94,5 +114,6 @@ export const useBlogStore = defineStore("blogs", () => {
         getBlog,
         editBlog,
         editBlogAsAdmin,
+        deleteBlogAsAdmin,
     };
 });

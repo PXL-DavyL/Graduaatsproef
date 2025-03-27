@@ -79,7 +79,7 @@
             </InputButton>
         </form>
 
-        <Delete :blog="blog" class="mt-4" />
+        <Delete v-if="blog" :blog="blog" class="mt-4" />
 
         <InputButtonLink class="mt-4 w-full" type="secondary" to="/admin/blogs/index">
             Back to blogs
@@ -103,7 +103,7 @@ import InputText from "@/components/InputText.vue";
 import AdminLayout from "@/layout/AdminLayout.vue";
 import InputTextArea from "@/components/InputTextArea.vue";
 import Author from "./Partials/Author.vue";
-//import Delete from "./Partials/Delete.vue";
+import Delete from "./Partials/Delete.vue";
 import InputButtonLink from "@/components/InputButtonLink.vue";
 
 const title = ref("");

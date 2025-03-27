@@ -33,12 +33,35 @@
                 if(!$new_author) {
                     return response()->json([
                         'message' => 'author not found'
-                    ]);
+                    ], 422);
                 }
                 
                 $blog->poster_id = $request->author;
             }
 
             $blog->save();
+        }
+
+        public function destroy(Request $request) {
+            $request->validate([
+                'blog' => 'required|integer',
+                'title' => 'required|string',
+            ]);
+
+            $blog = Blog::find($request->blog);
+
+            if(!$blog) {
+                return response()->json([
+                    'message' => 'blog not found'
+                ], 422);
+            }
+
+            if($blog->title != $request->title) {
+                return response()->json([
+                    'message' => 'title does not match'
+                ], 422);
+            }
+
+            $blog->delete();
         }
     }
