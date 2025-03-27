@@ -47,5 +47,8 @@ const submitComment = async() => {
     catch(error) {
         console.log(error);
     }
+    finally {
+        content.value = "";
+    }
 }
 </script>
