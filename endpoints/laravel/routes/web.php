@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -37,6 +38,11 @@ Route::prefix('api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', function (Request $request) { return $request->user(); });
 
+    // Blog
+    Route::get('/blog/index', [BlogController::class, 'index']);
+    Route::get('/blog/show', [BlogController::class, 'show']);
+    Route::patch('/blog/edit', [BlogController::class, 'edit']);
+
     Route::group(['middleware' => 'auth'], function() {
         // Profile
         Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
@@ -44,11 +50,10 @@ Route::prefix('api')->group(function () {
         Route::post('/delete-account', [ProfileController::class, 'deleteAccount']);
 
         // Role
-        Route::get('/auth-roles', [RoleController::class, 'get_auth_roles']);
-        Route::get('/auth-permissions', [RoleController::class, 'get_auth_permissions']);
-
-        Route::get('/user-roles', [RoleController::class, 'get_user_roles']);
-        Route::get('/user-permissions', [RoleController::class, 'get_user_permissions']);
+        Route::get('/auth-roles', [RoleController::class, 'get_auth_roles']); // auth only
+        Route::get('/auth-permissions', [RoleController::class, 'get_auth_permissions']); // auth only
+        Route::get('/user-roles', [RoleController::class, 'get_user_roles']); // user selection
+        Route::get('/user-permissions', [RoleController::class, 'get_user_permissions']); // user selection
     });
 
     Route::group(['middleware' => ['auth', 'role:admin']], function() {

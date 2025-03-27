@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "@/stores/auth"; 
+import { useBlogStore } from "@/stores/blogs"; 
 import { hasRole, hasPermission } from "@/composables/permissions";
 
 const router = createRouter({
@@ -8,7 +9,7 @@ const router = createRouter({
 		{
 			path: "/",
 			name: "home",
-			component: () => import("../views/Auth/HomeView.vue"),
+			component: () => import("@/views/Auth/HomeView.vue"),
 		},
 		{
 			path: "/login",
@@ -33,6 +34,19 @@ const router = createRouter({
 			name: "Profile",
 			component: () => import("@/views/Profile/ProfileView.vue"),
 			meta: { requiresAuth: true },
+		},
+
+		{
+			path: "/blog/show/:id",
+			name: "ShowBlog",
+			component: () => import("@/views/Blog/Show.vue"),
+			meta: { requiresAuth: true },
+		},
+		{
+			path: "/blog/edit/:id",
+			name: "EditBlog",
+			component: () => import("@/views/Blog/Edit.vue"),
+			meta: { requiresAuth: true, checkBlogAuthor: true },
 		},
 		{
 			path: "/admin",
@@ -64,7 +78,9 @@ const router = createRouter({
 
 router.beforeEach(async(to, from, next) => {
 	const authStore = useAuthStore();
+	const blogStore = useBlogStore();
 	const isAuthenticated = authStore.isAuthenticated();
+	const user = await authStore.getUserData();
 
 	// Authentication check
 	if (to.meta.requiresAuth && !isAuthenticated) { // auth only
@@ -87,6 +103,17 @@ router.beforeEach(async(to, from, next) => {
 	else if (to.meta.requiresPermission) { // permission checker
 		const permission = await hasPermission(to.meta.requiresPermission);
 		if (!permission) {
+			next({ name: "home" });
+			return;
+		}
+	}
+
+	// Blog related
+	else if(to.meta.checkBlogAuthor) { // match author with auth user
+		const blogId = to.params.id;
+		const blog = await blogStore.getBlog({id: blogId});
+		console.log(blog);
+		if (user.id !== blog.data.blog.poster_id) {
 			next({ name: "home" });
 			return;
 		}

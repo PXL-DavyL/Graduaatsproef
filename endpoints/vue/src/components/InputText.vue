@@ -15,7 +15,7 @@
             :autofocus="props.autofocus"
             :autocomplete="props.autocomplete"
             :placeholder="props.placeholder"
-            class="rounded-md border border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 w-full p-1"
+            class="p-2 rounded-md border border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 w-full"
             :class="{ 'border-zinc-600 bg-zinc-400 text-zinc-700 focus:border-indigo-600 focus:ring-indigo-600': props.darkmode }"
             v-model="model"
         />

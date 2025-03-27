@@ -12,7 +12,7 @@
                 props.type === 'danger',
         }"
     
-        :to="props.to" 
+        :to="props.to"
         >
         <slot />
     </router-link>

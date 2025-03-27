@@ -50,7 +50,7 @@
 				</div>
 			</div>
             
-            <Pagination :totalItems="allUsers" :onPageChange="getPaginationData" @update-pagination-data="getPaginationData" />
+            <Pagination :totalItems="allUsers" :onPageChange="getPaginationData" @update-pagination-data="getPaginationData" :darkMode="true" />
 		</div>
 	</AdminLayout>
 </template>

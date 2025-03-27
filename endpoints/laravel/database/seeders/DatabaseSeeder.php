@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Blog;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
         ]);
 
+        // Create users
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@test.net',
@@ -25,12 +27,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $admin = User::factory()->create([
-            'name' => 'Admin User',
+            'name' => 'Admin',
             'email' => 'admin@test.net',
             'password' => bcrypt('admin@test.net'),
         ]);
         $admin->assignRole('admin');
 
-        User::factory(100)->create();
+        // Create blogs
+        Blog::factory(25)->create(); 
     }
 }

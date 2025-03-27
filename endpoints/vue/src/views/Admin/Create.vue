@@ -84,8 +84,6 @@ const createUser = async() => {
             password: password.value,
             password_confirmation: password_confirmation.value,
         });
-
-
         toast.success("User created successfully");
 
         const new_user_id = response.data.user.id;
