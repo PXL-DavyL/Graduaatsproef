@@ -21,7 +21,9 @@
 
             if(!$blog) {
                 return response()->json([
-                    'message' => 'blog not found'
+                    'errors' => [
+                        'blog' => 'blog not found'
+                    ]
                 ]);
             }
 
@@ -32,7 +34,9 @@
                 $new_author = User::find($request->author);
                 if(!$new_author) {
                     return response()->json([
-                        'message' => 'author not found'
+                        'errors' => [
+                            'author' => 'author not found'
+                        ]
                     ], 422);
                 }
                 
@@ -52,13 +56,17 @@
 
             if(!$blog) {
                 return response()->json([
-                    'message' => 'blog not found'
+                    'errors' => [
+                        'blog' => 'blog not found'
+                    ]
                 ], 422);
             }
 
             if($blog->title != $request->title) {
                 return response()->json([
-                    'message' => 'title does not match'
+                    'errors' => [
+                        'confirm_title' => 'title does not match'
+                    ]
                 ], 422);
             }
 
