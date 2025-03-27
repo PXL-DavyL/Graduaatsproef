@@ -51,26 +51,39 @@ const router = createRouter({
 		{
 			path: "/admin",
 			name: "Admin",
-			component: () => import("@/views/Admin/Index.vue"),
+			component: () => import("@/views/Admin/Dashboard.vue"),
 			meta: { requiresAuth: true, requiresRole: 'admin'},
 		},
 		{
 			path: "/admin/users/index",
-			name: "Admin Users",
-			component: () => import("@/views/Admin/List.vue"),
+			name: "AdminUsers",
+			component: () => import("@/views/Admin/User/List.vue"),
 			meta: { requiresAuth: true, requiresRole: 'admin'},
 		},
 
 		{
 			path: "/admin/users/create",
-			name: "Create User",
-			component: () => import("@/views/Admin/Create.vue"),
+			name: "AdminCreateUser",
+			component: () => import("@/views/Admin/User/Create.vue"),
 			meta: { requiresAuth: true, requiresRole: 'admin'},
 		},
 		{
 			path: "/admin/users/edit/:id",
 			name: "AdminEditUser",
-			component: () => import("@/views/Admin/User/AdminEditUserView.vue"),
+			component: () => import("@/views/Admin/User/Edit.vue"),
+			meta: { requiresAuth: true, requiresRole: 'admin'},
+		},
+
+		{
+			path: "/admin/blogs/index",
+			name: "AdminBlogs",
+			component: () => import("@/views/Admin/Blog/List.vue"),
+			meta: { requiresAuth: true, requiresRole: 'admin'},
+		},
+		{
+			path: "/admin/blogs/edit/:id",
+			name: "AdminEditBlog",
+			component: () => import("@/views/Admin/Blog/Edit.vue"),
 			meta: { requiresAuth: true, requiresRole: 'admin'},
 		},
 	],

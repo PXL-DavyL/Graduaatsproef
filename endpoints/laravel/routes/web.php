@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -84,6 +85,10 @@ Route::prefix('api')->group(function () {
         Route::get('/admin/user', [AdminUserController::class, 'show']);
         Route::patch('/admin/user', [AdminUserController::class, 'update']);
         Route::delete('/admin/user', [AdminUserController::class, 'destroy']);
+
+        // Blog
+
+        Route::patch('/admin/blog', [AdminBlogController::class, 'update']);
     });
 
 });
