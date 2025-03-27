@@ -87,5 +87,39 @@ class BlogController extends Controller
             'blog' => $blog
         ]);
     }
-}
 
+    public function destroy(Request $request) {
+        $request->validate([
+            'blog' => 'required|integer',
+            'confirm_title' => 'required|string',
+        ]);
+
+        $blog = Blog::find($request->blog);
+        if(!$blog) {
+            return response()->json([
+                'errors' => [
+                    'blog' => ['Blog not found']
+                ]
+            ], 404);
+        }
+
+        if($blog->title != $request->confirm_title) {
+            return response()->json([
+                'errors' => [
+                    'confirm_title' => ['Title does not match']
+                ]
+            ], 422);
+        }
+
+        $user = Auth::user();
+        if($user->id != $blog->poster_id) {
+            return response()->json([
+                'errors' => [
+                    'blog' => ['You are not the author of this blog']
+                ]
+            ], 403);
+        }
+
+        $blog->delete();
+    }
+}

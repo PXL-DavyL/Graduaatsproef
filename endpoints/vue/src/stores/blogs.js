@@ -30,6 +30,7 @@ export const useBlogStore = defineStore("blogs", () => {
     };
 
     const getBlog = async (credentials) => {
+        loading.value = true;
         try {
             await getCsrfToken();
             const response = await axios.get("http://localhost:8000/api/blog/show", {
@@ -51,6 +52,7 @@ export const useBlogStore = defineStore("blogs", () => {
 
 
     const editBlog = async (credentials) => {
+        loading.value = true;
         try {
             await getCsrfToken();
             const response = await axios.patch("http://localhost:8000/api/blog/edit", credentials, {
@@ -70,6 +72,7 @@ export const useBlogStore = defineStore("blogs", () => {
     }
 
     const createBlog = async (credentials) => {
+        loading.value = true;
         try {
             await getCsrfToken();
             const response = await axios.post("http://localhost:8000/api/blog/create", credentials, {
@@ -86,10 +89,31 @@ export const useBlogStore = defineStore("blogs", () => {
         } finally {
             loading.value = false;
         }
+    }
 
+    const destroyBlog = async (credentials) => {
+        loading.value = true;
+        try {
+            await getCsrfToken();
+            const response = await axios.delete("http://localhost:8000/api/blog/destroy", {
+                params: credentials,
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            });
+            return response;
+        } catch (error) {
+            console.error("Delete blog failed:", error);
+            throw error;
+        }finally {
+            loading.value = false;
+        }
     }
 
     const editBlogAsAdmin = async (credentials) => {
+        loading.value = true;
         try {
             await getCsrfToken();
             const response = await axios.patch("http://localhost:8000/api/admin/blog", credentials, {
@@ -110,6 +134,7 @@ export const useBlogStore = defineStore("blogs", () => {
 
 
     const deleteBlogAsAdmin = async (credentials) => {
+        loading.value = true;
         try {
             await getCsrfToken();
             const response = await axios.delete("http://localhost:8000/api/admin/blog", {
@@ -130,6 +155,7 @@ export const useBlogStore = defineStore("blogs", () => {
     }
 
     const createBlogAsAdmin = async (credentials) => {
+        loading.value = true;
         try {
             await getCsrfToken();
             const response = await axios.post("http://localhost:8000/api/admin/blog", credentials, {
@@ -153,6 +179,7 @@ export const useBlogStore = defineStore("blogs", () => {
         getBlog,
         editBlog,
         createBlog,
+        destroyBlog,
 
         editBlogAsAdmin,
         deleteBlogAsAdmin,

@@ -45,6 +45,7 @@ Route::prefix('api')->group(function () {
     Route::post('/blog/create', [BlogController::class, 'store']);
     Route::get('/blog/show', [BlogController::class, 'show']);
     Route::patch('/blog/edit', [BlogController::class, 'edit']);
+    Route::delete('/blog/destroy', [BlogController::class, 'destroy']);
 
     Route::group(['middleware' => 'auth'], function() {
         // Profile
