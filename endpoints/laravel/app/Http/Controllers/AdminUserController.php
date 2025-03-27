@@ -14,7 +14,7 @@
             ]); 
         }
 
-        public function getUser(Request $request) {
+        public function show(Request $request) {
             $request->validate([
                 'user' => 'required|integer'
             ]);
@@ -26,7 +26,7 @@
             ]);
         }
 
-        public function saveUser(Request $request) {
+        public function update(Request $request) {
             $request->validate([
                 'name' => 'required|string',
                 'email' => 'required|email',
@@ -48,7 +48,7 @@
             $user->save();
         }
 
-        public function destroyUser(Request $request) {
+        public function destroy(Request $request) {
             $request->validate([
                 'user' => 'required|integer',
                 'confirm_password' => 'required',
@@ -69,5 +69,24 @@
             }
     
             $user->delete();
+        }
+
+        public function store(Request $request) {
+            $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|email',
+                'password' => 'required|string',
+                'password_confirmation' => 'required|same:password',
+            ]);
+
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->save();
+
+            return response()->json([
+                'user' => $user
+            ]);
         }
     }

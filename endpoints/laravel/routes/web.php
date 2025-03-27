@@ -75,9 +75,10 @@ Route::prefix('api')->group(function () {
 
         // User
         Route::get('/admin/users', [AdminUserController::class, 'index']);
-        Route::get('/admin/user', [AdminUserController::class, 'getUser']);
-        Route::post('/admin/user', [AdminUserController::class, 'saveUser']);
-        Route::delete('/admin/user', [AdminUserController::class, 'destroyUser']);
+        Route::post('/admin/user', [AdminUserController::class, 'store']);
+        Route::get('/admin/user', [AdminUserController::class, 'show']);
+        Route::patch('/admin/user', [AdminUserController::class, 'update']);
+        Route::delete('/admin/user', [AdminUserController::class, 'destroy']);
     });
 
 });

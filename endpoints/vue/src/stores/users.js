@@ -52,7 +52,7 @@ export const useUserStore = defineStore("user", () => {
         loading.value = true;
 		try {
 			await getCsrfToken();
-			const response = await axios.post("http://localhost:8000/api/admin/user", credentials, {
+			const response = await axios.patch("http://localhost:8000/api/admin/user", credentials, {
 				headers: {
 					Accept: "application/json",
 					"Content-Type": "application/json",
@@ -91,11 +91,34 @@ export const useUserStore = defineStore("user", () => {
 		}
 	}
 
+	const createUser = async (credentials) => {
+		loading.value = true;
+		try {
+			await getCsrfToken();
+			const response = await axios.post("http://localhost:8000/api/admin/user", credentials, {
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+				withCredentials: true,
+			});
+			return response;
+		}
+		catch (error) {
+			console.error("Failed to create user:", error);
+			throw error;
+		}
+		finally {
+			loading.value = false;
+		}
+	}
+
     return {
         loading,
 		getAllUsers,
         getUser,
         saveUser,
 		deleteUser,
+		createUser,
     }
 });
