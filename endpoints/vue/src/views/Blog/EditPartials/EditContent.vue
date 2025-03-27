@@ -27,7 +27,8 @@
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+const router = useRouter();
 import { useBlogStore } from "@/stores/blogs";
 const blogStore = useBlogStore();
 
@@ -59,6 +60,7 @@ const submit = async() => {
         })
 
         toast.success("Blog updated successfully");
+		router.push({ name: "ShowBlog", params: { id: blog.value.id } });
     }
     catch(error) {
         if (error.response) {

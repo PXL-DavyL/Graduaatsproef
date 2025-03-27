@@ -42,6 +42,7 @@ Route::prefix('api')->group(function () {
 
     // Blog
     Route::get('/blog/index', [BlogController::class, 'index']);
+    Route::post('/blog/create', [BlogController::class, 'store']);
     Route::get('/blog/show', [BlogController::class, 'show']);
     Route::patch('/blog/edit', [BlogController::class, 'edit']);
 

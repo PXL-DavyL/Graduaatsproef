@@ -69,6 +69,26 @@ export const useBlogStore = defineStore("blogs", () => {
         }
     }
 
+    const createBlog = async (credentials) => {
+        try {
+            await getCsrfToken();
+            const response = await axios.post("http://localhost:8000/api/blog/create", credentials, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            });
+            return response;
+        } catch (error) {
+            console.error("Create blog failed:", error);
+            throw error;
+        } finally {
+            loading.value = false;
+        }
+
+    }
+
     const editBlogAsAdmin = async (credentials) => {
         try {
             await getCsrfToken();
@@ -132,6 +152,8 @@ export const useBlogStore = defineStore("blogs", () => {
         getBlogs,
         getBlog,
         editBlog,
+        createBlog,
+
         editBlogAsAdmin,
         deleteBlogAsAdmin,
         createBlogAsAdmin,

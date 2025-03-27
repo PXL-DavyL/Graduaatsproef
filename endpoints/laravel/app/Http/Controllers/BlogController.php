@@ -67,5 +67,25 @@ class BlogController extends Controller
             'blog' => $blog->load('poster'),
         ]);
     }
+
+    public function store(Request $request) {
+
+        $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+        ]);
+
+        $author = Auth::user();
+
+        $blog = new Blog();
+        $blog->title = $request->title;
+        $blog->content = $request->content;
+        $blog->poster_id = $author->id;
+        $blog->save();
+
+        return response()->json([
+            'blog' => $blog
+        ]);
+    }
 }
 
