@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\RoleController;
+use App\Models\Blog;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -62,8 +63,8 @@ Route::prefix('api')->group(function () {
 
         Route::get('/admin', function() {
             return response()->json([
-                'message' => 'Admin only page.',
-                'users' => User::latest()->take(10)->get(),
+                'users' => User::latest()->take(7)->get(),
+                'blogs' => Blog::latest()->take(7)->get(),
             ]);
         });
 

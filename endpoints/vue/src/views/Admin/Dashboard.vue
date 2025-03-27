@@ -7,9 +7,12 @@
 			you will be redirected to the edit page.
 		</div>
 
-		{{ loadedUsers }}
+		{{ loadedIndexProps }}
 		<div class="mt-3 flex flex-col gap-5">
-			<div v-if="!loadedUsers" class="w-full flex flex-col gap-2 justify-center items-center">
+			<div
+				v-if="!loadedIndexProps"
+				class="w-full flex flex-col gap-2 justify-center items-center"
+			>
 				<span class="font-xl">Loading users...</span>
 				<IconLoading class="w-16 h-16" />
 			</div>
@@ -47,7 +50,7 @@
 					</tbody>
 				</table>
 				<span class="p-2 bg-zinc-600">
-					<router-link to="/admin/users" class="hover:underline">
+					<router-link to="/admin/users/index" class="hover:underline">
 						Browse all users
 					</router-link>
 				</span>
@@ -68,19 +71,35 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						<tr
+							v-for="blog in blogs"
+							:key="blog.id"
+							class="odd:bg-zinc-500 even:bg-zinc-400 hover:text-zinc-800 hover:bg-zinc-300 cursor-pointer"
+						>
+							<td class="p-2 border-b border-zinc-500">
+								{{ blog.id }}
+							</td>
+							<td class="p-2 border-b border-zinc-500">
+								{{ blog.poster_id }}
+							</td>
+							<td class="p-2 border-b border-zinc-500">
+								{{ blog.title }}
+							</td>
+							<td class="p-2 border-b border-zinc-500">
+								{{ blog.views }}
+							</td>
 							<td class="p-2 border-b border-zinc-500">NaN</td>
-							<td class="p-2 border-b border-zinc-500">NaN</td>
-							<td class="p-2 border-b border-zinc-500">NaN</td>
-							<td class="p-2 border-b border-zinc-500">NaN</td>
-							<td class="p-2 border-b border-zinc-500">NaN</td>
-							<td class="p-2 border-b border-zinc-500">NaN</td>
-							<td class="p-2 border-b border-zinc-500">NaN</td>
+							<td class="p-2 border-b border-zinc-500">
+								{{ new Date(blog.created_at).toLocaleDateString() }}
+							</td>
+							<td class="p-2 border-b border-zinc-500">
+								{{ new Date(blog.updated_at).toLocaleDateString() }}
+							</td>
 						</tr>
 					</tbody>
 				</table>
 				<span class="p-2 bg-zinc-600">
-					<router-link to="/admin/blogs" class="hover:underline">
+					<router-link to="/admin/blogs/index" class="hover:underline">
 						Browse all blogs
 					</router-link>
 				</span>
@@ -98,15 +117,20 @@ import axios from "axios";
 import AdminLayout from "@/layout/AdminLayout.vue";
 import IconLoading from "@/components/icons/IconLoading.vue";
 
-const loadedUsers = ref(false);
+const loadedIndexProps = ref(false);
 const users = ref([]);
+const blogs = ref([]);
 
 onBeforeMount(async () => {
-	users.value = await getUsers();
+	const response = await loadProps();
+	users.value = response.users;
+	blogs.value = response.blogs;
+	console.log(blogs.value);
+	console.log(blogs.value);
 });
 
-const getUsers = async () => {
-	loadedUsers.value = false;
+const loadProps = async () => {
+	loadedIndexProps.value = false;
 	try {
 		await getCsrfToken();
 		const response = await axios.get("http://localhost:8000/api/admin", {
@@ -116,10 +140,10 @@ const getUsers = async () => {
 			},
 			withCredentials: true,
 		});
-		loadedUsers.value = true;
-		return response.data.users;
+		loadedIndexProps.value = true;
+		return response.data;
 	} catch (error) {
-		loadedUsers.value = false;
+		loadedIndexProps.value = false;
 		console.error("Get users failed:", error);
 		throw error;
 	}
