@@ -15,8 +15,10 @@ export const useAuthStore = defineStore("auth", () => {
 		if(localStorage.getItem("user_unix") === null) {
 			if(localStorage.getItem("user") !== null) {
 				localStorage.removeItem("user");
+				localStorage.removeItem("user_unix");
 				toast.error("Session expired. Please log in again.");
 				window.location.href = "/login";
+				return;
 			}
 			// fix: infinite /login spam, if they're not logged in just return null
 			return null;
@@ -24,6 +26,7 @@ export const useAuthStore = defineStore("auth", () => {
 
 		if (localStorage.getItem("user_unix") < Math.floor(Date.now() / 1000) - 7200) { // 120 minutes - config/session.php
 			localStorage.removeItem("user");
+			localStorage.removeItem("user_unix");
 			toast.error("Session expired. Please log in again.");
 			window.location.href = "/login";
 			return null;
@@ -116,6 +119,7 @@ export const useAuthStore = defineStore("auth", () => {
 		} catch (error) {
 			delete axios.defaults.headers.common["Authorization"];
 			localStorage.removeItem("user");
+			localStorage.removeItem("user_unix");
 			console.error("Failed to fetch user:", error);
 			throw error;
 		} finally {
@@ -145,6 +149,7 @@ export const useAuthStore = defineStore("auth", () => {
 
 			delete axios.defaults.headers.common["Authorization"];
 			localStorage.removeItem("user");
+			localStorage.removeItem("user_unix");
 			loading.value = false;
 		}
 	};
