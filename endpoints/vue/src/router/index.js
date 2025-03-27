@@ -73,11 +73,16 @@ const router = createRouter({
 			component: () => import("@/views/Admin/User/Edit.vue"),
 			meta: { requiresAuth: true, requiresRole: 'admin'},
 		},
-
 		{
 			path: "/admin/blogs/index",
 			name: "AdminBlogs",
 			component: () => import("@/views/Admin/Blog/List.vue"),
+			meta: { requiresAuth: true, requiresRole: 'admin'},
+		},
+		{
+			path: "/admin/blogs/create",
+			name: "AdminCreateUser",
+			component: () => import("@/views/Admin/Blog/Create.vue"),
 			meta: { requiresAuth: true, requiresRole: 'admin'},
 		},
 		{

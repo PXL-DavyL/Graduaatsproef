@@ -74,7 +74,6 @@ Route::prefix('api')->group(function () {
             ]);
         });
 
-
         // Role
         Route::post('/admin/user/set-permission', [RoleController::class, 'save_user_permissions']);
         Route::post('/admin/user/toggle-admin', [RoleController::class, 'toggle_admin_role']);
@@ -88,7 +87,7 @@ Route::prefix('api')->group(function () {
         Route::delete('/admin/user', [AdminUserController::class, 'destroy']);
 
         // Blog
-
+        Route::post('/admin/blog', [AdminBlogController::class, 'store']);
         Route::patch('/admin/blog', [AdminBlogController::class, 'update']);
         Route::delete('/admin/blog', [AdminBlogController::class, 'destroy']);
     });
