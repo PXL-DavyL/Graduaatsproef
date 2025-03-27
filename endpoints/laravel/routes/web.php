@@ -51,6 +51,7 @@ Route::prefix('api')->group(function () {
     // Comments
 
     Route::patch('/comment/update', [CommentController::class, 'update']);
+    Route::delete('/comment/destroy', [CommentController::class, 'destroy']);
 
     Route::post('/blog/add-view', [BlogController::class, 'add_view']);
 

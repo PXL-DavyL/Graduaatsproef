@@ -25,4 +25,24 @@ class CommentController extends Controller
         $comment->save();
     }
 
+    public function destroy(Request $request) {
+        $request->validate([
+            'id' => 'required|integer',
+        ]);
+
+
+        $comment = BlogComment::find($request->id);
+        if(!$comment) {
+            return response()->json(['message' => 'Comment not found'], 404);
+        }
+
+        $user = Auth::user();
+
+        if($comment->poster_id != $user->id) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $comment->delete();
+    }
+
 }

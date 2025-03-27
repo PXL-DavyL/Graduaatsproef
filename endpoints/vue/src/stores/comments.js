@@ -28,7 +28,29 @@ export const useCommentStore = defineStore("comments", () => {
         }
     }
 
+    const destroyComment = async (credentials) => {
+        loading.value = true;
+        try {
+            await getCsrfToken();
+            const response = await axios.delete("http://localhost:8000/api/comment/destroy", {
+                params: credentials,
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            });
+            return response;
+        } catch (error) {
+            console.error("Destroy comment failed:", error);
+            throw error;
+        } finally {
+            loading.value = false;
+        }
+    }
+
     return {
         editComment,
+        destroyComment,
     }
 });

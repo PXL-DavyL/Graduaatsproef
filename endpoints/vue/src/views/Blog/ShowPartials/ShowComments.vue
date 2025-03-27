@@ -29,7 +29,9 @@
                     >
                 </div>
                 <DeleteComment
+                    :auth="userAuth"
                     :comment="comment"
+                    @delete-comment="refreshComments"
                 />
             </div>
         </div>
@@ -55,7 +57,7 @@ import Pagination from "@/components/Pagination.vue";
 import InputButton from "@/components/InputButton.vue";
 
 import EditComment from "./EditComment.vue";
-//import DeleteComment from "./DeleteComment.vue";
+import DeleteComment from "./DeleteComment.vue";
 
 const props = defineProps({
     show: {
