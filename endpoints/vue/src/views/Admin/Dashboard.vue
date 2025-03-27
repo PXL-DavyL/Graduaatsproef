@@ -7,7 +7,6 @@
 			you will be redirected to the edit page.
 		</div>
 
-		{{ loadedIndexProps }}
 		<div class="mt-3 flex flex-col gap-5">
 			<div
 				v-if="!loadedIndexProps"
