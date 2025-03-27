@@ -41,6 +41,7 @@
                 :show="showComments"
 				@refresh-comments="refreshComments"
             />
+			<AddComment @add-comment="refreshComments"/>
 		</div>
 	</Layout>
 </template>
@@ -49,7 +50,6 @@
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { formatDate } from "@/composables/dates.js";
-import { toast } from "vue3-toastify";
 
 import axios from "axios";
 import { getCsrfToken } from "@/stores/utils";
@@ -68,12 +68,12 @@ import InputButtonLink from "@/components/InputButtonLink.vue";
 import IconChevron from "@/components/icons/IconChevron.vue";
 
 import ShowComments from "./ShowPartials/ShowComments.vue";
+import AddComment from "./ShowPartials/AddComment.vue";
 
 const showComments = ref(true);
 const blog_id = useRoute().params.id;
 const blog_title = ref("Blog");
 const comments = ref([]);
-
 
 onMounted(async () => {
 	try {

@@ -49,7 +49,28 @@ export const useCommentStore = defineStore("comments", () => {
         }
     }
 
+    const addComment = async (credentials) => {
+        loading.value = true;
+        try {
+            await getCsrfToken();
+            const response = await axios.post("http://localhost:8000/api/comment/store", credentials, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            });
+            return response;
+        } catch (error) {
+            console.error("Add comment failed:", error);
+            throw error;
+        } finally {
+            loading.value = false;
+        }
+    }
+
     return {
+        addComment,
         editComment,
         destroyComment,
     }

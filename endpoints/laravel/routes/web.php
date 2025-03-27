@@ -50,6 +50,7 @@ Route::prefix('api')->group(function () {
 
     // Comments
 
+    Route::post('/comment/store', [CommentController::class, 'store']);
     Route::patch('/comment/update', [CommentController::class, 'update']);
     Route::delete('/comment/destroy', [CommentController::class, 'destroy']);
 

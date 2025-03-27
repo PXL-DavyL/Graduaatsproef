@@ -45,4 +45,17 @@ class CommentController extends Controller
         $comment->delete();
     }
 
+    public function store(Request $request) {
+        $request->validate([
+            'blog_id' => 'required|integer',
+            'content' => 'required|string',
+        ]);
+
+        $comment = new BlogComment();
+        $comment->blog_id = $request->blog_id;
+        $comment->content = $request->content;
+        $comment->poster_id = Auth::user()->id;
+        $comment->save();
+    }
+
 }
