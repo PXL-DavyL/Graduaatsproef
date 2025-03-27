@@ -126,8 +126,6 @@ onBeforeMount(async () => {
 	const response = await loadProps();
 	users.value = response.users;
 	blogs.value = response.blogs;
-	console.log(blogs.value);
-	console.log(blogs.value);
 });
 
 const loadProps = async () => {
