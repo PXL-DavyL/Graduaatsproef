@@ -99,8 +99,6 @@ const createUser = async() => {
 				toast.error(response_errors[error]);
 				errors.value[error] = response_errors[error][0];
 			}
-
-            confirm_password.value = '';
 		}
     }
     finally {
