@@ -32,8 +32,18 @@
 								</div>
 							</div>
 							<div class="flex gap-2">
-								<!-- reactions -->
-							</div>
+                                <div
+                                    class="flex gap-1 items-center text-gray-400"
+                                    v-for="reaction in processedReactions[index]
+                                        .reactions"
+                                >
+                                    <span v-html="reaction.icon"></span>
+                                    <span
+                                        v-if="reaction.count > 0"
+                                        v-html="reaction.count"
+                                    ></span>
+                                </div>
+                            </div>
 						</div>
 						<InputButton @click="onShowBlog(article.id)" class="self-end">
 							Read more
@@ -62,7 +72,6 @@ import { formatDate } from "@/composables/dates.js";
 
 import Layout from "@/layout/Layout.vue";
 import Pagination from "@/components/Pagination.vue";
-import InputButtonLink from "@/components/InputButtonLink.vue";
 import IconView from "@/components/icons/IconView.vue";
 import IconComments from "@/components/icons/IconComments.vue";
 import InputButton from "@/components/InputButton.vue";
@@ -76,10 +85,37 @@ onBeforeMount(async () => {
 
 const getPaginationData = (data, page) => {
 	blogs.value = data;
+	processReactions();
 	//currentPage.value = page;
 };
 
 const onShowBlog = (id) => {
 	router.push({ name: "ShowBlog", params: { id: id } });
+};
+
+
+const processedReactions = ref([]);
+const processReactions = () => {
+    processedReactions.value = blogs.value.map((article) => {
+        const reactionCounts = article.reactions.reduce(
+            (acc, reaction) => {
+                if (reaction.type === "upvote") {
+                    acc.upvotes++;
+                } else if (reaction.type === "downvote") {
+                    acc.downvotes++;
+                }
+                return acc;
+            },
+            { upvotes: 0, downvotes: 0 }
+        );
+
+        return {
+            id: article.id,
+            reactions: [
+                { id: "upvote", icon: "👍", count: reactionCounts.upvotes },
+                { id: "downvote", icon: "👎", count: reactionCounts.downvotes },
+            ],
+        };
+    });
 };
 </script>

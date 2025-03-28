@@ -11,7 +11,7 @@ class BlogController extends Controller
 {
     public function index() {
         return response()->json([
-            'blogs' => Blog::with('poster', 'comments')->get(),
+            'blogs' => Blog::with('poster', 'comments', 'reactions')->get(),
         ]); 
     }
 
