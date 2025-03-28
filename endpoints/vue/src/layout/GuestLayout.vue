@@ -7,7 +7,7 @@ import ApplicationLogo from '@/components/ApplicationLogo.vue';
         class="flex max-h-screen flex-col items-center pt-6 sm:justify-center sm:pt-0"
     >
         <div class="h-20 w-20">
-            <router-link to="/">
+            <router-link :to="{ name: 'home' }">
                 <ApplicationLogo class="fill-current text-red-600" />
             </router-link>
         </div>

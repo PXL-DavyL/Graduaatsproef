@@ -5,27 +5,27 @@
         >
             <span class="text-xl bold w-full">Admin Menu</span>
             <div class="mt-8 flex flex-col gap-2">
-                <router-link to="/admin"
-                    ><span class="flex w-full gap-4"
+                <router-link :to="{ name: 'Admin' }">
+                    <span class="flex w-full gap-4"
                         ><IconHome class="h-6 w-6" /> Home</span
                     ></router-link
                 >
                 
-                <router-link to="/admin/users/index"
+                <router-link :to="{ name: 'AdminUsers'}"
                     ><span class="flex w-full gap-4"
                         ><IconUser class="h-6 w-6" /> Users</span
                     ></router-link
                 >
 
-                <router-link to="/admin/blogs/index">
+                <router-link  :to="{ name: 'AdminBlogs'}">
                     <span class="flex w-full gap-4"
                         ><IconBlog class="h-6 w-6" /> Blogs
                     </span>
                 </router-link>
             </div>
             <div class="mt-8">
-                <router-link to="/"
-                    ><span class="flex w-full gap-4"
+                <router-link  :to="{ name: 'home'}">
+                    <span class="flex w-full gap-4"
                         ><IconReturn class="h-6 w-6" /> Back to site</span
                     ></router-link>
             </div>

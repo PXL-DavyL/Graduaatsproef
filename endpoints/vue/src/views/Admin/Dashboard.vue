@@ -49,7 +49,7 @@
 					</tbody>
 				</table>
 				<span class="p-2 bg-zinc-600">
-					<router-link to="/admin/users/index" class="hover:underline">
+					<router-link :to="{ name: 'AdminUsers'}" class="hover:underline">
 						Browse all users
 					</router-link>
 				</span>
@@ -102,7 +102,7 @@
 					</tbody>
 				</table>
 				<span class="p-2 bg-zinc-600">
-					<router-link to="/admin/blogs/index" class="hover:underline">
+					<router-link :to="{ name: 'AdminBlogs'}" class="hover:underline">
 						Browse all blogs
 					</router-link>
 				</span>
