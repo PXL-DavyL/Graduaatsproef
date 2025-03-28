@@ -5,7 +5,7 @@
 				<div class="flex flex-col border border-zinc-600 rounded">
 					<div class="p-2 bg-zinc-700 flex justify-between">
 						<span> User List </span>
-						<InputButtonLink type="primary" to="/admin/users/create">
+						<InputButtonLink type="primary" name="AdminCreateUser">
 							Create New User
 						</InputButtonLink>
 					</div>

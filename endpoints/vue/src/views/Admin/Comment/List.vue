@@ -54,7 +54,7 @@
 				/>
 			</div>
 		</div>
-		<InputButtonLink type="secondary" class="mt-4 w-full" to="/admin/blogs/index">
+		<InputButtonLink type="secondary" class="mt-4 w-full" name="AdminBlogs">
 			Back to blog
 		</InputButtonLink>
 	</AdminLayout>

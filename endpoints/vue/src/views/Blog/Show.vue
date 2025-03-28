@@ -45,7 +45,7 @@
 					class="self-end"
 					v-if="auth_user && blog.poster && auth_user.id === blog.poster.id"
 				>
-					<InputButtonLink :to="`/blog/edit/${blog.id}`" class="self-end" type="warning">
+					<InputButtonLink name="EditBlog" :params="{id: blog.id}" class="self-end" type="warning">
 						Edit
 					</InputButtonLink>
 				</div>

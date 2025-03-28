@@ -79,7 +79,7 @@
                 >
                     <div class="flex justify-between items-center">
                         <span> {{ blog.comments.length }}</span>
-                        <InputButton type="primary" @click="manageComment">Manage comments</InputButton>
+                        <InputButtonLink type="primary" name="AdminListBlogComments" :params="{id: blog.id}">Manage comments</InputButtonLink>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                 >
                     <div class="flex justify-between items-center">
                         <span> {{ blog.reactions.length }}</span>
-                        <InputButton type="primary" @click="manageReaction">Manage reactions</InputButton>
+                        <InputButtonLink type="primary" name="AdminListBlogReactions" :params="{id: blog.id}">Manage reactions</InputButtonLink>
                     </div>
                 </div>
             </div>
@@ -110,7 +110,7 @@
 
         <Delete v-if="blog" :blog="blog" class="mt-4" />
 
-        <InputButtonLink class="mt-4 w-full" type="secondary" to="/admin/blogs/index">
+        <InputButtonLink class="mt-4 w-full" type="secondary" name="AdminBlogs">
             Back to blogs
         </InputButtonLink>
     </AdminLayout>
@@ -189,21 +189,4 @@ const editBlog = async() => {
 	}
 };
 
-const manageComment = () => {
-    router.push({
-        name: "AdminListBlogComments",
-        params: {
-            id: blog.value.id,
-        },
-    });
-};
-
-const manageReaction = () => {
-    router.push({
-        name: "AdminListBlogReactions",
-        params: {
-            id: blog.value.id,
-        },
-    });
-};
 </script>

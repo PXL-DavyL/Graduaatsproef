@@ -15,15 +15,6 @@ use App\Models\Blog;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/test', function() {
-    return response()->json(['message' => 'API is working!']);
-});
-
-
 Route::get('/metadata', function() {
     return response()->json([
         'phpVersion' => phpversion(),

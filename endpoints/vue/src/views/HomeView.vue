@@ -45,9 +45,9 @@
                                 </div>
                             </div>
 						</div>
-						<InputButton @click="onShowBlog(article.id)" class="self-end">
+						<InputButtonLink  name="ShowBlog" :params="{ id: article.id}" class="self-end">
 							Read more
-						</InputButton>
+						</InputButtonLink>
 					</div>
 				</article>
 			</section>
@@ -74,7 +74,7 @@ import Layout from "@/layout/Layout.vue";
 import Pagination from "@/components/Pagination.vue";
 import IconView from "@/components/icons/IconView.vue";
 import IconComments from "@/components/icons/IconComments.vue";
-import InputButton from "@/components/InputButton.vue";
+import InputButtonLink from "@/components/InputButtonLink.vue";
 
 const blogs = ref([]);
 const allBlogs = ref([]);
@@ -87,10 +87,6 @@ const getPaginationData = (data, page) => {
 	blogs.value = data;
 	processReactions();
 	//currentPage.value = page;
-};
-
-const onShowBlog = (id) => {
-	router.push({ name: "ShowBlog", params: { id: id } });
 };
 
 

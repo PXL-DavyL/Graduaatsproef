@@ -55,9 +55,14 @@
 
 			<Delete :reaction="reaction" />
 
-			<InputButton @click="backToReactions" class="w-full" type="secondary">
+			<InputButtonLink
+				name="AdminListBlogReactions"
+				:params="{ id: reaction.blog_id }"
+				class="w-full"
+				type="secondary"
+			>
 				Back to reactions
-			</InputButton>
+			</InputButtonLink>
 		</div>
 	</AdminLayout>
 </template>
@@ -115,9 +120,5 @@ const editReaction = async () => {
 		toast.error("Failed to update reaction.");
 		console.log(error);
 	}
-};
-
-const backToReactions = () => {
-	router.push({ name: "AdminListBlogReactions", params: { id: reaction.value.blog_id } });
 };
 </script>

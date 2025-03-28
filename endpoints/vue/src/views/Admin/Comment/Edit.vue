@@ -68,14 +68,14 @@
             
             <Delete v-if="!loading" :comment="comment" />
 
-            <InputButton
-
-                @click="manageComment"
+            <InputButtonLink
                 class="w-full"
                 type="secondary"
+                name="AdminListBlogComments"
+                :params="{ id: comment.blog_id }"
             >
                 Back to comments
-            </InputButton>
+            </InputButtonLink>
         </div>
     </AdminLayout>
 </template>
@@ -150,15 +150,5 @@ const editComment = async () => {
 			}
 		}
     }
-};
-
-
-const manageComment = () => {
-    router.push({
-        name: "AdminListBlogComments",
-        params: {
-            id: comment.value.blog_id,
-        },
-    });
 };
 </script>

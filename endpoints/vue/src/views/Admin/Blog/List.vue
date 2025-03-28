@@ -7,7 +7,7 @@
                         <span> Blog List </span>
                         <InputButtonLink
                             type="primary"
-                            to="/admin/blogs/create"
+                            name="AdminCreateBlog"
                         >
                             Create New Blog
                         </InputButtonLink>

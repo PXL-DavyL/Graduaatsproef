@@ -1,5 +1,5 @@
 <template>
-    <router-link
+    <span
         class="inline-flex justify-center items-center rounded-md border border-transparent px-4 py-2 text-xs font-semibold uppercase tracking-widest transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2"
         :class="{
             'bg-sky-400 hover:bg-sky-300 focus:bg-sky-600 focus:ring-sky-500 active:bg-sky-500 text-white ':
@@ -12,13 +12,15 @@
                 props.type === 'danger',
         }"
     
-        :to="props.to"
+        @click="pushRoute"
         >
         <slot />
-    </router-link>
+    </span>
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const props = defineProps({
     type: {
         type: String,
@@ -26,9 +28,22 @@ const props = defineProps({
         validator: (value) =>
             ["primary", "secondary", "warning", "danger"].includes(value),
     },
-    to: {
+    name: {
         type: String,
         required: true,
     },
+    params: {
+        type: Object,
+        default: {},
+    }
 });
+
+const pushRoute = () => {
+    console.log(props.name);
+
+    console.log(props.params);
+    router.push({ name: props.name, params: props.params });
+};
+
+
 </script>
