@@ -76,6 +76,8 @@ import InputButton from "@/components/InputButton.vue";
 import InputButtonLink from "@/components/InputButtonLink.vue";
 import InputSelect from "@/components/InputSelect.vue";
 
+import Delete from "./Partials/Delete.vue";
+
 const reaction = ref([]);
 const reaction_author = ref("");
 

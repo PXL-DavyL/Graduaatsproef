@@ -66,5 +66,29 @@ class AdminBlogReactionController extends Controller
     }
     public function destroy(Request $request) {
         
+        $request->validate([
+            'id' => 'required|integer', // reaction
+            'confirm_author' => 'required|string'
+        ]);
+
+
+        $reaction = BlogReaction::find($request->id);
+        if(!$reaction) {
+            return response()->json([
+                'errors' => [
+                    'id' => ['Reaction not found']
+                ]
+            ], 404);
+        }
+
+        if($reaction->poster->name !== $request->confirm_author) {
+            return response()->json([
+                'errors' => [
+                    'confirm_author' => ['Author name does not match']
+                ]
+            ], 403);
+        }
+
+        $reaction->delete();
     }
 }
