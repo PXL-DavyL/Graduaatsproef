@@ -15,6 +15,11 @@ use App\Models\Blog;
 use Illuminate\Http\Request;
 use App\Models\User;
 
+
+// Authentication
+require __DIR__.'/auth.php';
+
+// Metadata
 Route::get('/metadata', function() {
     return response()->json([
         'phpVersion' => phpversion(),
@@ -22,34 +27,10 @@ Route::get('/metadata', function() {
     ]);
 });
 
-
 Route::prefix('api')->group(function () {
-    Route::get('/csrf-token', function() {
-        return response()->json(['token' => csrf_token()]);
-    });
-    
-    // auth
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/forgot_pass', [AuthController::class, 'forgot_pass']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', function (Request $request) { return $request->user(); });
 
-    // Blog
+    // Index page
     Route::get('/blog/index', [BlogController::class, 'index']);
-    Route::post('/blog/create', [BlogController::class, 'store']);
-    Route::get('/blog/show', [BlogController::class, 'show']);
-    Route::patch('/blog/edit', [BlogController::class, 'edit']);
-    Route::delete('/blog/destroy', [BlogController::class, 'destroy']);
-    Route::post('/blog/add-view', [BlogController::class, 'add_view']);
-
-    // Comments
-    Route::post('/comment/store', [BlogCommentController::class, 'store']);
-    Route::patch('/comment/update', [BlogCommentController::class, 'update']);
-    Route::delete('/comment/destroy', [BlogCommentController::class, 'destroy']);
-
-    // Reaction
-    Route::post('reaction_toggle', [BlogReactionController::class, 'toggle_reaction']);
 
     Route::group(['middleware' => 'auth'], function() {
         // Profile
@@ -57,16 +38,31 @@ Route::prefix('api')->group(function () {
         Route::post('/update-password', [ProfileController::class, 'updatePassword']);
         Route::post('/delete-account', [ProfileController::class, 'deleteAccount']);
 
-        // Role
+        // Blog
+        Route::post('/blog/create', [BlogController::class, 'store']);
+        Route::get('/blog/show', [BlogController::class, 'show']);
+        Route::patch('/blog/edit', [BlogController::class, 'edit']);
+        Route::delete('/blog/destroy', [BlogController::class, 'destroy']);
+        Route::post('/blog/add-view', [BlogController::class, 'add_view']);
+    
+        // Comments
+        Route::post('/comment/store', [BlogCommentController::class, 'store']);
+        Route::patch('/comment/update', [BlogCommentController::class, 'update']);
+        Route::delete('/comment/destroy', [BlogCommentController::class, 'destroy']);
+    
+        // Reaction
+        Route::post('reaction_toggle', [BlogReactionController::class, 'toggle_reaction']);
+
+        // Roles
         Route::get('/auth-roles', [RoleController::class, 'get_auth_roles']); // auth only
         Route::get('/auth-permissions', [RoleController::class, 'get_auth_permissions']); // auth only
         Route::get('/user-roles', [RoleController::class, 'get_user_roles']); // user selection
         Route::get('/user-permissions', [RoleController::class, 'get_user_permissions']); // user selection
     });
 
+    // Admin
     Route::group(['middleware' => ['auth', 'role:admin']], function() {
-        // Admin stuff goes ehre
-
+        // Index page
         Route::get('/admin', function() {
             return response()->json([
                 'users' => User::latest()->take(7)->get(),
@@ -80,11 +76,12 @@ Route::prefix('api')->group(function () {
             ]);
         });
 
-        // Role
+        // Permission routes
         Route::post('/admin/user/set-permission', [RoleController::class, 'save_user_permissions']);
         Route::post('/admin/user/toggle-admin', [RoleController::class, 'toggle_admin_role']);
         Route::get('/admin/user/permissions', [RoleController::class, 'get_all_permissions']);
 
+        // Resource routes (blogs/users)
         // User
         Route::get('/admin/users', [AdminUserController::class, 'index']);
         Route::post('/admin/user', [AdminUserController::class, 'store']);
