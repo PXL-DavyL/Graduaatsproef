@@ -86,12 +86,9 @@ watch(
 
 const deleteUser = async () => {
 	try {
-		console.log("Deleting user...");
 		const response = await profileStore.deleteAccount({
 			password: password.value,
 		});
-		console.log(response);
-		console.log("User deleted successfully.");
 		toast.success("Account deleted successfully.");
 		closeModal();
 	} catch (error) {

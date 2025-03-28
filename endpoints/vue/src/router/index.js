@@ -159,7 +159,6 @@ router.beforeEach(async(to, from, next) => {
 	else if(to.meta.checkBlogAuthor) { // match author with auth user
 		const blogId = to.params.id;
 		const blog = await blogStore.getBlog({id: blogId});
-		console.log(blog);
 		if (user.id !== blog.data.blog.poster_id) {
 			next({ name: "home" });
 			return;

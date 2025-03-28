@@ -52,12 +52,9 @@ const createBlog = async () => {
             title: title.value,
             content: content.value
         });
-        console.log(response);
-
+        
         const new_blog_id = response.data.blog.id;
         router.push({ name: "ShowBlog", params: { id: new_blog_id } });
-        console.log('pushing');
-
 
         toast.success('Blog created successfully');
     }

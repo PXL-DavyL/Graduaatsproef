@@ -14,7 +14,7 @@ export const useReactionStore = defineStore("reactions", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.get("http://localhost:8000/api/admin/blog/reactions", {
+            const response = await axios.get("http://localhost:8000/api/admin/blogs/reactions", {
                 params: credentials,
                 headers: {
                     Accept: "application/json",
@@ -35,7 +35,7 @@ export const useReactionStore = defineStore("reactions", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.get("http://localhost:8000/api/admin/blog/reaction", {
+            const response = await axios.get("http://localhost:8000/api/admin/blogs/reaction", {
                 params: credentials,
                 headers: {
                     Accept: "application/json",
@@ -56,7 +56,7 @@ export const useReactionStore = defineStore("reactions", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.patch("http://localhost:8000/api/admin/blog/reaction", credentials, {
+            const response = await axios.patch("http://localhost:8000/api/admin/blogs/reaction", credentials, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
@@ -76,7 +76,7 @@ export const useReactionStore = defineStore("reactions", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.delete("http://localhost:8000/api/admin/blog/reaction", {
+            const response = await axios.delete("http://localhost:8000/api/admin/blogs/reaction", {
                 params: credentials,
                 headers: {
                     Accept: "application/json",

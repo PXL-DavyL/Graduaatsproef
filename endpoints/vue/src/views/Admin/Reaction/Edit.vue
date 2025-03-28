@@ -96,7 +96,6 @@ onBeforeMount(async () => {
 		reaction.value = response.data.reaction;
 		reaction_author.value = reaction.value.poster.name;
 		type.value = reaction.value.type;
-		console.log(reaction.value);
 	} catch (error) {
 		console.log(error);
 	}
@@ -109,7 +108,6 @@ watch(
 );
 
 const editReaction = async () => {
-	console.log(type.value);
 	try {
 		const response = await reactionStore.updateReactionAsAdmin({
 			id: reaction.value.id,

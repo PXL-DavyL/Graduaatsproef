@@ -15,7 +15,8 @@ class BlogController extends Controller
         ]); 
     }
 
-    public function add_view(Request $request) {
+    // When they visit a page, this is called. Increments the view count.
+    public function update(Request $request) {
         $request->validate([
             'id' => 'required|integer',
         ]);

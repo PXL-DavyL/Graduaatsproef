@@ -39,11 +39,6 @@ const props = defineProps({
 });
 
 const pushRoute = () => {
-    console.log(props.name);
-
-    console.log(props.params);
     router.push({ name: props.name, params: props.params });
 };
-
-
 </script>

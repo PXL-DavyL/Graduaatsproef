@@ -114,7 +114,7 @@ const loadAllPermissions = async () => {
 	try {
 		loadingPermissions.value = true;
 		await getCsrfToken();
-		const response = await axios.get("http://localhost:8000/api/admin/user/permissions", {
+		const response = await axios.get("http://localhost:8000/api/admin/get-permissions", {
 			headers: {
 				Accept: "application/json",
 				"Content-Type": "application/json",

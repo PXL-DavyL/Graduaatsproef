@@ -12,7 +12,7 @@ export const useCommentStore = defineStore("comments", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.patch("http://localhost:8000/api/comment/update", credentials, {
+            const response = await axios.patch("http://localhost:8000/api/blog/comment", credentials, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export const useCommentStore = defineStore("comments", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.delete("http://localhost:8000/api/comment/destroy", {
+            const response = await axios.delete("http://localhost:8000/api/blog/comment", {
                 params: credentials,
                 headers: {
                     Accept: "application/json",
@@ -53,7 +53,7 @@ export const useCommentStore = defineStore("comments", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.post("http://localhost:8000/api/comment/store", credentials, {
+            const response = await axios.post("http://localhost:8000/api/blog/comment", credentials, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export const useCommentStore = defineStore("comments", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.get("http://localhost:8000/api/admin/blog/comments", {
+            const response = await axios.get("http://localhost:8000/api/admin/blogs/comments", {
                 params: credentials,
                 headers: {
                     Accept: "application/json",
@@ -94,7 +94,7 @@ export const useCommentStore = defineStore("comments", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.get("http://localhost:8000/api/admin/blog/comment", {
+            const response = await axios.get("http://localhost:8000/api/admin/blogs/comment", {
                 params: credentials,
                 headers: {
                     Accept: "application/json",
@@ -116,7 +116,7 @@ export const useCommentStore = defineStore("comments", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.patch("http://localhost:8000/api/admin/blog/comment", credentials, {
+            const response = await axios.patch("http://localhost:8000/api/admin/blogs/comment", credentials, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
@@ -138,7 +138,7 @@ export const useCommentStore = defineStore("comments", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.delete("http://localhost:8000/api/admin/blog/comment", {
+            const response = await axios.delete("http://localhost:8000/api/admin/blogs/comment", {
                 params: credentials,
                 headers: {
                     Accept: "application/json",

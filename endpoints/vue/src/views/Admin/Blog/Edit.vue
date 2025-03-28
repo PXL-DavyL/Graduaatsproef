@@ -154,7 +154,6 @@ onBeforeMount(async() => {
         });
 
         blog.value = blogResponse.data.blog;
-        console.log(blog.value);
         title.value = blog.value.title;
         content.value = blog.value.content;
         author.value = blog.value.poster_id;

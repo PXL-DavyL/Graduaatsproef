@@ -146,7 +146,7 @@ const toggleReaction = async (type) => {
 	try {
 		await getCsrfToken();
 		const response = await axios.post(
-			"http://localhost:8000/api/reaction_toggle",
+			"http://localhost:8000/api/blog/reaction",
 			{
 				id: blog_id,
 				type: type,
@@ -178,7 +178,7 @@ const increaseView = async () => {
 	try {
 		await getCsrfToken();
 		const response = await axios.post(
-			"http://localhost:8000/api/blog/add-view",
+			"http://localhost:8000/api/blog",
 			{
 				id: blog_id,
 			},

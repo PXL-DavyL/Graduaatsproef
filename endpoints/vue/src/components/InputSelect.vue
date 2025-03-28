@@ -43,8 +43,6 @@ const props = defineProps({
     },
 });
 
-console.log(props.options);
-
 const value = defineModel({
     type: String,
     required: true,

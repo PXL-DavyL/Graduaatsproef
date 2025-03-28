@@ -96,7 +96,7 @@ export const useRoleStore = defineStore("roles-and-permissions", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.post("http://localhost:8000/api/admin/user/set-permission", credentials, {
+            const response = await axios.post("http://localhost:8000/api/admin/users/permission", credentials, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
@@ -116,7 +116,7 @@ export const useRoleStore = defineStore("roles-and-permissions", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.post("http://localhost:8000/api/admin/user/toggle-admin", credentials, {
+            const response = await axios.post("http://localhost:8000/api/admin/users/admin", credentials, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",

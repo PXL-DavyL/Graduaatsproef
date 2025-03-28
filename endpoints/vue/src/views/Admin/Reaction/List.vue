@@ -100,7 +100,6 @@ const getPaginationData = (data, page) => {
 	reactions.value = data;
 };
 const onClickRow = (reaction) => {
-	console.log(blog_id);
 	router.push({
 		name: "AdminEditBlogReaction",
 		params: { blog: blog_id, reaction: reaction.id },

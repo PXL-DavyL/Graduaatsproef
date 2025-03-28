@@ -31,7 +31,7 @@ Route::get('/metadata', function() {
 Route::prefix('api')->group(function () { 
 
     // Index page
-    Route::get('/blog/index', [BlogController::class, 'index']);
+    Route::get('/blogs', [BlogController::class, 'index']);
 
     Route::group(['middleware' => 'auth'], function() {
         // Profile
@@ -41,18 +41,18 @@ Route::prefix('api')->group(function () {
 
         // Blog
         Route::post('/blog/create', [BlogController::class, 'store']);
-        Route::get('/blog/show', [BlogController::class, 'show']);
-        Route::patch('/blog/edit', [BlogController::class, 'edit']);
-        Route::delete('/blog/destroy', [BlogController::class, 'destroy']);
-        Route::post('/blog/add-view', [BlogController::class, 'add_view']);
+        Route::get('/blog', [BlogController::class, 'show']);
+        Route::patch('/blog', [BlogController::class, 'edit']);
+        Route::delete('/blog', [BlogController::class, 'destroy']);
+        Route::post('/blog', [BlogController::class, 'update']);
     
         // Comments
-        Route::post('/comment/store', [BlogCommentController::class, 'store']);
-        Route::patch('/comment/update', [BlogCommentController::class, 'update']);
-        Route::delete('/comment/destroy', [BlogCommentController::class, 'destroy']);
+        Route::post('/blog/comment', [BlogCommentController::class, 'store']);
+        Route::patch('/blog/comment', [BlogCommentController::class, 'update']);
+        Route::delete('/blog/comment', [BlogCommentController::class, 'destroy']);
     
         // Reaction
-        Route::post('reaction_toggle', [BlogReactionController::class, 'toggle_reaction']);
+        Route::post('blog/reaction', [BlogReactionController::class, 'toggle_reaction']);
 
         // Roles
         Route::get('/auth-roles', [RoleController::class, 'get_auth_roles']); // auth only
@@ -78,11 +78,10 @@ Route::prefix('api')->group(function () {
         });
 
         // Permission routes
-        Route::post('/admin/user/set-permission', [RoleController::class, 'save_user_permissions']);
-        Route::post('/admin/user/toggle-admin', [RoleController::class, 'toggle_admin_role']);
-        Route::get('/admin/user/permissions', [RoleController::class, 'get_all_permissions']);
+        Route::get('/admin/get-permissions', [RoleController::class, 'get_all_permissions']);
+        Route::post('/admin/users/permission', [RoleController::class, 'save_user_permissions']);
+        Route::post('/admin/users/admin', [RoleController::class, 'toggle_admin_role']);
 
-        // Resource routes (blogs/users)
         // User
         Route::get('/admin/users', [AdminUserController::class, 'index']);
         Route::post('/admin/user', [AdminUserController::class, 'store']);
@@ -91,21 +90,20 @@ Route::prefix('api')->group(function () {
         Route::delete('/admin/user', [AdminUserController::class, 'destroy']);
 
         // Blog
-        Route::post('/admin/blog', [AdminBlogController::class, 'store']);
-        Route::patch('/admin/blog', [AdminBlogController::class, 'update']);
-        Route::delete('/admin/blog', [AdminBlogController::class, 'destroy']);
+        Route::post('/admin/blogs', [AdminBlogController::class, 'store']);
+        Route::patch('/admin/blogs', [AdminBlogController::class, 'update']);
+        Route::delete('/admin/blogs', [AdminBlogController::class, 'destroy']);
 
         // Comments
-        Route::get('/admin/blog/comments', [AdminBlogCommentController::class, 'index']);
-        Route::get('/admin/blog/comment', [AdminBlogCommentController::class, 'show']);
-        Route::patch('/admin/blog/comment', [AdminBlogCommentController::class, 'update']);
-        Route::delete('/admin/blog/comment', [AdminBlogCommentController::class, 'destroy']);
+        Route::get('/admin/blogs/comments', [AdminBlogCommentController::class, 'index']);
+        Route::get('/admin/blogs/comment', [AdminBlogCommentController::class, 'show']);
+        Route::patch('/admin/blogs/comment', [AdminBlogCommentController::class, 'update']);
+        Route::delete('/admin/blogs/comment', [AdminBlogCommentController::class, 'destroy']);
 
         // Reactions
-        Route::get('/admin/blog/reactions', [AdminBlogReactionController::class, 'index']);
-        Route::get('/admin/blog/reaction', [AdminBlogReactionController::class, 'show']);
-        Route::patch('/admin/blog/reaction', [AdminBlogReactionController::class, 'update']);
-        Route::delete('/admin/blog/reaction', [AdminBlogReactionController::class, 'destroy']);
+        Route::get('/admin/blogs/reactions', [AdminBlogReactionController::class, 'index']);
+        Route::get('/admin/blogs/reaction', [AdminBlogReactionController::class, 'show']);
+        Route::patch('/admin/blogs/reaction', [AdminBlogReactionController::class, 'update']);
+        Route::delete('/admin/blogs/reaction', [AdminBlogReactionController::class, 'destroy']);
     });
-
 });

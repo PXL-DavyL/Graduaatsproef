@@ -12,7 +12,7 @@ export const useBlogStore = defineStore("blogs", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.get("http://localhost:8000/api/blog/index", {
+            const response = await axios.get("http://localhost:8000/api/blogs", {
                 params: credentials,
                 headers: {
                     Accept: "application/json",
@@ -33,7 +33,7 @@ export const useBlogStore = defineStore("blogs", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.get("http://localhost:8000/api/blog/show", {
+            const response = await axios.get("http://localhost:8000/api/blog", {
                 params: credentials,
                 headers: {
                     Accept: "application/json",
@@ -54,7 +54,7 @@ export const useBlogStore = defineStore("blogs", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.patch("http://localhost:8000/api/blog/edit", credentials, {
+            const response = await axios.patch("http://localhost:8000/api/blog", credentials, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
@@ -94,7 +94,7 @@ export const useBlogStore = defineStore("blogs", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.delete("http://localhost:8000/api/blog/destroy", {
+            const response = await axios.delete("http://localhost:8000/api/blog", {
                 params: credentials,
                 headers: {
                     Accept: "application/json",
@@ -115,7 +115,7 @@ export const useBlogStore = defineStore("blogs", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.patch("http://localhost:8000/api/admin/blog", credentials, {
+            const response = await axios.patch("http://localhost:8000/api/admin/blogs", credentials, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
@@ -136,7 +136,7 @@ export const useBlogStore = defineStore("blogs", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.delete("http://localhost:8000/api/admin/blog", {
+            const response = await axios.delete("http://localhost:8000/api/admin/blogs", {
                 params: credentials,
                 headers: {
                     Accept: "application/json",
@@ -157,7 +157,7 @@ export const useBlogStore = defineStore("blogs", () => {
         loading.value = true;
         try {
             await getCsrfToken();
-            const response = await axios.post("http://localhost:8000/api/admin/blog", credentials, {
+            const response = await axios.post("http://localhost:8000/api/admin/blogs", credentials, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
