@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\BlogComment;
 use Illuminate\Support\Facades\Auth;
 
-class CommentController extends Controller
+class BlogCommentController extends Controller
 {
 
     public function update(Request $request) {

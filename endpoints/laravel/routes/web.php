@@ -7,7 +7,7 @@ use App\Http\Controllers\AdminUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CommentController;
+use App\Http\Controllers\BlogCommentController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogReactionController;
 use App\Http\Controllers\RoleController;
@@ -44,9 +44,9 @@ Route::prefix('api')->group(function () {
     Route::post('/blog/add-view', [BlogController::class, 'add_view']);
 
     // Comments
-    Route::post('/comment/store', [CommentController::class, 'store']);
-    Route::patch('/comment/update', [CommentController::class, 'update']);
-    Route::delete('/comment/destroy', [CommentController::class, 'destroy']);
+    Route::post('/comment/store', [BlogCommentController::class, 'store']);
+    Route::patch('/comment/update', [BlogCommentController::class, 'update']);
+    Route::delete('/comment/destroy', [BlogCommentController::class, 'destroy']);
 
     // Reaction
     Route::post('reaction_toggle', [BlogReactionController::class, 'toggle_reaction']);
