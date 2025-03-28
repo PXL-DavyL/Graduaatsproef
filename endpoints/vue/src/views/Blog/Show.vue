@@ -27,7 +27,7 @@
 						v-for="reaction in processedReactions"
 						type="secondary"
 						:key="reaction.id"
-						class="inline-flex justify-center items-center rounded-md border border-transparent px-4 py-2 text-xs font-semibold uppercase tracking-widest transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 hover:bg-slate-300 focus:bg-slate-600 focus:ring-slate-500 active:bg-slate-500 text-white flex gap-2"
+						class="justify-center items-center rounded-md border border-transparent px-4 py-2 text-xs font-semibold uppercase tracking-widest transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 hover:bg-slate-300 focus:bg-slate-600 focus:ring-slate-500 active:bg-slate-500 text-white flex gap-2"
 						:class="
 							getUserSubmittedReaction() !== undefined &&
 							getUserSubmittedReaction().type === reaction.id
