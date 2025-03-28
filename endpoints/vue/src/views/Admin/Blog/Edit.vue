@@ -70,6 +70,20 @@
                 </span>
             </div>
 
+            <div class="flex flex-col gap-1">
+                <span class="block text-sm font-medium text-zinc-300">
+                    Comments
+                </span>
+                <div
+                    class="border border-zinc-700 bg-zinc-600 text-zinc-400 p-2 rounded-md w-full"
+                >
+                    <div class="flex justify-between items-center">
+                        <span> {{ blog.comments.length }}</span>
+                        <InputButton type="primary" @click="manageComment">Manage comments</InputButton>
+                    </div>
+                </div>
+            </div>
+
             <InputButton
                 :class="{ 'opacity-25': loading }"
                 :disabled="loading"
@@ -90,7 +104,8 @@
 <script setup>
 
 import { ref, watch, onBeforeMount } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+const router = useRouter();
 import { useBlogStore } from "@/stores/blogs";
 const blogStore = useBlogStore();
 const blog = ref(null);
@@ -124,6 +139,7 @@ onBeforeMount(async() => {
         });
 
         blog.value = blogResponse.data.blog;
+        console.log(blog.value);
         title.value = blog.value.title;
         content.value = blog.value.content;
         author.value = blog.value.poster_id;
@@ -156,5 +172,14 @@ const editBlog = async() => {
 			}
 		}
 	}
+};
+
+const manageComment = () => {
+    router.push({
+        name: "AdminListBlogComments",
+        params: {
+            id: blog.value.id,
+        },
+    });
 };
 </script>

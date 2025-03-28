@@ -69,9 +69,101 @@ export const useCommentStore = defineStore("comments", () => {
         }
     }
 
+    const getCommentsAsAdmin = async (credentials) => {
+        loading.value = true;
+        try {
+            await getCsrfToken();
+            const response = await axios.get("http://localhost:8000/api/admin/blog/comments", {
+                params: credentials,
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            });
+            return response;
+        } catch (error) {
+            console.error("Get comments failed:", error);
+            throw error;
+        } finally {
+            loading.value = false;
+        }
+    }
+
+    const getCommentAsAdmin = async (credentials) => {
+        loading.value = true;
+        try {
+            await getCsrfToken();
+            const response = await axios.get("http://localhost:8000/api/admin/blog/comment", {
+                params: credentials,
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            });
+            return response;
+        } catch (error) {
+            console.error("Get comments failed:", error);
+            throw error;
+        } finally {
+            loading.value = false;
+        }
+    }
+
+    const updateCommentAsAdmin = async (credentials) => {
+
+        loading.value = true;
+        try {
+            await getCsrfToken();
+            const response = await axios.patch("http://localhost:8000/api/admin/blog/comment", credentials, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            });
+            return response;
+        } catch (error) {
+            console.error("Get comments failed:", error);
+            throw error;
+        } finally {
+            loading.value = false;
+        }
+    }
+
+
+    const destroyCommentAsAdmin = async (credentials) => {
+
+        loading.value = true;
+        try {
+            await getCsrfToken();
+            const response = await axios.delete("http://localhost:8000/api/admin/blog/comment", {
+                params: credentials,
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            });
+            return response;
+        } catch (error) {
+            console.error("Get comments failed:", error);
+            throw error;
+        } finally {
+            loading.value = false;
+        }
+    }
+
+
     return {
         addComment,
         editComment,
         destroyComment,
+
+        getCommentsAsAdmin,
+        getCommentAsAdmin,
+        updateCommentAsAdmin,
+        destroyCommentAsAdmin,
     }
 });

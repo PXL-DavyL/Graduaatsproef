@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminBlogController;
+use App\Http\Controllers\AdminBlogCommentController;
 use App\Http\Controllers\AdminUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -49,7 +50,6 @@ Route::prefix('api')->group(function () {
     Route::delete('/blog/destroy', [BlogController::class, 'destroy']);
 
     // Comments
-
     Route::post('/comment/store', [CommentController::class, 'store']);
     Route::patch('/comment/update', [CommentController::class, 'update']);
     Route::delete('/comment/destroy', [CommentController::class, 'destroy']);
@@ -101,6 +101,12 @@ Route::prefix('api')->group(function () {
         Route::post('/admin/blog', [AdminBlogController::class, 'store']);
         Route::patch('/admin/blog', [AdminBlogController::class, 'update']);
         Route::delete('/admin/blog', [AdminBlogController::class, 'destroy']);
+
+        // Comments
+        Route::get('/admin/blog/comments', [AdminBlogCommentController::class, 'show']);
+        Route::get('/admin/blog/comment', [AdminBlogCommentController::class, 'edit']);
+        Route::patch('/admin/blog/comment', [AdminBlogCommentController::class, 'update']);
+        Route::delete('/admin/blog/comment', [AdminBlogCommentController::class, 'destroy']);
     });
 
 });
