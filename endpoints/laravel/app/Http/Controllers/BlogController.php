@@ -46,7 +46,8 @@ class BlogController extends Controller
 
         return response()->json([
             'blog' => $blog->load('poster', 'comments', 'reactions'),
-            'comments' => $blog->comments()->with('poster')->orderBy('created_at', 'desc')->get(),
+            'comments' => $blog->comments()->with('poster')->orderBy('created_at', 'desc')->get(), 
+            'reactions' => $blog->reactions()->with('poster')->orderBy('created_at', 'desc')->get(),
         ]);
     }
 

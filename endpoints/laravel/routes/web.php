@@ -27,7 +27,8 @@ Route::get('/metadata', function() {
     ]);
 });
 
-Route::prefix('api')->group(function () {
+// We need to prefix our routes to allow CORS calls (see config/cors.php)
+Route::prefix('api')->group(function () { 
 
     // Index page
     Route::get('/blog/index', [BlogController::class, 'index']);
