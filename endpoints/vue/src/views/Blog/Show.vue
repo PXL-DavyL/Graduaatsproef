@@ -23,7 +23,22 @@
 					/>
 				</InputButton>
 				<div class="flex gap-2">
-					<!-- reactions -->
+					<div
+						v-for="reaction in processedReactions"
+						type="secondary"
+						:key="reaction.id"
+						class="inline-flex justify-center items-center rounded-md border border-transparent px-4 py-2 text-xs font-semibold uppercase tracking-widest transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 hover:bg-slate-300 focus:bg-slate-600 focus:ring-slate-500 active:bg-slate-500 text-white flex gap-2"
+						:class="
+							getUserSubmittedReaction() !== undefined &&
+							getUserSubmittedReaction().type === reaction.id
+								? 'bg-sky-400'
+								: 'bg-slate-400'
+						"
+						@click="toggleReaction(reaction.id)"
+					>
+						<span v-html="reaction.icon"></span>
+						<span v-if="reaction.count > 0" v-html="reaction.count"></span>
+					</div>
 				</div>
 
 				<div
@@ -36,12 +51,12 @@
 				</div>
 			</div>
 
-            <ShowComments
-                :comments="comments"
-                :show="showComments"
+			<ShowComments
+				:comments="comments"
+				:show="showComments"
 				@refresh-comments="refreshComments"
-            />
-			<AddComment @add-comment="refreshComments"/>
+			/>
+			<AddComment @add-comment="refreshComments" />
 		</div>
 	</Layout>
 </template>
@@ -74,26 +89,90 @@ const showComments = ref(true);
 const blog_id = useRoute().params.id;
 const blog_title = ref("Blog");
 const comments = ref([]);
+const reactions = ref([]);
 
 onMounted(async () => {
 	try {
 		const authResponse = await authStore.getUserData();
 		auth_user.value = authResponse;
 
-		const blogResponse = await blogStore.getBlog({
-			id: blog_id,
-		});
-		
-		blog.value = blogResponse.data.blog;
-		blog_title.value = blog.value.title;
-
-        comments.value = blogResponse.data.comments;
+		await reloadblogs();
 	} catch (error) {
 		console.error("Blog error:", error);
 	}
 
 	await increaseView();
 });
+
+const reloadblogs = async () => {
+	try {
+		const blogResponse = await blogStore.getBlog({
+			id: blog_id,
+		});
+
+		blog.value = blogResponse.data.blog;
+		blog_title.value = blog.value.title;
+
+		comments.value = blogResponse.data.comments;
+		reactions.value = blogResponse.data.blog.reactions;
+
+		processReactions();
+	} catch (error) {
+		console.log("failed to (re)load blogs: ", error);
+	}
+};
+
+const processedReactions = ref([]);
+const processReactions = () => {
+	const reactionCounts = reactions.value.reduce(
+		(filtered, reaction) => {
+			if (reaction.type === "upvote") {
+				filtered.upvotes++;
+			} else if (reaction.type === "downvote") {
+				filtered.downvotes++;
+			}
+			return filtered;
+		},
+		{ upvotes: 0, downvotes: 0 },
+	);
+
+	processedReactions.value = [
+		{ id: "upvote", icon: "👍", count: reactionCounts.upvotes },
+		{ id: "downvote", icon: "👎", count: reactionCounts.downvotes },
+	];
+};
+
+const toggleReaction = async (type) => {
+	try {
+		await getCsrfToken();
+		const response = await axios.post(
+			"http://localhost:8000/api/reaction_toggle",
+			{
+				id: blog_id,
+				type: type,
+			},
+			{
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+				withCredentials: true,
+			},
+		);
+
+		await reloadblogs();
+
+		return response;
+	} catch (error) {
+		console.error("Toggle reaction failed:", error);
+		throw error;
+	}
+};
+
+const getUserSubmittedReaction = () => {
+	const reaction = reactions.value.find((reaction) => reaction.poster_id === auth_user.value.id);
+	return reaction;
+};
 
 const increaseView = async () => {
 	try {
@@ -118,7 +197,7 @@ const increaseView = async () => {
 	}
 };
 
-const refreshComments = async() => {
+const refreshComments = async () => {
 	try {
 		const blogResponse = await blogStore.getBlog({
 			id: blog_id,
@@ -127,5 +206,5 @@ const refreshComments = async() => {
 	} catch (error) {
 		console.error("Refresh comments error:", error);
 	}
-}
+};
 </script>

@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\BlogReactionController;
 use App\Http\Controllers\RoleController;
 use App\Models\Blog;
 use Illuminate\Http\Request;
@@ -48,13 +49,15 @@ Route::prefix('api')->group(function () {
     Route::get('/blog/show', [BlogController::class, 'show']);
     Route::patch('/blog/edit', [BlogController::class, 'edit']);
     Route::delete('/blog/destroy', [BlogController::class, 'destroy']);
+    Route::post('/blog/add-view', [BlogController::class, 'add_view']);
 
     // Comments
     Route::post('/comment/store', [CommentController::class, 'store']);
     Route::patch('/comment/update', [CommentController::class, 'update']);
     Route::delete('/comment/destroy', [CommentController::class, 'destroy']);
 
-    Route::post('/blog/add-view', [BlogController::class, 'add_view']);
+    // Reaction
+    Route::post('reaction_toggle', [BlogReactionController::class, 'toggle_reaction']);
 
     Route::group(['middleware' => 'auth'], function() {
         // Profile
