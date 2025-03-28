@@ -84,6 +84,21 @@
                 </div>
             </div>
 
+
+            <div class="flex flex-col gap-1">
+                <span class="block text-sm font-medium text-zinc-300">
+                    Reactions
+                </span>
+                <div
+                    class="border border-zinc-700 bg-zinc-600 text-zinc-400 p-2 rounded-md w-full"
+                >
+                    <div class="flex justify-between items-center">
+                        <span> {{ blog.reactions.length }}</span>
+                        <InputButton type="primary" @click="manageReaction">Manage reactions</InputButton>
+                    </div>
+                </div>
+            </div>
+            
             <InputButton
                 :class="{ 'opacity-25': loading }"
                 :disabled="loading"
@@ -177,6 +192,15 @@ const editBlog = async() => {
 const manageComment = () => {
     router.push({
         name: "AdminListBlogComments",
+        params: {
+            id: blog.value.id,
+        },
+    });
+};
+
+const manageReaction = () => {
+    router.push({
+        name: "AdminListBlogReactions",
         params: {
             id: blog.value.id,
         },

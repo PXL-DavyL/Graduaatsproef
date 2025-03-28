@@ -88,7 +88,10 @@
 							<td class="p-2 border-b border-zinc-500">
 								{{ blog.views }}
 							</td>
-							<td class="p-2 border-b border-zinc-500">NaN</td>
+							<td class="p-2 border-b border-zinc-500">
+								{{ blog.comments.length }}
+
+							</td>
 							<td class="p-2 border-b border-zinc-500">
 								{{ new Date(blog.created_at).toLocaleDateString() }}
 							</td>

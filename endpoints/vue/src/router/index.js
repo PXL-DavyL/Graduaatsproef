@@ -102,11 +102,22 @@ const router = createRouter({
 			component: () => import("@/views/Admin/Comment/List.vue"),
 			meta: { requiresAuth: true, requiresRole: 'admin'},
 		},
-
+		{
+			path: "/admin/blogs/edit/:id/reactions",
+			name: "AdminListBlogReactions",
+			component: () => import("@/views/Admin/Reaction/List.vue"),
+			meta: { requiresAuth: true, requiresRole: 'admin'},
+		},
 		{
 			path: "/admin/blogs/edit/:blog/comments/:comment",
 			name: "AdminEditBlogComment",
 			component: () => import("@/views/Admin/Comment/Edit.vue"),
+			meta: { requiresAuth: true, requiresRole: 'admin'},
+		},
+		{
+			path: "/admin/blogs/edit/:blog/reactions/:reaction",
+			name: "AdminEditBlogReaction",
+			component: () => import("@/views/Admin/Reaction/Edit.vue"),
 			meta: { requiresAuth: true, requiresRole: 'admin'},
 		}
 	],

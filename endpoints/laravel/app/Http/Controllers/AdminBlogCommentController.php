@@ -11,7 +11,7 @@ use Inertia\Inertia;
 
 class AdminBlogCommentController extends Controller
 {
-    public function show(Request $request)
+    public function index(Request $request)
     {
         $blog = Blog::find($request->id);
         if(!$blog) {
@@ -29,8 +29,7 @@ class AdminBlogCommentController extends Controller
 
     }
 
-    // Renders the necessary props for the edit page
-    public function edit(Request $request) 
+    public function show(Request $request) 
     {
         $request->validate([
             'id' => 'required|integer',

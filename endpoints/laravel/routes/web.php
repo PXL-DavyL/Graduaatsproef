@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminBlogCommentController;
+use App\Http\Controllers\AdminBlogReactionController;
 use App\Http\Controllers\AdminUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -78,7 +79,7 @@ Route::prefix('api')->group(function () {
         Route::get('/admin', function() {
             return response()->json([
                 'users' => User::latest()->take(7)->get(),
-                'blogs' => Blog::latest()->take(7)->get(),
+                'blogs' => Blog::latest()->with('comments')->take(7)->get(),
             ]);
         });
 
@@ -106,10 +107,16 @@ Route::prefix('api')->group(function () {
         Route::delete('/admin/blog', [AdminBlogController::class, 'destroy']);
 
         // Comments
-        Route::get('/admin/blog/comments', [AdminBlogCommentController::class, 'show']);
-        Route::get('/admin/blog/comment', [AdminBlogCommentController::class, 'edit']);
+        Route::get('/admin/blog/comments', [AdminBlogCommentController::class, 'index']);
+        Route::get('/admin/blog/comment', [AdminBlogCommentController::class, 'show']);
         Route::patch('/admin/blog/comment', [AdminBlogCommentController::class, 'update']);
         Route::delete('/admin/blog/comment', [AdminBlogCommentController::class, 'destroy']);
+
+        // Reactions
+        Route::get('/admin/blog/reactions', [AdminBlogReactionController::class, 'index']);
+        Route::get('/admin/blog/reaction', [AdminBlogReactionController::class, 'show']);
+        Route::patch('/admin/blog/reaction', [AdminBlogReactionController::class, 'update']);
+        Route::delete('/admin/blog/reaction', [AdminBlogReactionController::class, 'destroy']);
     });
 
 });
